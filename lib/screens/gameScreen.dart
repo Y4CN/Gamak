@@ -69,22 +69,17 @@ class _GameScreenState extends State<GameScreen> {
                     'assets/images/test2.jpg',
                     fit: BoxFit.cover,
                   ),
-                  Positioned(
-                    bottom: 0,
-                    right: 0,
-                    left: 0,
-                    child: Container(
-                      height: 180,
-                      width: double.infinity,
-                      decoration: const BoxDecoration(
-                        // color: Colors.black,
+                  const Positioned.fill(
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
                         gradient: LinearGradient(
-                          begin: Alignment.bottomCenter,
-                          end: Alignment.topCenter,
                           colors: [
-                            GenerallColor.primaryColor,
                             Colors.transparent,
+                            GenerallColor.primaryColor,
                           ],
+                          end: Alignment.bottomCenter,
+                          begin: Alignment.topCenter,
+                          stops: [.9, 1],
                         ),
                       ),
                     ),
