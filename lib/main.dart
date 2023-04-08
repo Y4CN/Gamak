@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
+        fontFamily: 'roboto',
         scaffoldBackgroundColor: GenerallColor.primaryColor,
         useMaterial3: true,
       ),

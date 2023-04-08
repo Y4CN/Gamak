@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:game_hacks_chat/constant/generallColor.dart';
 import 'package:game_hacks_chat/screens/gameScreen.dart';
+import 'package:page_transition/page_transition.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -181,10 +182,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 return GestureDetector(
                   onTap: () {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const GameScreen(),
-                        ));
+                      context,
+                      PageTransition(
+                        child: const GameScreen(),
+                        type: PageTransitionType.fade,
+                        duration: const Duration(milliseconds: 200),
+                        // isIos: true,
+                        reverseDuration: const Duration(milliseconds: 200),
+                      ),
+                    );
                   },
                   child: Container(
                     height: 110,
@@ -223,9 +229,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 'Name Game',
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w600,
-                                ),
+                                    fontSize: 16,
+                                    // fontWeight: FontWeight.w600,
+                                    fontFamily: 'robotom'),
                               ),
                               const SizedBox(
                                 height: 6,
