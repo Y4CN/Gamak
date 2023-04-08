@@ -35,10 +35,6 @@ class _SplashScreenState extends State<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: const [
             Spacer(),
-            // LoadingAnimationWidget.threeRotatingDots(
-            //   color: Colors.white,
-            //   size: 50,
-            // ),
             SizedBox(
                 height: 200,
                 width: 200,

@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:game_hacks_chat/constant/generallColor.dart';
+import 'package:game_hacks_chat/screens/gameScreen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -25,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
             floating: true,
             toolbarHeight: 100,
             centerTitle: false,
-            backgroundColor: const Color.fromARGB(255, 42, 79, 158),
+            backgroundColor: GenerallColor.appBarBackGroundColor,
             title: const Text(
               'Welcome To Game App',
               style: TextStyle(
@@ -44,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     borderRadius: BorderRadius.vertical(
                       top: Radius.circular(20),
                     ),
-                    color: Color(0xffF6F7FF),
+                    color: GenerallColor.primaryColor,
                   ),
                   child: TextField(
                     keyboardType: TextInputType.text,
@@ -176,70 +178,79 @@ class _HomeScreenState extends State<HomeScreen> {
           SliverList(
             delegate: SliverChildBuilderDelegate(
               (context, index) {
-                return Container(
-                  height: 110,
-                  margin: EdgeInsets.only(
-                      top: index == 0 ? 10 : 15, left: 20, right: 20),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Colors.black12,
-                        blurRadius: 8,
-                      )
-                    ],
-                  ),
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Row(
-                    children: [
-                      Container(
-                        height: 75,
-                        width: 75,
-                        decoration: BoxDecoration(
-                          color: Colors.amber,
-                          borderRadius: BorderRadius.circular(10),
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const GameScreen(),
+                        ));
+                  },
+                  child: Container(
+                    height: 110,
+                    margin: EdgeInsets.only(
+                        top: index == 0 ? 10 : 15, left: 20, right: 20),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(20),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Colors.black12,
+                          blurRadius: 8,
+                        )
+                      ],
+                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Row(
+                      children: [
+                        Container(
+                          height: 75,
+                          width: 75,
+                          decoration: BoxDecoration(
+                            color: Colors.amber,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
                         ),
-                      ),
-                      const SizedBox(
-                        width: 8,
-                      ),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text(
-                              'Name Game',
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 6,
-                            ),
-                            Text(
-                              'Category Game',
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Colors.grey.shade500,
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 6,
-                            ),
-                            Icon(
-                              CupertinoIcons.star,
-                              color: Colors.yellow.shade800,
-                              size: 20,
-                            ),
-                          ],
+                        const SizedBox(
+                          width: 8,
                         ),
-                      )
-                    ],
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text(
+                                'Name Game',
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 6,
+                              ),
+                              Text(
+                                'Category Game',
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.grey.shade500,
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 6,
+                              ),
+                              Icon(
+                                CupertinoIcons.star,
+                                color: Colors.yellow.shade800,
+                                size: 20,
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 );
               },

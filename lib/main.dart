@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:game_hacks_chat/constant/generallColor.dart';
 import 'package:game_hacks_chat/screens/splashScreen.dart';
 
 void main() {
@@ -12,9 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        scaffoldBackgroundColor: const Color(
-          0xffF6F7FF
-        ),
+        scaffoldBackgroundColor: GenerallColor.primaryColor,
         useMaterial3: true,
       ),
       home: const SplashScreen(),
