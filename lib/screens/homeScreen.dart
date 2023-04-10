@@ -50,39 +50,26 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   color: GenerallColor.primaryColor,
                 ),
-                child: TextField(
-                  keyboardType: TextInputType.text,
-                  textInputAction: TextInputAction.search,
-                  onSubmitted: (value) {
-                    print(value);
-                    print('***** HERE *****');
-                  },
-                  decoration: InputDecoration(
-                    suffixIcon: IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        CupertinoIcons.mic_fill,
-                        color: Colors.black,
-                      ),
+                child: Container(
+                  color: Colors.transparent,
+                  width: double.infinity,
+                  height: 60,
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                  ),
+                  alignment: Alignment.centerLeft,
+                  child: const Text(
+                    'Name User',
+                    style: TextStyle(
+                      fontSize: 18,
                     ),
-                    prefixIcon: const Icon(
-                      CupertinoIcons.search,
-                      color: Colors.black,
-                    ),
-                    hintText: '🎮 Search Game 🎮',
-                    filled: true,
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 15),
-                    fillColor: Colors.white,
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide.none),
                   ),
                 ),
               ),
             ),
           ),
-          SliverPadding(
-            padding: const EdgeInsets.symmetric(vertical: 20),
+          const SliverPadding(
+            padding: EdgeInsets.symmetric(vertical: 20),
             sliver: SliverToBoxAdapter(
               child: categoryItem(),
             ),
@@ -152,6 +139,9 @@ class _HomeScreenState extends State<HomeScreen> {
               },
               childCount: 10,
             ),
+          ),
+          const SliverPadding(
+            padding: EdgeInsets.only(bottom: 160),
           ),
         ],
       )),

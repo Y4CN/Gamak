@@ -8,6 +8,8 @@ import 'package:game_hacks_chat/bloc/mainBloc/mainEvent.dart';
 import 'package:game_hacks_chat/bloc/mainBloc/mainState.dart';
 import 'package:game_hacks_chat/constant/generallColor.dart';
 import 'package:game_hacks_chat/screens/homeScreen.dart';
+import 'package:game_hacks_chat/screens/profileScreen.dart';
+import 'package:game_hacks_chat/screens/searchScreen.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
@@ -25,13 +27,10 @@ class MainScreen extends StatelessWidget {
                 Positioned.fill(
                   child: IndexedStack(
                     index: state.selectedPage,
-                    children: [
-                      const HomeScreen(),
-                      Container(
-                        color: Colors.red,
-                      ),
-                      const HomeScreen(),
-                      const HomeScreen(),
+                    children: const [
+                      HomeScreen(),
+                      SearchScreen(),
+                      ProfileScreen()
                     ],
                   ),
                 ),
@@ -139,9 +138,9 @@ class MainScreen extends StatelessWidget {
                                           MainAxisAlignment.center,
                                       children: [
                                         Icon(
-                                          state.selectedPage == 1
-                                              ? CupertinoIcons.person
-                                              : CupertinoIcons.person_fill,
+                                          state.selectedPage == 2
+                                              ? CupertinoIcons.person_fill
+                                              : CupertinoIcons.person,
                                         ),
                                         const SizedBox(
                                           height: 5,
