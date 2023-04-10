@@ -61,7 +61,7 @@ class MainScreen extends StatelessWidget {
                                         .add(MainChangeScreenEvent(value: 0));
                                   },
                                   child: SizedBox(
-                                    width: 60,
+                                    width: 100,
                                     child: Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
@@ -96,7 +96,7 @@ class MainScreen extends StatelessWidget {
                                         .add(MainChangeScreenEvent(value: 1));
                                   },
                                   child: SizedBox(
-                                    width: 60,
+                                    width: 100,
                                     child: Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
@@ -132,7 +132,7 @@ class MainScreen extends StatelessWidget {
                                         .add(MainChangeScreenEvent(value: 2));
                                   },
                                   child: SizedBox(
-                                    width: 60,
+                                    width: 100,
                                     child: Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
