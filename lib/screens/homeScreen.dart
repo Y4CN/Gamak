@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:game_hacks_chat/constant/generallColor.dart';
+import 'package:game_hacks_chat/screens/categoryGameScreen.dart';
 import 'package:game_hacks_chat/screens/gameScreen.dart';
 import 'package:game_hacks_chat/widget/singleItem.dart';
 import 'package:page_transition/page_transition.dart';
@@ -83,41 +84,7 @@ class _HomeScreenState extends State<HomeScreen> {
           SliverPadding(
             padding: const EdgeInsets.symmetric(vertical: 20),
             sliver: SliverToBoxAdapter(
-              child: SizedBox(
-                height: 130,
-                width: double.infinity,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 10,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        children: [
-                          Container(
-                            height: 80,
-                            decoration: BoxDecoration(
-                                color: Colors.green,
-                                borderRadius: BorderRadius.circular(20)),
-                            width: 80,
-                          ),
-                          const SizedBox(
-                            height: 7,
-                          ),
-                          const Text(
-                            'Title',
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                ),
-              ),
+              child: categoryItem(),
             ),
           ),
           SliverToBoxAdapter(
@@ -188,6 +155,60 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
       )),
+    );
+  }
+}
+
+class categoryItem extends StatelessWidget {
+  const categoryItem({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          PageTransition(
+              child: const CategoryGameScreen(), type: PageTransitionType.fade),
+        );
+      },
+      child: SizedBox(
+        height: 130,
+        width: double.infinity,
+        child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: 10,
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  Container(
+                    height: 80,
+                    decoration: BoxDecoration(
+                        color: Colors.green,
+                        borderRadius: BorderRadius.circular(20)),
+                    width: 80,
+                  ),
+                  const SizedBox(
+                    height: 7,
+                  ),
+                  const Text(
+                    'Title',
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+      ),
     );
   }
 }
