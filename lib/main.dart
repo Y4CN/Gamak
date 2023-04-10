@@ -18,8 +18,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: GenerallColor.primaryColor,
         useMaterial3: true,
       ),
-      // home: const SplashScreen(), 
-      home: const MainScreen(), 
+      home: const SplashScreen(), 
     );
   }
 }

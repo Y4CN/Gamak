@@ -22,19 +22,19 @@ class MainScreen extends StatelessWidget {
         builder: (context, state) {
           if (state is MainChagedScreenState) {
             return Scaffold(
-                body: Stack(
-              children: [
-                Positioned.fill(
-                  child: IndexedStack(
-                    index: state.selectedPage,
-                    children: const [
-                      HomeScreen(),
-                      SearchScreen(),
-                      ProfileScreen()
-                    ],
+              body: Stack(
+                children: [
+                  Positioned.fill(
+                    child: IndexedStack(
+                      index: state.selectedPage,
+                      children: const [
+                        HomeScreen(),
+                        SearchScreen(),
+                        ProfileScreen()
+                      ],
+                    ),
                   ),
-                ),
-                Positioned(
+                  Positioned(
                     bottom: 20,
                     right: 30,
                     left: 30,
@@ -68,7 +68,7 @@ class MainScreen extends StatelessWidget {
                                       children: [
                                         Icon(
                                           state.selectedPage == 0
-                                              ? Icons.home_filled
+                                              ? Icons.home
                                               : Icons.home_outlined,
                                           size: 30,
                                         ),
@@ -165,9 +165,11 @@ class MainScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                    )),
-              ],
-            ));
+                    ),
+                  ),
+                ],
+              ),
+            );
           }
           return Container();
         },
