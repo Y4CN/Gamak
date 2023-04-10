@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:game_hacks_chat/constant/generallColor.dart';
+import 'package:game_hacks_chat/screens/mainScreen.dart';
 import 'package:game_hacks_chat/screens/splashScreen.dart';
 
 void main() {
@@ -17,7 +18,8 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: GenerallColor.primaryColor,
         useMaterial3: true,
       ),
-      home: const SplashScreen(),
+      // home: const SplashScreen(), 
+      home: const MainScreen(), 
     );
   }
 }

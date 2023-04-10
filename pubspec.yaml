@@ -39,6 +39,7 @@ dependencies:
   loading_animation_widget: ^1.2.0+4
   page_transition: ^2.0.9
   expandable_text: ^2.3.0
+  flutter_bloc: ^8.1.2
 
 dev_dependencies:
   flutter_test:
