@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:game_hacks_chat/constant/generallColor.dart';
 import 'package:game_hacks_chat/screens/gameScreen.dart';
+import 'package:game_hacks_chat/widget/singleItem.dart';
 import 'package:page_transition/page_transition.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -38,45 +39,42 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             bottom: PreferredSize(
-              preferredSize: const Size(double.infinity, 60),
-              child: Expanded(
-                child: Container(
-                  alignment: Alignment.bottomCenter,
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.vertical(
-                      top: Radius.circular(20),
-                    ),
-                    color: GenerallColor.primaryColor,
+              preferredSize: const Size(double.infinity, 50),
+              child: Container(
+                alignment: Alignment.bottomCenter,
+                padding: const EdgeInsets.symmetric(horizontal: 10),
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.vertical(
+                    top: Radius.circular(20),
                   ),
-                  child: TextField(
-                    keyboardType: TextInputType.text,
-                    textInputAction: TextInputAction.search,
-                    onSubmitted: (value) {
-                      print(value);
-                      print('***** HERE *****');
-                    },
-                    decoration: InputDecoration(
-                      suffixIcon: IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          CupertinoIcons.mic_fill,
-                          color: Colors.black,
-                        ),
-                      ),
-                      prefixIcon: const Icon(
-                        CupertinoIcons.search,
+                  color: GenerallColor.primaryColor,
+                ),
+                child: TextField(
+                  keyboardType: TextInputType.text,
+                  textInputAction: TextInputAction.search,
+                  onSubmitted: (value) {
+                    print(value);
+                    print('***** HERE *****');
+                  },
+                  decoration: InputDecoration(
+                    suffixIcon: IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        CupertinoIcons.mic_fill,
                         color: Colors.black,
                       ),
-                      hintText: '🎮 Search Game 🎮',
-                      filled: true,
-                      contentPadding:
-                          const EdgeInsets.symmetric(horizontal: 15),
-                      fillColor: Colors.white,
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide: BorderSide.none),
                     ),
+                    prefixIcon: const Icon(
+                      CupertinoIcons.search,
+                      color: Colors.black,
+                    ),
+                    hintText: '🎮 Search Game 🎮',
+                    filled: true,
+                    contentPadding: const EdgeInsets.symmetric(horizontal: 15),
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: BorderSide.none),
                   ),
                 ),
               ),
@@ -179,85 +177,10 @@ class _HomeScreenState extends State<HomeScreen> {
           SliverList(
             delegate: SliverChildBuilderDelegate(
               (context, index) {
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      PageTransition(
-                        child: const GameScreen(),
-                        type: PageTransitionType.fade,
-                        duration: const Duration(milliseconds: 200),
-                        // isIos: true,
-                        reverseDuration: const Duration(milliseconds: 200),
-                      ),
-                    );
-                  },
-                  child: Container(
-                    height: 110,
-                    margin: EdgeInsets.only(
-                        top: index == 0 ? 10 : 15, left: 20, right: 20),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(20),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Colors.black12,
-                          blurRadius: 8,
-                        )
-                      ],
-                    ),
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Row(
-                      children: [
-                        Container(
-                          height: 75,
-                          width: 75,
-                          decoration: BoxDecoration(
-                            color: Colors.amber,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 8,
-                        ),
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text(
-                                'Name Game',
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    // fontWeight: FontWeight.w600,
-                                    fontFamily: 'robotom'),
-                              ),
-                              const SizedBox(
-                                height: 6,
-                              ),
-                              Text(
-                                'Category Game',
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.grey.shade500,
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 6,
-                              ),
-                              Icon(
-                                CupertinoIcons.star,
-                                color: Colors.yellow.shade800,
-                                size: 20,
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
+                return Padding(
+                  padding: EdgeInsets.only(
+                      top: index == 0 ? 10 : 15, left: 20, right: 20),
+                  child: const singleItemGame(),
                 );
               },
               childCount: 10,
