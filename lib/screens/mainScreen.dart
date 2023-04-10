@@ -78,7 +78,7 @@ class MainScreen extends StatelessWidget {
                                         Visibility(
                                           visible: state.selectedPage != 0,
                                           child: const Text(
-                                            'Home',
+                                            'خانه',
                                             style: TextStyle(
                                               fontSize: 14,
                                               fontWeight: FontWeight.bold,
@@ -114,7 +114,7 @@ class MainScreen extends StatelessWidget {
                                         Visibility(
                                           visible: state.selectedPage != 1,
                                           child: const Text(
-                                            'Search',
+                                            'جست و جو',
                                             style: TextStyle(
                                               fontSize: 14,
                                               fontWeight: FontWeight.bold,
@@ -148,7 +148,7 @@ class MainScreen extends StatelessWidget {
                                         Visibility(
                                           visible: state.selectedPage != 2,
                                           child: const Text(
-                                            'Profile',
+                                            'پروفایل',
                                             style: TextStyle(
                                               fontSize: 14,
                                               fontWeight: FontWeight.bold,

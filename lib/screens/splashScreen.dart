@@ -42,10 +42,12 @@ class _SplashScreenState extends State<SplashScreen> {
                 child: RiveAnimation.asset('assets/rive/loading.riv')),
             Spacer(),
             Text(
-              'Game',
+              'اسم برنامه که هنوز چیزی به مغزم نرسیده',
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 18,
+                fontFamily: 'vazirm',
+                fontWeight: FontWeight.bold,
               ),
             ),
             SizedBox(

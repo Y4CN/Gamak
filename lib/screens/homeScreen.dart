@@ -32,9 +32,9 @@ class _HomeScreenState extends State<HomeScreen> {
             centerTitle: false,
             backgroundColor: GenerallColor.appBarBackGroundColor,
             title: const Text(
-              'Welcome To Game App',
+              'به برنامه چی چی خوش اومدین',
               style: TextStyle(
-                fontSize: 24,
+                fontSize: 20,
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
               ),
@@ -57,9 +57,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   margin: const EdgeInsets.symmetric(
                     horizontal: 12,
                   ),
-                  alignment: Alignment.centerLeft,
+                  alignment: Alignment.center,
                   child: const Text(
-                    'Name User',
+                    'اسم کاربر',
                     style: TextStyle(
                       fontSize: 18,
                     ),
@@ -79,13 +79,14 @@ class _HomeScreenState extends State<HomeScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Padding(
-                  padding: EdgeInsets.only(left: 10, bottom: 10),
+                  padding: EdgeInsets.only(right: 20, bottom: 10),
                   child: Text(
-                    'POPULAR',
+                    'محبوب ها',
                     style: TextStyle(
                       fontSize: 20,
                       color: Colors.black,
-                      fontWeight: FontWeight.bold,
+                      fontFamily: 'vazirm',
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ),
@@ -98,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     itemBuilder: (context, index) {
                       return Container(
                         margin: EdgeInsets.only(
-                          left: index == 0 ? 25 : 15,
+                          right: index == 0 ? 25 : 15,
                         ),
                         decoration: BoxDecoration(
                           color: Colors.green,
@@ -117,13 +118,14 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           const SliverToBoxAdapter(
             child: Padding(
-              padding: EdgeInsets.only(left: 10, bottom: 10),
+              padding: EdgeInsets.only(right: 20, bottom: 10),
               child: Text(
-                'NEWEST GAME',
+                'جدید ترین بازی ها',
                 style: TextStyle(
                   fontSize: 20,
                   color: Colors.black,
-                  fontWeight: FontWeight.bold,
+                  fontFamily: 'vazirm',
+                  fontWeight: FontWeight.w600,
                 ),
               ),
             ),
@@ -134,7 +136,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 return Padding(
                   padding: EdgeInsets.only(
                       top: index == 0 ? 10 : 15, left: 20, right: 20),
-                  child: const singleItemGame(),
+                  child: const Directionality(
+                      textDirection: TextDirection.ltr,
+                      child: singleItemGame()),
                 );
               },
               childCount: 10,
@@ -176,11 +180,11 @@ class categoryItem extends StatelessWidget {
               child: Column(
                 children: [
                   Container(
-                    height: 80,
+                    height: 70,
                     decoration: BoxDecoration(
                         color: Colors.green,
                         borderRadius: BorderRadius.circular(20)),
-                    width: 80,
+                    width: 70,
                   ),
                   const SizedBox(
                     height: 7,

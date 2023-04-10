@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:game_hacks_chat/constant/generallColor.dart';
 
 class SearchScreen extends StatelessWidget {
   const SearchScreen({super.key});
@@ -14,8 +15,11 @@ class SearchScreen extends StatelessWidget {
         body: CustomScrollView(
           slivers: [
             SliverAppBar(
+              toolbarHeight: 100,
               centerTitle: true,
+              backgroundColor: GenerallColor.primaryColor,
               title: TextField(
+                textAlign: TextAlign.center,
                 keyboardType: TextInputType.text,
                 textInputAction: TextInputAction.search,
                 onSubmitted: (value) {
@@ -23,18 +27,25 @@ class SearchScreen extends StatelessWidget {
                   print('***** HERE *****');
                 },
                 decoration: InputDecoration(
-                  suffixIcon: IconButton(
+                  // suffixIcon: IconButton(
+                  //   onPressed: () {},
+                  //   icon: const Icon(
+                  //     CupertinoIcons.mic_fill,
+                  //     color: Colors.black,
+                  //   ),
+                  // ),
+                  // prefixIcon: const Icon(
+                  //   CupertinoIcons.search,
+                  //   color: Colors.black,
+                  // ),
+                  prefixIcon: IconButton(
                     onPressed: () {},
                     icon: const Icon(
-                      CupertinoIcons.mic_fill,
+                      CupertinoIcons.search,
                       color: Colors.black,
                     ),
                   ),
-                  prefixIcon: const Icon(
-                    CupertinoIcons.search,
-                    color: Colors.black,
-                  ),
-                  hintText: '🎮 Search Game 🎮',
+                  hintText: '🎮 جست و جوی بازی مورد نظر 🎮',
                   filled: true,
                   contentPadding: const EdgeInsets.symmetric(horizontal: 15),
                   fillColor: Colors.white,
@@ -44,7 +55,7 @@ class SearchScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SliverToBoxAdapter(
+            const SliverToBoxAdapter(
               child: Text('data'),
             )
           ],
