@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:game_hacks_chat/constant/generallColor.dart';
+import 'package:game_hacks_chat/widget/singleItem.dart';
 
 class SearchScreen extends StatelessWidget {
   const SearchScreen({super.key});
@@ -55,9 +56,19 @@ class SearchScreen extends StatelessWidget {
                 ),
               ),
             ),
-            const SliverToBoxAdapter(
-              child: Text('data'),
-            )
+            SliverList(delegate: SliverChildBuilderDelegate((context, index) {
+              return const Padding(
+                padding: EdgeInsets.only(
+                  left: 20,
+                  right: 20,
+                  top: 10,
+                ),
+                child: singleItemGame(),
+              );
+            },childCount: 10)),
+            const SliverPadding(
+              padding: EdgeInsets.only(bottom: 140),
+            ),
           ],
         ),
       ),
