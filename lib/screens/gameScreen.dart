@@ -149,7 +149,7 @@ class _GameScreenState extends State<GameScreen> {
                               color: Colors.grey.shade300,
                             ),
                             child: const Text(
-                              'category',
+                              'Platform',
                               style: TextStyle(
                                   fontSize: 14, fontWeight: FontWeight.w300),
                             ),

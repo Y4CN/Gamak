@@ -7,6 +7,7 @@ import 'package:game_hacks_chat/screens/categoryGameScreen.dart';
 import 'package:game_hacks_chat/screens/gameScreen.dart';
 import 'package:game_hacks_chat/widget/singleItem.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -16,6 +17,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late PageController _bannerPageController;
+
+  @override
+  void initState() {
+    super.initState();
+    _bannerPageController = PageController(viewportFraction: .8);
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -65,6 +74,50 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: SizedBox(
+              height: 170,
+              width: double.infinity,
+              child: Stack(
+                children: [
+                  PageView.builder(
+                    itemCount: 10,
+                    controller: _bannerPageController,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        decoration: BoxDecoration(
+                          color: Colors.grey,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        margin: const EdgeInsets.only(
+                          right: 10,
+                        ),
+                      );
+                    },
+                  ),
+                  Positioned(
+                    bottom: 4,
+                    left: 0,
+                    right: 0,
+                    child: Center(
+                      child: SmoothPageIndicator(
+                        controller: _bannerPageController,
+                        count: 10,
+                        effect: const ScrollingDotsEffect(
+                          fixedCenter: true,
+                          activeDotColor: Colors.black,
+                          dotColor: Colors.white,
+                          dotHeight: 12,
+                          dotWidth: 12,
+                          spacing: 10,
+                        ),
+                      ),
+                    ),
+                  )
+                ],
               ),
             ),
           ),

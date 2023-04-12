@@ -15,20 +15,6 @@ class ProfileScreen extends StatelessWidget {
           headerSliverBuilder: (context, innerBoxIsScrolled) {
             return [
               SliverAppBar(
-                leading: Padding(
-                  padding: const EdgeInsets.only(bottom: 60, right: 20),
-                  child: IconButton(
-                    style: IconButton.styleFrom(
-                      splashFactory: NoSplash.splashFactory,
-                    ),
-                    tooltip: 'پشتیبانی',
-                    onPressed: () {},
-                    icon: const Icon(
-                      CupertinoIcons.bubble_left_fill,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
                 actions: [
                   Padding(
                     padding: const EdgeInsets.only(bottom: 60, left: 25),
@@ -145,6 +131,10 @@ class ProfileScreen extends StatelessWidget {
                 delegate: SliverChildListDelegate(
                   [
                     ListTile(
+                      leading: const Icon(
+                        Icons.key,
+                        color: Colors.black54,
+                      ),
                       onTap: () {},
                       title: const Text('تغییر رمز عبور'),
                     ),
@@ -153,6 +143,10 @@ class ProfileScreen extends StatelessWidget {
                       height: .2,
                     ),
                     ListTile(
+                      leading: const Icon(
+                        CupertinoIcons.game_controller_solid,
+                        color: Colors.black54,
+                      ),
                       onTap: () {},
                       title: const Text('سفارش های بازی شما'),
                     ),
@@ -161,6 +155,27 @@ class ProfileScreen extends StatelessWidget {
                       height: .2,
                     ),
                     ListTile(
+                      leading: const Icon(
+                        CupertinoIcons.bubble_left_fill,
+                        color: Colors.black54,
+                      ),
+                      onTap: () {},
+                      title: const Text(
+                        'پشتیبانی',
+                        style: TextStyle(
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                    const Divider(
+                      color: Colors.grey,
+                      height: .2,
+                    ),
+                    ListTile(
+                      leading: const Icon(
+                        Icons.remove_circle,
+                        color: Colors.black54,
+                      ),
                       onTap: () {},
                       title: const Text('خروج از اکانت'),
                     ),
