@@ -13,14 +13,14 @@ class GameScreen extends StatefulWidget {
 class _GameScreenState extends State<GameScreen> {
   @override
   Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: TextDirection.ltr,
-      child: Scaffold(
-        body: Stack(
-          children: [
-            CustomScrollView(
-              slivers: [
-                SliverAppBar(
+    return Scaffold(
+      body: Stack(
+        children: [
+          CustomScrollView(
+            slivers: [
+              Directionality(
+                textDirection: TextDirection.ltr,
+                child: SliverAppBar(
                   backgroundColor: GenerallColor.appBarBackGroundColor,
                   toolbarHeight: 200,
                   automaticallyImplyLeading: false,
@@ -93,7 +93,10 @@ class _GameScreenState extends State<GameScreen> {
                     ),
                   ),
                 ),
-                SliverToBoxAdapter(
+              ),
+              Directionality(
+                textDirection: TextDirection.ltr,
+                child: SliverToBoxAdapter(
                   child: Padding(
                     padding:
                         const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
@@ -129,152 +132,151 @@ class _GameScreenState extends State<GameScreen> {
                     ),
                   ),
                 ),
-                SliverPadding(
-                  padding: const EdgeInsets.symmetric(vertical: 14),
-                  sliver: SliverToBoxAdapter(
-                    child: SizedBox(
-                      height: 35,
-                      width: double.infinity,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 10,
-                        itemBuilder: (context, index) {
-                          return Container(
-                            margin: EdgeInsets.only(left: index == 0 ? 12 : 7),
-                            alignment: Alignment.center,
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 5),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(1000),
-                              color: Colors.grey.shade300,
-                            ),
-                            child: const Text(
-                              'Platform',
-                              style: TextStyle(
-                                  fontSize: 14, fontWeight: FontWeight.w300),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ),
-                ),
-                const SliverToBoxAdapter(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                    child: ExpandableText(
-                      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-                      expandText: 'Show more',
-                      collapseText: 'Show less',
-                      maxLines: 3,
-                      style: TextStyle(fontSize: 15),
-                    ),
-                  ),
-                ),
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Container(
-                          height: 55,
-                          width: 55,
-                          decoration: BoxDecoration(
-                            color: Colors.grey.shade300,
-                            shape: BoxShape.circle,
-                          ),
-                          child: const Center(
-                            child: Icon(
-                              CupertinoIcons.chat_bubble,
-                              color: Colors.black,
-                              size: 20,
-                              shadows: [
-                                BoxShadow(
-                                  color: Colors.black,
-                                  blurRadius: 2,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        const Text(
-                          '10K',
-                          style: TextStyle(fontSize: 16),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                SliverPadding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  sliver: SliverGrid(
-                    delegate: SliverChildBuilderDelegate(
-                      (context, index) {
+              ),
+              SliverPadding(
+                padding: const EdgeInsets.symmetric(vertical: 14),
+                sliver: SliverToBoxAdapter(
+                  child: SizedBox(
+                    height: 35,
+                    width: double.infinity,
+                    child: ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 10,
+                      itemBuilder: (context, index) {
                         return Container(
-                          width: 40,
-                          height: 40,
+                          margin: EdgeInsets.only(right: index == 0 ? 12 : 7),
+                          alignment: Alignment.center,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 5),
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            color: Colors.amber,
+                            borderRadius: BorderRadius.circular(1000),
+                            color: Colors.grey.shade300,
+                          ),
+                          child: const Text(
+                            'Platform',
+                            style: TextStyle(
+                                fontSize: 14, fontWeight: FontWeight.w300),
                           ),
                         );
                       },
-                      childCount: 10,
                     ),
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 12,
-                      crossAxisSpacing: 12,
-                      childAspectRatio: .9,
-                    ),
-                  ),
-                ),
-                const SliverPadding(
-                  padding: EdgeInsets.only(
-                    bottom: 120,
-                  ),
-                )
-              ],
-            ),
-            Positioned(
-              bottom: 50,
-              right: 20,
-              left: 20,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  surfaceTintColor: Colors.transparent,
-                  shadowColor: Colors.white,
-                  elevation: 20,
-                  backgroundColor: Colors.green.shade300,
-                  minimumSize: const Size(double.infinity, 50),
-                  shape: RoundedRectangleBorder(
-                    side: const BorderSide(
-                      color: Colors.black,
-                      width: 2,
-                      strokeAlign: .1,
-                    ),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                onPressed: () {},
-                child: const Text(
-                  'خرید مستقیم بازی',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontFamily: 'vazirm',
-                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
-            )
-          ],
-        ),
+              const SliverToBoxAdapter(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                  child: ExpandableText(
+                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                    expandText: 'بیش تر',
+                    collapseText: 'کم تر',
+                    maxLines: 3,
+                    style: TextStyle(fontSize: 15),
+                  ),
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        height: 55,
+                        width: 55,
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade300,
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Center(
+                          child: Icon(
+                            CupertinoIcons.chat_bubble,
+                            color: Colors.black,
+                            size: 20,
+                            shadows: [
+                              BoxShadow(
+                                color: Colors.black,
+                                blurRadius: 2,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      const Text(
+                        '10K',
+                        style: TextStyle(fontSize: 16),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              SliverPadding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                sliver: SliverGrid(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      return Container(
+                        width: 40,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: Colors.amber,
+                        ),
+                      );
+                    },
+                    childCount: 10,
+                  ),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 12,
+                    crossAxisSpacing: 12,
+                    childAspectRatio: .9,
+                  ),
+                ),
+              ),
+              const SliverPadding(
+                padding: EdgeInsets.only(
+                  bottom: 120,
+                ),
+              )
+            ],
+          ),
+          Positioned(
+            bottom: 50,
+            right: 20,
+            left: 20,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                surfaceTintColor: Colors.transparent,
+                shadowColor: Colors.white,
+                elevation: 20,
+                backgroundColor: Colors.green.shade300,
+                minimumSize: const Size(double.infinity, 50),
+                shape: RoundedRectangleBorder(
+                  side: const BorderSide(
+                    color: Colors.black,
+                    width: 2,
+                    strokeAlign: .1,
+                  ),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              onPressed: () {},
+              child: const Text(
+                'خرید مستقیم بازی',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontFamily: 'vazirm',
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          )
+        ],
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:game_hacks_chat/screens/gameScreen.dart';
+import 'package:game_hacks_chat/screens/trickScreen.dart';
 import 'package:page_transition/page_transition.dart';
 
 class singleItemGame extends StatelessWidget {
@@ -86,7 +87,14 @@ class singleItemGame extends StatelessWidget {
             ),
             IconButton(
               splashRadius: 15,
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const TrickScreen(),
+                  ),
+                );
+              },
               icon: Icon(
                 Icons.lightbulb,
                 color: Colors.amber.shade600,
