@@ -42,7 +42,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 child: RiveAnimation.asset('assets/rive/loading.riv')),
             Spacer(),
             Text(
-              'اسم برنامه که هنوز چیزی به مغزم نرسیده',
+              'گیمک',
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 18,

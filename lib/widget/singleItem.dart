@@ -83,7 +83,16 @@ class singleItemGame extends StatelessWidget {
                   ),
                 ],
               ),
-            )
+            ),
+            IconButton(
+              splashRadius: 15,
+              onPressed: () {},
+              icon: Icon(
+                Icons.lightbulb,
+                color: Colors.amber.shade600,
+                size: 26,
+              ),
+            ),
           ],
         ),
       ),
