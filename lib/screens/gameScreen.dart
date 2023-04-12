@@ -2,6 +2,8 @@ import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:game_hacks_chat/constant/generallColor.dart';
+import 'package:game_hacks_chat/screens/trickListScreen.dart';
+import 'package:page_transition/page_transition.dart';
 
 class GameScreen extends StatefulWidget {
   const GameScreen({super.key});
@@ -126,6 +128,24 @@ class _GameScreenState extends State<GameScreen> {
                                 color: Colors.yellow.shade600,
                               )
                             ],
+                          ),
+                        ),
+                        IconButton(
+                          splashRadius: 15,
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              PageTransition(
+                                child: const TrickListScreen(),
+                                type: PageTransitionType.fade,
+                                duration: const Duration(milliseconds: 200),
+                              ),
+                            );
+                          },
+                          icon: Icon(
+                            Icons.lightbulb_outline_rounded,
+                            color: Colors.amber.shade600,
+                            size: 26,
                           ),
                         ),
                       ],

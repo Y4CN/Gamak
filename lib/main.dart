@@ -5,6 +5,7 @@ import 'package:game_hacks_chat/locator.dart';
 import 'package:game_hacks_chat/screens/splashScreen.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await initGet_it();
   runApp(const MyApp());
 }

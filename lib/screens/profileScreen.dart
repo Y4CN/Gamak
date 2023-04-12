@@ -156,6 +156,23 @@ class ProfileScreen extends StatelessWidget {
                     ),
                     ListTile(
                       leading: const Icon(
+                        Icons.lightbulb,
+                        color: Colors.black54,
+                      ),
+                      onTap: () {},
+                      title: const Text(
+                        'ترفند های شما',
+                        style: TextStyle(
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
+                    const Divider(
+                      color: Colors.grey,
+                      height: .2,
+                    ),
+                    ListTile(
+                      leading: const Icon(
                         CupertinoIcons.bubble_left_fill,
                         color: Colors.black54,
                       ),

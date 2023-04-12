@@ -185,9 +185,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 return Padding(
                   padding: EdgeInsets.only(
                       top: index == 0 ? 10 : 15, left: 20, right: 20),
-                  child: const Directionality(
-                      textDirection: TextDirection.ltr,
-                      child: singleItemGame()),
+                  child: singleItemGame(),
                 );
               },
               childCount: 10,
