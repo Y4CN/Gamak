@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:game_hacks_chat/bloc/homeBloc/homeBloc.dart';
 import 'package:game_hacks_chat/bloc/mainBloc/mainBloc.dart';
 import 'package:game_hacks_chat/bloc/mainBloc/mainEvent.dart';
 import 'package:game_hacks_chat/bloc/mainBloc/mainState.dart';
@@ -27,10 +28,12 @@ class MainScreen extends StatelessWidget {
                   Positioned.fill(
                     child: IndexedStack(
                       index: state.selectedPage,
-                      children: const [
-                        HomeScreen(),
-                        SearchScreen(),
-                        ProfileScreen()
+                      children: [
+                        BlocProvider(
+                            create: (context) => HomeBloc(),
+                            child: const HomeScreen()),
+                        const SearchScreen(),
+                        const ProfileScreen()
                       ],
                     ),
                   ),
