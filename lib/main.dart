@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:game_hacks_chat/constant/generallColor.dart';
 import 'package:game_hacks_chat/locator.dart';
+import 'package:game_hacks_chat/screens/registerScreen.dart';
 import 'package:game_hacks_chat/screens/splashScreen.dart';
 
 void main() async {

@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
-import 'package:game_hacks_chat/screens/homeScreen.dart';
-import 'package:game_hacks_chat/screens/mainScreen.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:game_hacks_chat/screens/registerScreen.dart';
 import 'package:rive/rive.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -21,7 +17,7 @@ class _SplashScreenState extends State<SplashScreen> {
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
-          builder: (context) => const MainScreen(),
+          builder: (context) => const RegisterScreen(),
         ),
         (route) => false,
       );
