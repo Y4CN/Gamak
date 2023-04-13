@@ -65,6 +65,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
+                    minimumSize: const Size(double.infinity, 50),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                     backgroundColor:
                         GenerallColor.appBarBackGroundColor.withOpacity(.8),
                   ),

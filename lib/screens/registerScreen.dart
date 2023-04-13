@@ -1,8 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:game_hacks_chat/constant/generallColor.dart';
 import 'package:game_hacks_chat/screens/loginScreen.dart';
+import 'package:game_hacks_chat/utilities/fileManager.dart';
+import 'package:game_hacks_chat/widget/customSnakBar.dart';
 import 'package:game_hacks_chat/widget/customTextField.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -17,6 +22,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   late TextEditingController _nameController;
   late TextEditingController _passController;
   late TextEditingController _confirmPassController;
+  File? userAvatar;
+  ValueNotifier _notifier = ValueNotifier<bool>(false);
 
   @override
   void initState() {
@@ -60,26 +67,65 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   Stack(
                     children: [
-                      const CircleAvatar(
-                        radius: 35,
-                        backgroundColor: GenerallColor.primaryColor,
-                        child: Icon(
-                          CupertinoIcons.person,
-                          size: 20,
-                        ),
+                      ValueListenableBuilder(
+                        valueListenable: _notifier,
+                        builder: (context, value, child) {
+                          return Container(
+                            height: 70,
+                            width: 70,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white,
+                              image: userAvatar == null
+                                  ? null
+                                  : DecorationImage(
+                                      image: FileImage(userAvatar as File),
+                                      fit: BoxFit.cover,
+                                    ),
+                            ),
+                            alignment: Alignment.center,
+                            child: userAvatar == null
+                                ? const Icon(
+                                    CupertinoIcons.person,
+                                    size: 30,
+                                  )
+                                : null,
+                          );
+                        },
                       ),
                       Positioned(
                         top: 1,
                         left: 1,
-                        child: Container(
-                          height: 25,
-                          width: 25,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.white,
-                          ),
-                          child: const Icon(
-                            CupertinoIcons.add,
+                        child: GestureDetector(
+                          onTap: () async {
+                            if (await Permission.storage.isDenied) {
+                              Permission.storage.request();
+                            }
+                            if (await Permission.storage.isGranted) {
+                              var eiFile = await FileManager.pickFile();
+                              eiFile.fold((l) {
+                                CustomSnakBar.getCustomSnakBar(l, context);
+                              }, (r) async {
+                                userAvatar = r;
+                                _notifier.value = await r.exists();
+                                _notifier.notifyListeners();
+                              });
+                            } else {
+                              CustomSnakBar.getCustomSnakBar(
+                                  'لطفا اجازه دسترسی برای فضای ذخیره سازی را بدهید',
+                                  context);
+                            }
+                          },
+                          child: Container(
+                            height: 25,
+                            width: 25,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white,
+                            ),
+                            child: const Icon(
+                              CupertinoIcons.add,
+                            ),
                           ),
                         ),
                       )
@@ -89,23 +135,34 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
             ),
             SliverToBoxAdapter(
-              child:
-                  CustomTextFeild(controller: _emailController, txt: 'ایمیل'),
+              child: CustomTextFeild(
+                controller: _emailController,
+                txt: 'ایمیل',
+              ),
             ),
             SliverToBoxAdapter(
               child: CustomTextFeild(
-                  controller: _usernameController, txt: ' اسم کاربری'),
-            ),
-            SliverToBoxAdapter(
-              child: CustomTextFeild(controller: _nameController, txt: 'اسم'),
-            ),
-            SliverToBoxAdapter(
-              child:
-                  CustomTextFeild(controller: _passController, txt: 'رمز عبور'),
+                controller: _usernameController,
+                txt: ' اسم کاربری',
+              ),
             ),
             SliverToBoxAdapter(
               child: CustomTextFeild(
-                  controller: _confirmPassController, txt: 'تایید رمز عبور'),
+                controller: _nameController,
+                txt: 'اسم',
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: CustomTextFeild(
+                controller: _passController,
+                txt: 'رمز عبور',
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: CustomTextFeild(
+                controller: _confirmPassController,
+                txt: 'تایید رمز عبور',
+              ),
             ),
             SliverToBoxAdapter(
               child: Padding(
@@ -115,6 +172,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
+                    minimumSize: const Size(double.infinity, 50),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                     backgroundColor:
                         GenerallColor.appBarBackGroundColor.withOpacity(.8),
                   ),
@@ -139,5 +200,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _notifier.dispose();
   }
 }
