@@ -22,5 +22,5 @@ Future<void> initGet_it() async {
 
   //repository
   locator.registerSingleton<ICategoryRepository>(CategoryRepository());
-  locator.registerSingleton<AuthRepository>(AuthRepository());
+  locator.registerSingleton<IAuthRepository>(AuthRepository());
 }

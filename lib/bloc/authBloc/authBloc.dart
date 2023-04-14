@@ -22,7 +22,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         event.name,
         event.password,
         event.passwordConfirm,
-        event.avatar,
+        event.avatar??null,
       );
       emit(AuthRegisterResponseState(register));
     });

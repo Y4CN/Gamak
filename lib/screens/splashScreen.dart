@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:game_hacks_chat/bloc/authBloc/authBloc.dart';
 import 'package:game_hacks_chat/screens/registerScreen.dart';
 import 'package:rive/rive.dart';
 
@@ -17,7 +19,8 @@ class _SplashScreenState extends State<SplashScreen> {
       Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(
-          builder: (context) => const RegisterScreen(),
+          builder: (context) => BlocProvider(
+              create: (context) => AuthBloc(), child: const RegisterScreen()),
         ),
         (route) => false,
       );

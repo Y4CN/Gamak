@@ -12,7 +12,7 @@ abstract class IAuthRepository {
     String name,
     String password,
     String passwordConfirm,
-    File avatar,
+    File? avatar,
   );
   Future<Either<String, bool>> login(
     String emailOruserName,
@@ -35,7 +35,7 @@ class AuthRepository extends IAuthRepository {
 
   @override
   Future<Either<String, bool>> register(String email, String userName,
-      String name, String password, String passwordConfirm, File avatar) async {
+      String name, String password, String passwordConfirm, File? avatar) async {
     try {
       await _authDataSource.register(
         email,

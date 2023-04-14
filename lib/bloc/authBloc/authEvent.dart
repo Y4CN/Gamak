@@ -14,7 +14,7 @@ class AuthRegisterEvent extends AuthEvent {
   String name;
   String password;
   String passwordConfirm;
-  File avatar;
+  File? avatar;
 
   AuthRegisterEvent(
     this.avatar,
