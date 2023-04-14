@@ -1,8 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:game_hacks_chat/bloc/authBloc/authBloc.dart';
+import 'package:game_hacks_chat/bloc/authBloc/authEvent.dart';
+import 'package:game_hacks_chat/bloc/authBloc/authState.dart';
 import 'package:game_hacks_chat/constant/generallColor.dart';
 import 'package:game_hacks_chat/screens/mainScreen.dart';
+import 'package:game_hacks_chat/widget/customSnakBar.dart';
 import 'package:game_hacks_chat/widget/customTextField.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -32,6 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
         body: CustomScrollView(
           slivers: [
             const SliverAppBar(
+              automaticallyImplyLeading: false,
               toolbarHeight: 200,
               backgroundColor: GenerallColor.appBarBackGroundColor,
               shape: RoundedRectangleBorder(
@@ -50,8 +57,9 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
             SliverToBoxAdapter(
               child: CustomTextFeild(
-                  controller: _emailOruserNameController,
-                  txt: 'نام کاربری / ایمیل'),
+                controller: _emailOruserNameController,
+                txt: 'نام کاربری / ایمیل',
+              ),
             ),
             SliverToBoxAdapter(
               child:
@@ -63,30 +71,77 @@ class _LoginScreenState extends State<LoginScreen> {
                   horizontal: 12,
                   vertical: 20,
                 ),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(double.infinity, 50),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    backgroundColor:
-                        GenerallColor.appBarBackGroundColor.withOpacity(.8),
-                  ),
-                  onPressed: () {
-                    Navigator.pushAndRemoveUntil(
+                child: BlocConsumer<AuthBloc, AuthState>(
+                  listener: (context, state) {
+                    if (state is AuthLoginResponseState) {
+                      CustomSnakBar.getCustomSnakBar(
+                        'شما با موفقیت وارد شدید',
                         context,
-                        MaterialPageRoute(
-                          builder: (context) => const MainScreen(),
-                        ),
-                        (route) => false);
+                      );
+                      state.login.fold((l) {
+                        CustomSnakBar.getCustomSnakBar(l, context);
+                      }, (r) {
+                        if (r) {
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const MainScreen(),
+                            ),
+                            (route) => false,
+                          );
+                        }
+                      });
+                    }
                   },
-                  child: const Text(
-                    'ورود',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 15,
-                    ),
-                  ),
+                  builder: (context, state) {
+                    if (state is AuthLoadingState ||
+                        state is AuthLoginResponseState) {
+                      return Center(
+                        child: LoadingAnimationWidget.fourRotatingDots(
+                          color: GenerallColor.appBarBackGroundColor,
+                          size: 30,
+                        ),
+                      );
+                    }
+                    return ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: const Size(double.infinity, 50),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        backgroundColor:
+                            GenerallColor.appBarBackGroundColor.withOpacity(.8),
+                      ),
+                      onPressed: () {
+                        if (_emailOruserNameController.text.trim().length < 8) {
+                          CustomSnakBar.getCustomSnakBar(
+                              'لطفا نام کاربری یا ایمیل خود را وارد کنین',
+                              context);
+                          return;
+                        }
+                        if (_passController.text.trim().length < 8) {
+                          CustomSnakBar.getCustomSnakBar(
+                            'لطفا پسورد خود را درست وارد کنین',
+                            context,
+                          );
+                          return;
+                        }
+                        BlocProvider.of<AuthBloc>(context).add(
+                          AuthLoginEvent(
+                            _emailOruserNameController.text.trim(),
+                            _passController.text.trim(),
+                          ),
+                        );
+                      },
+                      child: const Text(
+                        'ورود',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 15,
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ),
             ),

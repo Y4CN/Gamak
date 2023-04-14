@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:game_hacks_chat/bloc/authBloc/authBloc.dart';
+import 'package:game_hacks_chat/screens/mainScreen.dart';
 import 'package:game_hacks_chat/screens/registerScreen.dart';
+import 'package:game_hacks_chat/utilities/sharManager.dart';
 import 'package:rive/rive.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -16,14 +18,26 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 3), () {
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(
-          builder: (context) => BlocProvider(
-              create: (context) => AuthBloc(), child: const RegisterScreen()),
-        ),
-        (route) => false,
-      );
+      if (ShareManager.isLogedin()) {
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const MainScreen(),
+          ),
+          (route) => false,
+        );
+      } else {
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) => BlocProvider(
+              create: (context) => AuthBloc(),
+              child: const RegisterScreen(),
+            ),
+          ),
+          (route) => false,
+        );
+      }
     });
   }
 

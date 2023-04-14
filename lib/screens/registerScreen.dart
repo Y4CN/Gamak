@@ -183,10 +183,24 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         'شما با موفقیت ثبت نام کردین',
                         context,
                       );
+                      state.register.fold((l) {
+                        CustomSnakBar.getCustomSnakBar(l, context);
+                      }, (r) {
+                        if (r) {
+                          Navigator.push(context, MaterialPageRoute(
+                            builder: (context) {
+                              return BlocProvider(
+                                  create: (context) => AuthBloc(),
+                                  child: const LoginScreen());
+                            },
+                          ));
+                        }
+                      });
                     }
                   },
                   builder: (context, state) {
-                    if (state is AuthLoadingState) {
+                    if (state is AuthLoadingState ||
+                        state is AuthRegisterResponseState) {
                       return Center(
                         child: LoadingAnimationWidget.fourRotatingDots(
                           color: GenerallColor.appBarBackGroundColor,
@@ -218,8 +232,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         }
                         if (_nameController.text.trim().isEmpty) {
                           CustomSnakBar.getCustomSnakBar(
-                              'لطفا اسم را وارد کنین',
-                              context);
+                              'لطفا اسم را وارد کنین', context);
                           return;
                         }
                         if (_passController.text.trim().length < 8) {
@@ -243,12 +256,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             _usernameController.text.trim(),
                           ),
                         );
-
-                        // Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
-                        //   builder: (context) {
-                        //     return const LoginScreen();
-                        //   },
-                        // ), (route) => false);
                       },
                       child: const Text(
                         'ثبت نام',
@@ -262,6 +269,41 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
               ),
             ),
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                ),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size(double.infinity, 50),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    backgroundColor:
+                        GenerallColor.appBarBackGroundColor.withOpacity(.8),
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => BlocProvider(
+                          create: (context) => AuthBloc(),
+                          child: const LoginScreen(),
+                        ),
+                      ),
+                    );
+                  },
+                  child: const Text(
+                    'اکانت دارید ! وارد شوید',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15,
+                    ),
+                  ),
+                ),
+              ),
+            )
           ],
         ),
       ),

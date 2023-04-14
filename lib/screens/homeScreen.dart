@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:game_hacks_chat/bloc/homeBloc/homeBloc.dart';
@@ -146,7 +145,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   );
                 }, (r) {
                   return SliverPadding(
-                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    padding: const EdgeInsets.only(bottom: 20, top: 20),
                     sliver: SliverToBoxAdapter(
                       child: categoryItem(categoryModel: r),
                     ),
@@ -260,7 +259,9 @@ class categoryItem extends StatelessWidget {
             String categoryColor = 'ff${singleCat.color}';
             int hexColor = int.parse(categoryColor, radix: 16);
             return Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.only(
+                right: index == 0 ? 20 : 15,
+              ),
               child: Column(
                 children: [
                   Container(
