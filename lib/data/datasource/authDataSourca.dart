@@ -12,7 +12,7 @@ abstract class IAuthDataSource {
     String name,
     String password,
     String passwordConfirm,
-    File avatar,
+    File? avatar,
   );
   Future<void> login(
     String emailOruserName,
@@ -51,21 +51,31 @@ class AuthDataSource extends IAuthDataSource {
     String name,
     String password,
     String passwordConfirm,
-    File avatar,
+    File? avatar,
   ) async {
-    try {
-      await _dio.post(
-        'collections/users/records',
-        data: {
+//        {
+//           'username': userName,
+//           'email': email,
+//           'password': password,
+//           'passwordConfirm': passwordConfirm,
+//           'name': name,
+//           'avatar': avatar
+//         },
+
+FormData _formData = FormData.fromMap({
           'username': userName,
           'email': email,
           'password': password,
           'passwordConfirm': passwordConfirm,
           'name': name,
-          'avatar': avatar
-        },
+          'avatar': avatar==null ? null : await MultipartFile.fromFile(avatar.path)
+});
+    try {
+      await _dio.post(
+        'collections/users/records',
+        data: _formData
       );
-    } on DioError catch (ex) {
+    } on DioError catch (ex) {  
       throw ErrorHandler(ex.response?.statusCode, ex.response?.data['message']);
     } catch (ex) {
       throw ErrorHandler(0, 'unknown erorr');
