@@ -22,9 +22,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         event.name,
         event.password,
         event.passwordConfirm,
-        event.avatar??null,
+        event.avatar,
       );
       emit(AuthRegisterResponseState(register));
+    });
+
+    on<AuthReadUserEvent>((event, emit) async {
+      emit(AuthLoadingState());
+      var responseUser = await _authRepository.readUser();
+      emit(AuthReadUserResponseState(responseUser));
     });
   }
 }

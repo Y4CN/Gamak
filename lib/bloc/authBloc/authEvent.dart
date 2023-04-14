@@ -25,3 +25,9 @@ class AuthRegisterEvent extends AuthEvent {
     this.userName,
   );
 }
+
+
+
+class AuthReadUserEvent extends AuthEvent{
+  
+}

@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:game_hacks_chat/bloc/authBloc/authBloc.dart';
 import 'package:game_hacks_chat/bloc/homeBloc/homeBloc.dart';
 import 'package:game_hacks_chat/bloc/mainBloc/mainBloc.dart';
 import 'package:game_hacks_chat/bloc/mainBloc/mainEvent.dart';
@@ -33,7 +34,10 @@ class MainScreen extends StatelessWidget {
                             create: (context) => HomeBloc(),
                             child: const HomeScreen()),
                         const SearchScreen(),
-                        const ProfileScreen()
+                        BlocProvider(
+                          create: (context) => AuthBloc(),
+                          child: const ProfileScreen(),
+                        )
                       ],
                     ),
                   ),

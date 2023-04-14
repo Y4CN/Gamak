@@ -44,7 +44,6 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             );
           }
-
           return CustomScrollView(
             slivers: [
               SliverAppBar(

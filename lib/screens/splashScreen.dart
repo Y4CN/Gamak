@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:game_hacks_chat/bloc/authBloc/authBloc.dart';
+import 'package:game_hacks_chat/data/datasource/authDataSourca.dart';
+import 'package:game_hacks_chat/locator.dart';
 import 'package:game_hacks_chat/screens/mainScreen.dart';
 import 'package:game_hacks_chat/screens/registerScreen.dart';
 import 'package:game_hacks_chat/utilities/sharManager.dart';

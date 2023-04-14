@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:game_hacks_chat/data/datasource/authDataSourca.dart';
+import 'package:game_hacks_chat/data/model/userModel.dart';
 import 'package:game_hacks_chat/locator.dart';
 import 'package:game_hacks_chat/utilities/errorHandler.dart';
 
@@ -18,6 +19,7 @@ abstract class IAuthRepository {
     String emailOruserName,
     String password,
   );
+  Future<Either<String, UserModel>> readUser();
 }
 
 class AuthRepository extends IAuthRepository {
@@ -34,8 +36,13 @@ class AuthRepository extends IAuthRepository {
   }
 
   @override
-  Future<Either<String, bool>> register(String email, String userName,
-      String name, String password, String passwordConfirm, File? avatar) async {
+  Future<Either<String, bool>> register(
+      String email,
+      String userName,
+      String name,
+      String password,
+      String passwordConfirm,
+      File? avatar) async {
     try {
       await _authDataSource.register(
         email,
@@ -46,6 +53,16 @@ class AuthRepository extends IAuthRepository {
         avatar,
       );
       return const Right(true);
+    } on ErrorHandler catch (e) {
+      throw Left(e.message ?? 'خطای ناشناخته');
+    }
+  }
+
+  @override
+  Future<Either<String, UserModel>> readUser() async {
+    try {
+      var response = await _authDataSource.readUser();
+      return Right(response);
     } on ErrorHandler catch (e) {
       throw Left(e.message ?? 'خطای ناشناخته');
     }

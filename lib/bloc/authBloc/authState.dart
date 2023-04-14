@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:game_hacks_chat/data/model/userModel.dart';
 
 class AuthState {}
 
@@ -14,4 +15,10 @@ class AuthLoginResponseState extends AuthState {
 class AuthRegisterResponseState extends AuthState {
   Either<String, bool> register;
   AuthRegisterResponseState(this.register);
+}
+
+class AuthReadUserResponseState extends AuthState{
+  Either<String,UserModel> readUser;
+
+  AuthReadUserResponseState(this.readUser);
 }
