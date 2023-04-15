@@ -3,6 +3,7 @@
 
 import 'package:dartz/dartz.dart';
 import 'package:game_hacks_chat/data/model/categoryModel.dart';
+import 'package:game_hacks_chat/data/model/userModel.dart';
 
 class HomeState{}
 
@@ -11,5 +12,6 @@ class HomeInitState extends HomeState{}
 class HomeLoadingState extends HomeState{}
 class HomeResponseState extends HomeState{
   Either<String,List<CategoryModel>> getAllCategory;
-  HomeResponseState(this.getAllCategory);
+  Either<String,UserModel> readUser;
+  HomeResponseState(this.getAllCategory,this.readUser);
 }

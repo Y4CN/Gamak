@@ -79,12 +79,21 @@ class _HomeScreenState extends State<HomeScreen> {
                         horizontal: 12,
                       ),
                       alignment: Alignment.center,
-                      child: const Text(
-                        'اسم کاربر',
-                        style: TextStyle(
-                          fontSize: 18,
-                        ),
-                      ),
+                      child: state is HomeResponseState
+                          ? state.readUser.fold((l) {
+                              return Text(
+                                l,
+                                style: const TextStyle(fontSize: 18),
+                              );
+                            }, (r) {
+                              return Text(
+                                r.name,
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                ),
+                              );
+                            })
+                          : null,
                     ),
                   ),
                 ),
@@ -213,7 +222,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     return Padding(
                       padding: EdgeInsets.only(
                           top: index == 0 ? 10 : 15, left: 20, right: 20),
-                      child: singleItemGame(),
+                      child: const singleItemGame(),
                     );
                   },
                   childCount: 10,
