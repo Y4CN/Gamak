@@ -8,11 +8,13 @@ abstract class IBannerDataSource {
 }
 
 class BannerDataSource extends IBannerDataSource {
+  final Dio _dio = locator.get();
   @override
   Future<List<BannerModel>> getAllBanner() async {
-    final Dio _dio = locator.get();
     try {
-      var response = await _dio.get('collections/banner_games/records');
+      Map<String, dynamic> q = {'sort': '-updated'};
+      var response = await _dio.get('collections/banner_games/records',
+          queryParameters: q);
       return response.data['items']
           .map<BannerModel>((e) => BannerModel.fromJson(e))
           .toList();

@@ -110,139 +110,161 @@ class _HomeScreenState extends State<HomeScreen> {
                 }, (r) {
                   return r.isNotEmpty
                       ? SliverToBoxAdapter(
-                          child: SizedBox(
-                            height: 170,
-                            width: double.infinity,
-                            child: Stack(
-                              children: [
-                                PageView.builder(
-                                  itemCount: r.length,
-                                  controller: _bannerPageController,
-                                  itemBuilder: (context, index) {
-                                    return Container(
-                                      decoration: BoxDecoration(
-                                        color: Colors.black12,
-                                        borderRadius: BorderRadius.circular(20),
-                                      ),
-                                      margin: const EdgeInsets.only(
-                                        right: 10,
-                                      ),
-                                      child: Row(
-                                        children: [
-                                          CachedNetworkImage(
-                                            imageUrl: r[index].image,
-                                            placeholder: (context, url) {
-                                              return SizedBox(
-                                                height: double.infinity,
-                                                width: 140,
-                                                child: Center(
-                                                  child: LoadingAnimationWidget
-                                                      .fourRotatingDots(
-                                                    color: GenerallColor
-                                                        .appBarBackGroundColor,
-                                                    size: 20,
-                                                  ),
-                                                ),
-                                              );
-                                            },
-                                            errorWidget: (context, url, error) {
-                                              return const SizedBox(
-                                                height: double.infinity,
-                                                width: 140,
-                                                child: Center(
-                                                  child:
-                                                      Text('خطای بارگذاری عکس'),
-                                                ),
-                                              );
-                                            },
-                                            imageBuilder:
-                                                (context, imageProvider) {
-                                              return SizedBox(
-                                                height: double.infinity,
-                                                width: 140,
-                                                child: Image(
-                                                  image: imageProvider,
-                                                  fit: BoxFit.contain,
-                                                ),
-                                              );
-                                            },
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Padding(
+                                padding: EdgeInsets.only(right: 55),
+                                child: Text(
+                                  'پیشنهاد ها',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontFamily: 'vazirm',
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 6,
+                              ),
+                              SizedBox(
+                                height: 170,
+                                width: double.infinity,
+                                child: Stack(
+                                  children: [
+                                    PageView.builder(
+                                      itemCount: r.length,
+                                      controller: _bannerPageController,
+                                      itemBuilder: (context, index) {
+                                        return Container(
+                                          decoration: BoxDecoration(
+                                            color: Colors.black12,
+                                            borderRadius:
+                                                BorderRadius.circular(20),
                                           ),
-                                          Expanded(
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                  r[index].title,
-                                                  style: const TextStyle(
-                                                      fontSize: 16,
-                                                      fontFamily: 'vazirm'),
-                                                ),
-                                                const SizedBox(
-                                                  height: 15,
-                                                ),
-                                                Visibility(
-                                                  visible:
-                                                      r[index].price.isNotEmpty,
-                                                  child: Text(
-                                                    'قیمت : ${r[index].price}',
-                                                    style: const TextStyle(
-                                                      fontSize: 16,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
+                                          margin: const EdgeInsets.only(
+                                            right: 10,
+                                          ),
+                                          child: Row(
+                                            children: [
+                                              CachedNetworkImage(
+                                                imageUrl: r[index].image,
+                                                placeholder: (context, url) {
+                                                  return SizedBox(
+                                                    height: double.infinity,
+                                                    width: 140,
+                                                    child: Center(
+                                                      child:
+                                                          LoadingAnimationWidget
+                                                              .fourRotatingDots(
+                                                        color: GenerallColor
+                                                            .appBarBackGroundColor,
+                                                        size: 20,
+                                                      ),
                                                     ),
-                                                  ),
-                                                ),
-                                                const SizedBox(
-                                                  height: 3,
-                                                ),
-                                                Visibility(
-                                                  visible: r[index]
-                                                      .discountPrice
-                                                      .isNotEmpty,
-                                                  child: Text(
-                                                    'قیمت با تخفیف : ${r[index].discountPrice}',
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    style: const TextStyle(
-                                                      fontSize: 16,
+                                                  );
+                                                },
+                                                errorWidget:
+                                                    (context, url, error) {
+                                                  return const SizedBox(
+                                                    height: double.infinity,
+                                                    width: 140,
+                                                    child: Center(
+                                                      child: Text(
+                                                          'خطای بارگذاری عکس'),
                                                     ),
-                                                  ),
+                                                  );
+                                                },
+                                                imageBuilder:
+                                                    (context, imageProvider) {
+                                                  return SizedBox(
+                                                    height: double.infinity,
+                                                    width: 140,
+                                                    child: Image(
+                                                      image: imageProvider,
+                                                      fit: BoxFit.contain,
+                                                    ),
+                                                  );
+                                                },
+                                              ),
+                                              Expanded(
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                      r[index].title,
+                                                      style: const TextStyle(
+                                                          fontSize: 16,
+                                                          fontFamily: 'vazirm'),
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 15,
+                                                    ),
+                                                    Visibility(
+                                                      visible: r[index]
+                                                          .price
+                                                          .isNotEmpty,
+                                                      child: Text(
+                                                        'قیمت : ${r[index].price}',
+                                                        style: const TextStyle(
+                                                          fontSize: 16,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    const SizedBox(
+                                                      height: 3,
+                                                    ),
+                                                    Visibility(
+                                                      visible: r[index]
+                                                          .discountPrice
+                                                          .isNotEmpty,
+                                                      child: Text(
+                                                        'قیمت با تخفیف : ${r[index].discountPrice}',
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: const TextStyle(
+                                                          fontSize: 16,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
-                                              ],
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                    Visibility(
+                                      visible: r.length > 1,
+                                      child: Positioned(
+                                        bottom: 4,
+                                        left: 0,
+                                        right: 0,
+                                        child: Center(
+                                          child: SmoothPageIndicator(
+                                            controller: _bannerPageController,
+                                            count: r.length,
+                                            effect: const ScrollingDotsEffect(
+                                              fixedCenter: true,
+                                              activeDotColor: Colors.black,
+                                              dotColor: Colors.white,
+                                              dotHeight: 12,
+                                              dotWidth: 12,
+                                              spacing: 10,
                                             ),
                                           ),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                ),
-                                Visibility(
-                                  visible: r.length > 1,
-                                  child: Positioned(
-                                    bottom: 4,
-                                    left: 0,
-                                    right: 0,
-                                    child: Center(
-                                      child: SmoothPageIndicator(
-                                        controller: _bannerPageController,
-                                        count: r.length,
-                                        effect: const ScrollingDotsEffect(
-                                          fixedCenter: true,
-                                          activeDotColor: Colors.black,
-                                          dotColor: Colors.white,
-                                          dotHeight: 12,
-                                          dotWidth: 12,
-                                          spacing: 10,
                                         ),
                                       ),
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
                         )
                       : const SliverToBoxAdapter(
