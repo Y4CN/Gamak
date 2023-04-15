@@ -56,16 +56,17 @@ class SearchScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SliverList(delegate: SliverChildBuilderDelegate((context, index) {
-              return const Padding(
-                padding: EdgeInsets.only(
+            SliverList(
+                delegate: SliverChildBuilderDelegate((context, index) {
+              return  Padding(
+                padding: const EdgeInsets.only(
                   left: 20,
                   right: 20,
                   top: 10,
                 ),
-                child: singleItemGame(),
+                child: Container(color: Colors.red,),
               );
-            },childCount: 10)),
+            }, childCount: 10)),
             const SliverPadding(
               padding: EdgeInsets.only(bottom: 140),
             ),

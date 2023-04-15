@@ -2,7 +2,7 @@ class GameProductModel {
   String id;
   String categoryId;
   String image;
-  String title;
+  String name;
   int rate;
 
   GameProductModel(
@@ -10,7 +10,7 @@ class GameProductModel {
       required this.id,
       required this.image,
       required this.rate,
-      required this.title});
+      required this.name});
 
   factory GameProductModel.fromJson(Map<String, dynamic> jsonData) {
     return GameProductModel(
@@ -19,7 +19,7 @@ class GameProductModel {
       image:
           'http://127.0.0.1:8090/api/files/${jsonData['collectionId']}/${jsonData['id']}/${jsonData['image']}',
       rate: jsonData['rate'],
-      title: jsonData['title'],
+      name: jsonData['name'],
     );
   }
 }
