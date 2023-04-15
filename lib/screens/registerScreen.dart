@@ -114,12 +114,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               }, (r) async {
                                 userAvatar = r;
                                 _notifier.value = await r.exists();
+                                // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
                                 _notifier.notifyListeners();
                               });
                             } else {
+                              // ignore: use_build_context_synchronously
                               CustomSnakBar.getCustomSnakBar(
-                                  'لطفا اجازه دسترسی برای فضای ذخیره سازی را بدهید',
-                                  context);
+                                'لطفا اجازه دسترسی برای فضای ذخیره سازی را بدهید',
+                                context,
+                              );
                             }
                           },
                           child: Container(

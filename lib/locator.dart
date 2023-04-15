@@ -1,7 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:game_hacks_chat/data/datasource/authDataSourca.dart';
+import 'package:game_hacks_chat/data/datasource/bannet_dataSource.dart';
 import 'package:game_hacks_chat/data/datasource/categoryDataSource.dart';
 import 'package:game_hacks_chat/data/repository/authRepository.dart';
+import 'package:game_hacks_chat/data/repository/bannerRepository.dart';
 import 'package:game_hacks_chat/data/repository/categoryRepository.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,8 +21,10 @@ Future<void> initGet_it() async {
   //dataSource
   locator.registerSingleton<ICategoryDatasource>(CategoryDataSource());
   locator.registerSingleton<IAuthDataSource>(AuthDataSource());
+  locator.registerSingleton<IBannerDataSource>(BannerDataSource());
 
   //repository
   locator.registerSingleton<ICategoryRepository>(CategoryRepository());
   locator.registerSingleton<IAuthRepository>(AuthRepository());
+  locator.registerSingleton<IBannerRepository>(BannerRepository());
 }

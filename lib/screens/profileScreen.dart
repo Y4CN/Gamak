@@ -200,7 +200,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 color: Colors.black54,
                               ),
                               onTap: () {},
-                              title: const Text('سفارش های بازی شما'),
+                              title: const Text('سفارش های شما'),
                             ),
                             const Divider(
                               color: Colors.grey,

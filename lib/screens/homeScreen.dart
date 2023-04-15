@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:game_hacks_chat/bloc/homeBloc/homeBloc.dart';
@@ -98,50 +99,157 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-              SliverToBoxAdapter(
-                child: SizedBox(
-                  height: 170,
-                  width: double.infinity,
-                  child: Stack(
-                    children: [
-                      PageView.builder(
-                        itemCount: 10,
-                        controller: _bannerPageController,
-                        itemBuilder: (context, index) {
-                          return Container(
-                            decoration: BoxDecoration(
-                              color: Colors.grey,
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            margin: const EdgeInsets.only(
-                              right: 10,
-                            ),
-                          );
-                        },
-                      ),
-                      Positioned(
-                        bottom: 4,
-                        left: 0,
-                        right: 0,
-                        child: Center(
-                          child: SmoothPageIndicator(
-                            controller: _bannerPageController,
-                            count: 10,
-                            effect: const ScrollingDotsEffect(
-                              fixedCenter: true,
-                              activeDotColor: Colors.black,
-                              dotColor: Colors.white,
-                              dotHeight: 12,
-                              dotWidth: 12,
-                              spacing: 10,
+              if (state is HomeResponseState) ...{
+                state.getAllBanner.fold((l) {
+                  return SliverToBoxAdapter(
+                    child: Text(
+                      l,
+                      style: const TextStyle(fontSize: 18),
+                    ),
+                  );
+                }, (r) {
+                  return r.isNotEmpty
+                      ? SliverToBoxAdapter(
+                          child: SizedBox(
+                            height: 170,
+                            width: double.infinity,
+                            child: Stack(
+                              children: [
+                                PageView.builder(
+                                  itemCount: r.length,
+                                  controller: _bannerPageController,
+                                  itemBuilder: (context, index) {
+                                    return Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.black12,
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      margin: const EdgeInsets.only(
+                                        right: 10,
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          CachedNetworkImage(
+                                            imageUrl: r[index].image,
+                                            placeholder: (context, url) {
+                                              return SizedBox(
+                                                height: double.infinity,
+                                                width: 140,
+                                                child: Center(
+                                                  child: LoadingAnimationWidget
+                                                      .fourRotatingDots(
+                                                    color: GenerallColor
+                                                        .appBarBackGroundColor,
+                                                    size: 20,
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                            errorWidget: (context, url, error) {
+                                              return const SizedBox(
+                                                height: double.infinity,
+                                                width: 140,
+                                                child: Center(
+                                                  child:
+                                                      Text('خطای بارگذاری عکس'),
+                                                ),
+                                              );
+                                            },
+                                            imageBuilder:
+                                                (context, imageProvider) {
+                                              return SizedBox(
+                                                height: double.infinity,
+                                                width: 140,
+                                                child: Image(
+                                                  image: imageProvider,
+                                                  fit: BoxFit.contain,
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                          Expanded(
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              children: [
+                                                Text(
+                                                  r[index].title,
+                                                  style: const TextStyle(
+                                                      fontSize: 16,
+                                                      fontFamily: 'vazirm'),
+                                                ),
+                                                const SizedBox(
+                                                  height: 15,
+                                                ),
+                                                Visibility(
+                                                  visible:
+                                                      r[index].price.isNotEmpty,
+                                                  child: Text(
+                                                    'قیمت : ${r[index].price}',
+                                                    style: const TextStyle(
+                                                      fontSize: 16,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                    ),
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  height: 3,
+                                                ),
+                                                Visibility(
+                                                  visible: r[index]
+                                                      .discountPrice
+                                                      .isNotEmpty,
+                                                  child: Text(
+                                                    'قیمت با تخفیف : ${r[index].discountPrice}',
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: const TextStyle(
+                                                      fontSize: 16,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                ),
+                                Visibility(
+                                  visible: r.length > 1,
+                                  child: Positioned(
+                                    bottom: 4,
+                                    left: 0,
+                                    right: 0,
+                                    child: Center(
+                                      child: SmoothPageIndicator(
+                                        controller: _bannerPageController,
+                                        count: r.length,
+                                        effect: const ScrollingDotsEffect(
+                                          fixedCenter: true,
+                                          activeDotColor: Colors.black,
+                                          dotColor: Colors.white,
+                                          dotHeight: 12,
+                                          dotWidth: 12,
+                                          spacing: 10,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              ],
                             ),
                           ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
+                        )
+                      : const SliverToBoxAdapter(
+                          child: Spacer(),
+                        );
+                }),
+              },
               if (state is HomeResponseState) ...{
                 state.getAllCategory.fold((l) {
                   return Text(
