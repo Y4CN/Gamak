@@ -7,6 +7,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:game_hacks_chat/constant/generallColor.dart';
 import 'package:game_hacks_chat/data/model/gameProductModel.dart';
 import 'package:game_hacks_chat/screens/gameScreen.dart';
+import 'package:game_hacks_chat/screens/homeScreen.dart';
 import 'package:game_hacks_chat/screens/trickListScreen.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:page_transition/page_transition.dart';
@@ -109,7 +110,7 @@ class singleItemGame extends StatelessWidget {
                     height: 6,
                   ),
                   Text(
-                    'Category Game',
+                    gameProductModel.categoryModel.title,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       fontSize: 12,

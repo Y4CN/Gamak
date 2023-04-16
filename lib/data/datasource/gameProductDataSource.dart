@@ -4,18 +4,20 @@ import 'package:game_hacks_chat/locator.dart';
 
 import '../../utilities/errorHandler.dart';
 
-abstract class IGameProductDataSource{
+abstract class IGameProductDataSource {
   Future<List<GameProductModel>> getAllgames();
 }
 
-
-
-class GameProductDataSource extends IGameProductDataSource{
+class GameProductDataSource extends IGameProductDataSource {
   final Dio _dio = locator.get();
   @override
-  Future<List<GameProductModel>> getAllgames() async{
-       try {
-      var response = await _dio.get('collections/games_product/records');
+  Future<List<GameProductModel>> getAllgames() async {
+    try {
+      Map<String, dynamic> qExpanded = {'expand': 'category_id'};
+      var response = await _dio.get(
+        'collections/games_product/records',
+        queryParameters: qExpanded,
+      );
       return response.data['items']
           .map<GameProductModel>((e) => GameProductModel.fromJson(e))
           .toList();
@@ -25,5 +27,4 @@ class GameProductDataSource extends IGameProductDataSource{
       throw ErrorHandler(0, 'unknown erorr');
     }
   }
-
 }

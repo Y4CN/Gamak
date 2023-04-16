@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:game_hacks_chat/constant/generallColor.dart';
 import 'package:game_hacks_chat/data/model/bannerModel.dart';
@@ -18,11 +19,11 @@ class _BannerDetailsScreenState extends State<BannerDetailsScreen> {
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          const SliverAppBar(
+          SliverAppBar(
             toolbarHeight: 100,
             backgroundColor: GenerallColor.appBarBackGroundColor,
             centerTitle: true,
-            title: Text(
+            title: const Text(
               'جزئیات',
               style: TextStyle(
                 fontSize: 20,
@@ -31,6 +32,21 @@ class _BannerDetailsScreenState extends State<BannerDetailsScreen> {
               ),
             ),
             automaticallyImplyLeading: false,
+            actions: [
+              IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: const Icon(
+                  CupertinoIcons.forward,
+                  size: 25,
+                  color: Colors.white,
+                ),
+              ),
+              const SizedBox(
+                width: 5,
+              ),
+            ],
           ),
           const SliverPadding(
             padding: EdgeInsets.only(top: 15),
