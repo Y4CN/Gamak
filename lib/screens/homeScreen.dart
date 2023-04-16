@@ -312,45 +312,102 @@ class _HomeScreenState extends State<HomeScreen> {
                   );
                 }),
               },
-              SliverToBoxAdapter(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Padding(
-                      padding: EdgeInsets.only(right: 20, bottom: 10),
+              if (state is HomeResponseState) ...{
+                state.popularGame.fold((l) {
+                  return SliverToBoxAdapter(
+                    child: Center(
                       child: Text(
-                        'محبوب ها',
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: Colors.black,
-                          fontFamily: 'vazirm',
-                          fontWeight: FontWeight.w600,
+                        l,
+                        style: const TextStyle(fontSize: 18),
+                      ),
+                    ),
+                  );
+                }, (r) {
+                  return SliverToBoxAdapter(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.only(right: 20, bottom: 10),
+                          child: Text(
+                            'محبوب ها',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.black,
+                              fontFamily: 'vazirm',
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
                         ),
-                      ),
+                        SizedBox(
+                          height: 180,
+                          width: double.infinity,
+                          child: ListView.builder(
+                            itemCount: r.length,
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+                              return CachedNetworkImage(
+                                imageUrl: r[index].imaheBanner,
+                                imageBuilder: (context, imageProvider) {
+                                  return Container(
+                                    margin: EdgeInsets.only(
+                                      right: index == 0 ? 25 : 15,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      image: DecorationImage(
+                                        image: imageProvider,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                    width: 330,
+                                  );
+                                },
+                                placeholder: (context, url) {
+                                  return Container(
+                                    margin: EdgeInsets.only(
+                                      right: index == 0 ? 25 : 15,
+                                    ),
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    width: 330,
+                                    child: LoadingAnimationWidget.fallingDot(
+                                      color:
+                                          GenerallColor.appBarBackGroundColor,
+                                      size: 26,
+                                    ),
+                                  );
+                                },
+                                errorWidget: (context, url, error) {
+                                  return Container(
+                                    margin: EdgeInsets.only(
+                                      right: index == 0 ? 25 : 15,
+                                    ),
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    width: 330,
+                                    child: const Text(
+                                      'مشکل در بارگذاری عکس',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontFamily: 'vazirm',
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                          ),
+                        ),
+                      ],
                     ),
-                    SizedBox(
-                      height: 180,
-                      width: double.infinity,
-                      child: ListView.builder(
-                        itemCount: 10,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index) {
-                          return Container(
-                            margin: EdgeInsets.only(
-                              right: index == 0 ? 25 : 15,
-                            ),
-                            decoration: BoxDecoration(
-                              color: Colors.green,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            width: 330,
-                          );
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+                  );
+                })
+              },
               const SliverPadding(
                 padding: EdgeInsets.symmetric(vertical: 10),
               ),

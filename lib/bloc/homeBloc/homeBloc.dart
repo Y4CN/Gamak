@@ -19,7 +19,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       var userResponse = await _authRepository.readUser();
       var readBanner = await _bannerRepository.getAllBanner();
       var games = await _gameProductRepository.getAllgameProduct();
-      emit(HomeResponseState(getAllCategory, userResponse, readBanner, games));
+      var popularGames = await _gameProductRepository.getPopulargameProduct();
+      emit(HomeResponseState(getAllCategory, userResponse, readBanner, games,popularGames));
     });
   }
 }

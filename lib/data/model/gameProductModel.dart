@@ -8,15 +8,18 @@ class GameProductModel {
   int rate;
   CategoryModel categoryModel;
   String mode;
+  String imaheBanner;
 
-  GameProductModel(
-      {required this.categoryId,
-      required this.id,
-      required this.image,
-      required this.rate,
-      required this.name,
-      required this.categoryModel,
-      required this.mode});
+  GameProductModel({
+    required this.categoryId,
+    required this.id,
+    required this.image,
+    required this.rate,
+    required this.name,
+    required this.categoryModel,
+    required this.mode,
+    required this.imaheBanner,
+  });
 
   factory GameProductModel.fromJson(Map<String, dynamic> jsonData) {
     return GameProductModel(
@@ -28,6 +31,8 @@ class GameProductModel {
       name: jsonData['name'],
       categoryModel: CategoryModel.fromJson(jsonData['expand']['category_id']),
       mode: jsonData['mode'],
+      imaheBanner:
+          'http://127.0.0.1:8090/api/files/${jsonData['collectionId']}/${jsonData['id']}/${jsonData['banner_image']}',
     );
   }
 }

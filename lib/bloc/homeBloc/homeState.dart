@@ -17,5 +17,6 @@ class HomeResponseState extends HomeState{
   Either<String,UserModel> readUser;
   Either<String , List<BannerModel>> getAllBanner;
   Either<String , List<GameProductModel>> games;
-  HomeResponseState(this.getAllCategory,this.readUser,this.getAllBanner,this.games);
+  Either<String , List<GameProductModel>> popularGame;
+  HomeResponseState(this.getAllCategory,this.readUser,this.getAllBanner,this.games,this.popularGame);
 }
