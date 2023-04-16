@@ -8,6 +8,7 @@ import 'package:game_hacks_chat/constant/generallColor.dart';
 import 'package:game_hacks_chat/data/model/categoryModel.dart';
 import 'package:game_hacks_chat/screens/bannerDetailsScreen.dart';
 import 'package:game_hacks_chat/screens/categoryGameScreen.dart';
+import 'package:game_hacks_chat/screens/gameScreen.dart';
 import 'package:game_hacks_chat/widget/singleItem.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:page_transition/page_transition.dart';
@@ -349,18 +350,35 @@ class _HomeScreenState extends State<HomeScreen> {
                               return CachedNetworkImage(
                                 imageUrl: r[index].imaheBanner,
                                 imageBuilder: (context, imageProvider) {
-                                  return Container(
-                                    margin: EdgeInsets.only(
-                                      right: index == 0 ? 25 : 15,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      image: DecorationImage(
-                                        image: imageProvider,
-                                        fit: BoxFit.cover,
+                                  return GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        PageTransition(
+                                          child: GameScreen(gameProductModel: r[index],),
+                                          type: PageTransitionType.fade,
+                                          duration:
+                                              const Duration(milliseconds: 200),
+                                          // isIos: true,
+                                          reverseDuration:
+                                              const Duration(milliseconds: 200),
+                                        ),
+                                      );
+                                    },
+                                    child: Container(
+                                      margin: EdgeInsets.only(
+                                        right: index == 0 ? 25 : 15,
+                                        left: index == r.length-1 ? 10 :0
                                       ),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        image: DecorationImage(
+                                          image: imageProvider,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                      width: 330,
                                     ),
-                                    width: 330,
                                   );
                                 },
                                 placeholder: (context, url) {
@@ -491,6 +509,7 @@ class categoryItem extends StatelessWidget {
             return Padding(
               padding: EdgeInsets.only(
                 right: index == 0 ? 20 : 15,
+                left: index == categoryModel.length-1 ? 10 :0
               ),
               child: Column(
                 children: [

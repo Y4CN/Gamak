@@ -1,12 +1,17 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:game_hacks_chat/constant/generallColor.dart';
+import 'package:game_hacks_chat/data/model/gameProductModel.dart';
 import 'package:game_hacks_chat/screens/trickListScreen.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:page_transition/page_transition.dart';
 
 class GameScreen extends StatefulWidget {
-  const GameScreen({super.key});
+  GameScreen({super.key, required this.gameProductModel});
+  GameProductModel gameProductModel;
 
   @override
   State<GameScreen> createState() => _GameScreenState();
@@ -72,9 +77,33 @@ class _GameScreenState extends State<GameScreen> {
                     background: Stack(
                       fit: StackFit.expand,
                       children: [
-                        Image.asset(
-                          'assets/images/test2.jpg',
-                          fit: BoxFit.cover,
+                        CachedNetworkImage(
+                          imageUrl: widget.gameProductModel.imaheBanner,
+                          imageBuilder: (context, imageProvider) {
+                            return Image(
+                              image: imageProvider,
+                              fit: BoxFit.cover,
+                            );
+                          },
+                          placeholder: (context, url) {
+                            return Center(
+                              child: LoadingAnimationWidget.fourRotatingDots(
+                                color: GenerallColor.appBarBackGroundColor,
+                                size: 30,
+                              ),
+                            );
+                          },
+                          errorWidget: (context, url, error) {
+                            return const Center(
+                              child: Text(
+                                'مشکل در بارگذاری عکس',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontFamily: 'vazirm',
+                                ),
+                              ),
+                            );
+                          },
                         ),
                         const Positioned.fill(
                           child: DecoratedBox(
@@ -104,29 +133,88 @@ class _GameScreenState extends State<GameScreen> {
                         const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
                     child: Row(
                       children: [
-                        const CircleAvatar(
-                          minRadius: 35,
-                        ),
+                        CachedNetworkImage(
+                            imageUrl: widget.gameProductModel.image,
+                            imageBuilder: (context, imageProvider) {
+                              return Container(
+                                height: 75,
+                                width: 75,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: imageProvider,
+                                      fit: BoxFit.contain),
+                                  shape: BoxShape.circle,
+                                ),
+                              );
+                            },
+                            placeholder: (context, url) {
+                              return Container(
+                                height: 75,
+                                width: 75,
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                ),
+                                alignment: Alignment.center,
+                                child: LoadingAnimationWidget.fourRotatingDots(
+                                  color: GenerallColor.appBarBackGroundColor,
+                                  size: 20,
+                                ),
+                              );
+                            },
+                            errorWidget: (context, url, error) {
+                              return Container(
+                                height: 75,
+                                width: 75,
+                                decoration: const BoxDecoration(
+                                  shape: BoxShape.circle,
+                                ),
+                                alignment: Alignment.center,
+                                child: const Text(
+                                  'مشکل در بارگذاری عکس',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontFamily: 'vazirm',
+                                  ),
+                                ),
+                              );
+                            }),
                         const SizedBox(
-                          width: 6,
+                          width: 10,
                         ),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text(
-                                'Name Game',
-                                style: TextStyle(
-                                    fontSize: 16, fontFamily: 'robotom'
+                              Text(
+                                widget.gameProductModel.name,
+                                style: const TextStyle(
+                                    fontSize: 16, fontFamily: 'vazirm'
                                     // fontWeight: FontWeight.w600,
                                     ),
                               ),
                               const SizedBox(height: 5),
-                              Icon(
-                                CupertinoIcons.star,
-                                size: 20,
-                                color: Colors.yellow.shade600,
-                              )
+                              RatingBar(
+                                direction: Axis.horizontal,
+                                glow: false,
+                                ignoreGestures: true,
+                                itemCount: 5,
+                                itemSize: 18,
+                                initialRating:
+                                    widget.gameProductModel.rate.toDouble(),
+                                maxRating: 5,
+                                updateOnDrag: false,
+                                ratingWidget: RatingWidget(
+                                    full: Icon(
+                                      CupertinoIcons.star_fill,
+                                      color: Colors.yellow.shade800,
+                                    ),
+                                    half: const SizedBox(),
+                                    empty: Icon(
+                                      CupertinoIcons.star,
+                                      color: Colors.grey.shade500,
+                                    )),
+                                onRatingUpdate: (value) {},
+                              ),
                             ],
                           ),
                         ),

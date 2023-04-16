@@ -23,7 +23,9 @@ class singleItemGame extends StatelessWidget {
         Navigator.push(
           context,
           PageTransition(
-            child: const GameScreen(),
+            child: GameScreen(
+              gameProductModel: gameProductModel,
+            ),
             type: PageTransitionType.fade,
             duration: const Duration(milliseconds: 200),
             // isIos: true,
