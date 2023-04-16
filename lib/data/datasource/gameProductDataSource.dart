@@ -13,7 +13,10 @@ class GameProductDataSource extends IGameProductDataSource {
   @override
   Future<List<GameProductModel>> getAllgames() async {
     try {
-      Map<String, dynamic> qExpanded = {'expand': 'category_id'};
+      Map<String, dynamic> qExpanded = {
+        'expand': 'category_id',
+        'sort': '-updated'
+      };
       var response = await _dio.get(
         'collections/games_product/records',
         queryParameters: qExpanded,

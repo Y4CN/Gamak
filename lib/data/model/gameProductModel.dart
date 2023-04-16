@@ -7,15 +7,16 @@ class GameProductModel {
   String name;
   int rate;
   CategoryModel categoryModel;
+  String mode;
 
-  GameProductModel({
-    required this.categoryId,
-    required this.id,
-    required this.image,
-    required this.rate,
-    required this.name,
-    required this.categoryModel
-  });
+  GameProductModel(
+      {required this.categoryId,
+      required this.id,
+      required this.image,
+      required this.rate,
+      required this.name,
+      required this.categoryModel,
+      required this.mode});
 
   factory GameProductModel.fromJson(Map<String, dynamic> jsonData) {
     return GameProductModel(
@@ -25,7 +26,8 @@ class GameProductModel {
           'http://127.0.0.1:8090/api/files/${jsonData['collectionId']}/${jsonData['id']}/${jsonData['image']}',
       rate: jsonData['rate'],
       name: jsonData['name'],
-      categoryModel: CategoryModel.fromJson(jsonData['expand']['category_id'])
+      categoryModel: CategoryModel.fromJson(jsonData['expand']['category_id']),
+      mode: jsonData['mode'],
     );
   }
 }
