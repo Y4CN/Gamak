@@ -1,9 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:game_hacks_chat/constant/generallColor.dart';
 import 'package:game_hacks_chat/data/model/bannerModel.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class BannerDetailsScreen extends StatefulWidget {
   BannerDetailsScreen({super.key, required this.bannerModel});
@@ -14,6 +16,14 @@ class BannerDetailsScreen extends StatefulWidget {
 }
 
 class _BannerDetailsScreenState extends State<BannerDetailsScreen> {
+  late PageController _pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -118,7 +128,61 @@ class _BannerDetailsScreenState extends State<BannerDetailsScreen> {
                 ],
               ),
             ),
-          )
+          ),
+          const SliverToBoxAdapter(
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                vertical: 15,
+                horizontal: 20,
+              ),
+              child: ExpandableText(
+                'adadadadadsadsajdajdjsajdjffffffkfkkfkfkfkfkfkfkfkfkfadadadadadadaadadadadadandadajdjajdajdjadjajdjadjajdjadjajdajdjajdajdjadjajdjadjajdjadjajdajdjajdajdjajdajdjajdajdjajdjajdjajdjsajdjsajdakfkskfdskfkskdfkskfsllaldaldloqoeoqeoqoewieiweiwiewepwpepqpeqpepqprpprepwprpwr[er[w[[ew]rw][rwe]r]w]r]ewt[wtp]',
+                expandText: 'بیشتر',
+                maxLines: 4,
+                style: TextStyle(
+                  fontSize: 16,
+                ),
+                collapseText: 'کم تر',
+              ),
+            ),
+          ),
+          SliverPadding(
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            sliver: SliverToBoxAdapter(
+              child: SizedBox(
+                height: 200,
+                width: double.infinity,
+                child: PageView.builder(
+                  controller: _pageController,
+                  scrollDirection: Axis.horizontal,
+                  itemCount: 3,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 30),
+                      width: 200,
+                      decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(12)),
+                    );
+                  },
+                ),
+              ),
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: Center(
+              child: SmoothPageIndicator(
+                controller: _pageController,
+                count: 3,
+                effect: const SwapEffect(
+                    dotColor: Colors.black12,
+                    activeDotColor: Colors.black,
+                    dotHeight: 13,
+                    dotWidth: 13,
+                    type: SwapType.zRotation),
+              ),
+            ),
+          ),
         ],
       ),
     );
