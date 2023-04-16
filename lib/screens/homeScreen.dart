@@ -6,6 +6,7 @@ import 'package:game_hacks_chat/bloc/homeBloc/homeEvent.dart';
 import 'package:game_hacks_chat/bloc/homeBloc/homeState.dart';
 import 'package:game_hacks_chat/constant/generallColor.dart';
 import 'package:game_hacks_chat/data/model/categoryModel.dart';
+import 'package:game_hacks_chat/screens/bannerDetailsScreen.dart';
 import 'package:game_hacks_chat/screens/categoryGameScreen.dart';
 import 'package:game_hacks_chat/widget/singleItem.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -135,106 +136,127 @@ class _HomeScreenState extends State<HomeScreen> {
                                       itemCount: r.length,
                                       controller: _bannerPageController,
                                       itemBuilder: (context, index) {
-                                        return Container(
-                                          decoration: BoxDecoration(
-                                            color: Colors.black12,
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                          ),
-                                          margin: const EdgeInsets.only(
-                                            right: 10,
-                                          ),
-                                          child: Row(
-                                            children: [
-                                              CachedNetworkImage(
-                                                imageUrl: r[index].image,
-                                                placeholder: (context, url) {
-                                                  return SizedBox(
-                                                    height: double.infinity,
-                                                    width: 140,
-                                                    child: Center(
-                                                      child:
-                                                          LoadingAnimationWidget
-                                                              .fourRotatingDots(
-                                                        color: GenerallColor
-                                                            .appBarBackGroundColor,
-                                                        size: 20,
-                                                      ),
-                                                    ),
-                                                  );
-                                                },
-                                                errorWidget:
-                                                    (context, url, error) {
-                                                  return const SizedBox(
-                                                    height: double.infinity,
-                                                    width: 140,
-                                                    child: Center(
-                                                      child: Text(
-                                                          'خطای بارگذاری عکس'),
-                                                    ),
-                                                  );
-                                                },
-                                                imageBuilder:
-                                                    (context, imageProvider) {
-                                                  return SizedBox(
-                                                    height: double.infinity,
-                                                    width: 140,
-                                                    child: Image(
-                                                      image: imageProvider,
-                                                      fit: BoxFit.contain,
-                                                    ),
-                                                  );
-                                                },
+                                        return GestureDetector(
+                                          onTap: () {
+                                            Navigator.push(
+                                              context,
+                                              PageTransition(
+                                                child: BannerDetailsScreen(
+                                                  bannerModel: r[index],
+                                                ),
+                                                type: PageTransitionType.fade,
+                                                duration: const Duration(
+                                                    milliseconds: 200),
                                               ),
-                                              Expanded(
-                                                child: Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  children: [
-                                                    Text(
-                                                      r[index].title,
-                                                      style: const TextStyle(
-                                                          fontSize: 16,
-                                                          fontFamily: 'vazirm'),
-                                                    ),
-                                                    const SizedBox(
-                                                      height: 15,
-                                                    ),
-                                                    Visibility(
-                                                      visible: r[index]
-                                                          .price
-                                                          .isNotEmpty,
-                                                      child: Text(
-                                                        'قیمت : ${r[index].price}',
+                                            );
+                                          },
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color: Colors.black12,
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                            ),
+                                            margin: const EdgeInsets.only(
+                                              right: 10,
+                                            ),
+                                            child: Row(
+                                              children: [
+                                                CachedNetworkImage(
+                                                  imageUrl: r[index].image,
+                                                  placeholder: (context, url) {
+                                                    return SizedBox(
+                                                      height: double.infinity,
+                                                      width: 140,
+                                                      child: Center(
+                                                        child:
+                                                            LoadingAnimationWidget
+                                                                .fourRotatingDots(
+                                                          color: GenerallColor
+                                                              .appBarBackGroundColor,
+                                                          size: 20,
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                  errorWidget:
+                                                      (context, url, error) {
+                                                    return const SizedBox(
+                                                      height: double.infinity,
+                                                      width: 140,
+                                                      child: Center(
+                                                        child: Text(
+                                                            'خطای بارگذاری عکس'),
+                                                      ),
+                                                    );
+                                                  },
+                                                  imageBuilder:
+                                                      (context, imageProvider) {
+                                                    return SizedBox(
+                                                      height: double.infinity,
+                                                      width: 140,
+                                                      child: Image(
+                                                        image: imageProvider,
+                                                        fit: BoxFit.contain,
+                                                      ),
+                                                    );
+                                                  },
+                                                ),
+                                                Expanded(
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .center,
+                                                    children: [
+                                                      Text(
+                                                        r[index].title,
                                                         style: const TextStyle(
-                                                          fontSize: 16,
+                                                            fontSize: 16,
+                                                            fontFamily:
+                                                                'vazirm'),
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 15,
+                                                      ),
+                                                      Visibility(
+                                                        visible: r[index]
+                                                            .price
+                                                            .isNotEmpty,
+                                                        child: Text(
+                                                          'قیمت : ${r[index].price}',
+                                                          style:
+                                                              const TextStyle(
+                                                            fontSize: 16,
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      const SizedBox(
+                                                        height: 3,
+                                                      ),
+                                                      Visibility(
+                                                        visible: r[index]
+                                                            .discountPrice
+                                                            .isNotEmpty,
+                                                        child: Text(
+                                                          'قیمت با تخفیف : ${r[index].discountPrice}',
                                                           overflow: TextOverflow
                                                               .ellipsis,
+                                                          style:
+                                                              const TextStyle(
+                                                            fontSize: 16,
+                                                          ),
                                                         ),
                                                       ),
-                                                    ),
-                                                    const SizedBox(
-                                                      height: 3,
-                                                    ),
-                                                    Visibility(
-                                                      visible: r[index]
-                                                          .discountPrice
-                                                          .isNotEmpty,
-                                                      child: Text(
-                                                        'قیمت با تخفیف : ${r[index].discountPrice}',
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
-                                                        style: const TextStyle(
-                                                          fontSize: 16,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
+                                                    ],
+                                                  ),
                                                 ),
-                                              ),
-                                            ],
+                                              ],
+                                            ),
                                           ),
                                         );
                                       },
