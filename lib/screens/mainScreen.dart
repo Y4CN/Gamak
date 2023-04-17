@@ -8,6 +8,7 @@ import 'package:game_hacks_chat/bloc/homeBloc/homeBloc.dart';
 import 'package:game_hacks_chat/bloc/mainBloc/mainBloc.dart';
 import 'package:game_hacks_chat/bloc/mainBloc/mainEvent.dart';
 import 'package:game_hacks_chat/bloc/mainBloc/mainState.dart';
+import 'package:game_hacks_chat/bloc/searchBloc/searchBloc.dart';
 import 'package:game_hacks_chat/constant/generallColor.dart';
 import 'package:game_hacks_chat/screens/homeScreen.dart';
 import 'package:game_hacks_chat/screens/profileScreen.dart';
@@ -33,7 +34,9 @@ class MainScreen extends StatelessWidget {
                         BlocProvider(
                             create: (context) => HomeBloc(),
                             child: const HomeScreen()),
-                        const SearchScreen(),
+                        BlocProvider(
+                            create: (context) => SearchBloc(),
+                            child:  SearchScreen()),
                         BlocProvider(
                           create: (context) => AuthBloc(),
                           child: const ProfileScreen(),
