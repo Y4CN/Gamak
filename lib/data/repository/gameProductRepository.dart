@@ -8,6 +8,7 @@ import '../../utilities/errorHandler.dart';
 abstract class IGameProductRepository{
   Future<Either<String,List<GameProductModel>>> getAllgameProduct();
   Future<Either<String,List<GameProductModel>>> getPopulargameProduct();
+  Future<Either<String,List<GameProductModel>>> getSearhGames(String txt);
 }
 
 
@@ -27,6 +28,16 @@ class GameProductRepository extends IGameProductRepository{
   Future<Either<String, List<GameProductModel>>> getPopulargameProduct() async {
      try {
       var response = await _gameProductDataSource.getPopulargames();
+      return Right(response);
+    } on ErrorHandler catch (e) {
+      throw Left(e.message ?? 'خطای ناشناخته');
+    }
+  }
+  
+  @override
+  Future<Either<String, List<GameProductModel>>> getSearhGames(String txt) async{
+     try {
+      var response = await _gameProductDataSource.getSearhGames(txt);
       return Right(response);
     } on ErrorHandler catch (e) {
       throw Left(e.message ?? 'خطای ناشناخته');
