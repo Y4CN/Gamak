@@ -4,7 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:game_hacks_chat/constant/generallColor.dart';
 import 'package:game_hacks_chat/data/model/bannerModel.dart';
+import 'package:game_hacks_chat/screens/sellItemScreen.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class BannerDetailsScreen extends StatefulWidget {
@@ -30,9 +32,9 @@ class _BannerDetailsScreenState extends State<BannerDetailsScreen> {
             toolbarHeight: 65,
             backgroundColor: GenerallColor.appBarBackGroundColor,
             centerTitle: true,
-            title: const Text(
-              'آیتم ها',
-              style: TextStyle(
+            title: Text(
+              widget.bannerModel.title,
+              style: const TextStyle(
                 fontSize: 20,
                 fontFamily: 'vazirm',
                 color: Colors.white,
@@ -68,52 +70,104 @@ class _BannerDetailsScreenState extends State<BannerDetailsScreen> {
               vertical: 4,
             ),
             sliver: SliverGrid(
-              delegate: SliverChildBuilderDelegate(
-                (context, index) {
-                  return Container(
-                    width: 10,
-                    height: 10,
+              delegate: SliverChildBuilderDelegate((context, index) {
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      PageTransition(
+                        child: SellItemScreen(bannerModel: widget.bannerModel),
+                        type: PageTransitionType.fade,
+                        duration: const Duration(milliseconds: 200),
+                      ),
+                    );
+                  },
+                  child: Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(
-                        color: Colors.black,
-                        width: .5,
-                      ),
+                      borderRadius: BorderRadius.circular(13),
                     ),
-                    foregroundDecoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      gradient: const LinearGradient(
-                        colors: [
-                          Colors.transparent,
-                          Colors.black,
-                        ],
-                        stops: [.15, 1],
-                        end: Alignment.bottomCenter,
-                        begin: Alignment.center,
-                      ),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        //TODO FIX HERE **************
-                        const Text(
-                          'Title',
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.black,
+                    // foregroundDecoration: BoxDecoration(
+                    //   borderRadius: BorderRadius.circular(13),
+                    //   gradient: const LinearGradient(
+                    //     colors: [
+                    //       Colors.black87,
+                    //       Colors.transparent,
+                    //     ],
+                    //     stops: [0.1, 0.9],
+                    //     end: Alignment.center,
+                    //     begin: Alignment.bottomCenter,
+                    //   ),
+                    // ),
+                    child: Column(children: [
+                      Expanded(
+                        flex: 2,
+                        child: Container(
+                          decoration: const BoxDecoration(
+                            borderRadius:
+                                BorderRadius.vertical(top: Radius.circular(16)),
+                            image: DecorationImage(
+                              image: AssetImage('assets/images/test2.jpg'),
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
-                        Row(
-                          children: [],
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                          decoration: const BoxDecoration(
+                            color: Colors.black12,
+                            borderRadius: BorderRadius.vertical(
+                              bottom: Radius.circular(16),
+                            ),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: const [
+                              Center(
+                                child: Text(
+                                  'اسم ایتم',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 18,
+                                    fontFamily: 'vazirm',
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Center(
+                                child: Text(
+                                  'قیمت : ۱۰۰۰۰۰',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ),
+                              Center(
+                                child: Text(
+                                  'قیمت با تخفیف : ۹۰۰۰۰',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                            ],
+                          ),
                         ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
+                      ),
+                    ]),
+                  ),
+                );
+              }, childCount: 10),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 crossAxisSpacing: 5,
@@ -121,7 +175,7 @@ class _BannerDetailsScreenState extends State<BannerDetailsScreen> {
                 childAspectRatio: .8,
               ),
             ),
-          )
+          ),
         ],
       ),
     );
