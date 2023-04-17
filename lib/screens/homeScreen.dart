@@ -202,58 +202,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     );
                                                   },
                                                 ),
+                                                const SizedBox(width: 10,),
                                                 Expanded(
-                                                  child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Text(
-                                                        r[index].title,
-                                                        style: const TextStyle(
-                                                            fontSize: 16,
-                                                            fontFamily:
-                                                                'vazirm'),
-                                                      ),
-                                                      const SizedBox(
-                                                        height: 15,
-                                                      ),
-                                                      Visibility(
-                                                        visible: r[index]
-                                                            .price
-                                                            .isNotEmpty,
-                                                        child: Text(
-                                                          'قیمت : ${r[index].price}',
-                                                          style:
-                                                              const TextStyle(
-                                                            fontSize: 16,
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .ellipsis,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      const SizedBox(
-                                                        height: 3,
-                                                      ),
-                                                      Visibility(
-                                                        visible: r[index]
-                                                            .discountPrice
-                                                            .isNotEmpty,
-                                                        child: Text(
-                                                          'قیمت با تخفیف : ${r[index].discountPrice}',
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
-                                                          style:
-                                                              const TextStyle(
-                                                            fontSize: 16,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
+                                                  child: Text(
+                                                    r[index].title,
+                                                    style: const TextStyle(
+                                                        fontSize: 16,
+                                                        fontFamily: 'vazirm'),
                                                   ),
                                                 ),
                                               ],
@@ -355,7 +310,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                       Navigator.push(
                                         context,
                                         PageTransition(
-                                          child: GameScreen(gameProductModel: r[index],),
+                                          child: GameScreen(
+                                            gameProductModel: r[index],
+                                          ),
                                           type: PageTransitionType.fade,
                                           duration:
                                               const Duration(milliseconds: 200),
@@ -367,9 +324,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                     },
                                     child: Container(
                                       margin: EdgeInsets.only(
-                                        right: index == 0 ? 25 : 15,
-                                        left: index == r.length-1 ? 10 :0
-                                      ),
+                                          right: index == 0 ? 25 : 15,
+                                          left: index == r.length - 1 ? 10 : 0),
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(10),
                                         image: DecorationImage(
@@ -508,9 +464,8 @@ class categoryItem extends StatelessWidget {
             int hexColor = int.parse(categoryColor, radix: 16);
             return Padding(
               padding: EdgeInsets.only(
-                right: index == 0 ? 20 : 15,
-                left: index == categoryModel.length-1 ? 10 :0
-              ),
+                  right: index == 0 ? 20 : 15,
+                  left: index == categoryModel.length - 1 ? 10 : 0),
               child: Column(
                 children: [
                   Container(

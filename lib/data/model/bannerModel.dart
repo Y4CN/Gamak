@@ -1,27 +1,21 @@
 class BannerModel {
   String collectionId;
-  String discountPrice;
   String id;
   String image;
-  String price;
   String title;
 
   BannerModel(
       {required this.collectionId,
-      required this.discountPrice,
       required this.id,
       required this.image,
-      required this.price,
       required this.title});
 
   factory BannerModel.fromJson(Map<String, dynamic> jsonData) {
     return BannerModel(
       collectionId: jsonData['collectionId'],
-      discountPrice: jsonData['discount_price'],
       id: jsonData['id'],
       image:
           'http://127.0.0.1:8090/api/files/${jsonData['collectionId']}/${jsonData['id']}/${jsonData['image']}',
-      price: jsonData['price'],
       title: jsonData['title'],
     );
   }
