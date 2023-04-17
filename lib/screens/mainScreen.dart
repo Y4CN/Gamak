@@ -35,8 +35,9 @@ class MainScreen extends StatelessWidget {
                             create: (context) => HomeBloc(),
                             child: const HomeScreen()),
                         BlocProvider(
-                            create: (context) => SearchBloc(),
-                            child:  SearchScreen()),
+                          create: (context) => SearchBloc(),
+                          child: const SearchScreen(),
+                        ),
                         BlocProvider(
                           create: (context) => AuthBloc(),
                           child: const ProfileScreen(),

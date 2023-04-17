@@ -48,17 +48,6 @@ class _SearchScreenState extends State<SearchScreen> {
                   _saerchController.clear();
                 },
                 decoration: InputDecoration(
-                  // suffixIcon: IconButton(
-                  //   onPressed: () {},
-                  //   icon: const Icon(
-                  //     CupertinoIcons.mic_fill,
-                  //     color: Colors.black,
-                  //   ),
-                  // ),
-                  // prefixIcon: const Icon(
-                  //   CupertinoIcons.search,
-                  //   color: Colors.black,
-                  // ),
                   prefixIcon: IconButton(
                     onPressed: () {
                       BlocProvider.of<SearchBloc>(context).add(
@@ -120,6 +109,24 @@ class _SearchScreenState extends State<SearchScreen> {
                       ),
                     );
                   }, (r) {
+                    if (r.isEmpty) {
+                      return const SliverToBoxAdapter(
+                        child: Center(
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 20),
+                            child: Text(
+                              'متاسفانه همچین بازی اکنون در برنامه نیست برای اضافه کردن به پشتیبانی پیام دهید',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontFamily: 'vazirm',
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    }
                     return SliverList(
                       delegate: SliverChildBuilderDelegate((context, index) {
                         return Padding(
