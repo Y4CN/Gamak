@@ -16,12 +16,9 @@ class BannerDetailsScreen extends StatefulWidget {
 }
 
 class _BannerDetailsScreenState extends State<BannerDetailsScreen> {
-  late PageController _pageController;
-
   @override
   void initState() {
     super.initState();
-    _pageController = PageController();
   }
 
   @override
@@ -30,11 +27,11 @@ class _BannerDetailsScreenState extends State<BannerDetailsScreen> {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            toolbarHeight: 100,
+            toolbarHeight: 65,
             backgroundColor: GenerallColor.appBarBackGroundColor,
             centerTitle: true,
             title: const Text(
-              'جزئیات',
+              'آیتم ها',
               style: TextStyle(
                 fontSize: 20,
                 fontFamily: 'vazirm',
@@ -57,132 +54,74 @@ class _BannerDetailsScreenState extends State<BannerDetailsScreen> {
                 width: 5,
               ),
             ],
-          ),
-          const SliverPadding(
-            padding: EdgeInsets.only(top: 15),
-          ),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: Row(
-                children: [
-                  CachedNetworkImage(
-                    imageUrl: widget.bannerModel.image,
-                    imageBuilder: (context, imageProvider) {
-                      return Container(
-                        height: 60,
-                        width: 60,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: imageProvider,
-                            fit: BoxFit.contain,
-                          ),
-                          border: Border.all(
-                            color: Colors.black45,
-                            width: .3,
-                          ),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      );
-                    },
-                    placeholder: (context, url) {
-                      return Container(
-                        height: 60,
-                        width: 60,
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.black45,
-                            width: .3,
-                          ),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        child: LoadingAnimationWidget.fourRotatingDots(
-                          color: GenerallColor.appBarBackGroundColor,
-                          size: 20,
-                        ),
-                      );
-                    },
-                    errorWidget: (context, url, error) {
-                      return Container(
-                          height: 60,
-                          width: 60,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Colors.black45,
-                              width: .3,
-                            ),
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          child: const Text('خطای بارگذاری'));
-                    },
-                  ),
-                  const SizedBox(
-                    width: 15,
-                  ),
-                  Text(
-                    widget.bannerModel.title,
-                    style: const TextStyle(fontSize: 16),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          const SliverToBoxAdapter(
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                vertical: 15,
-                horizontal: 20,
-              ),
-              child: ExpandableText(
-                'adadadadadsadsajdajdjsajdjffffffkfkkfkfkfkfkfkfkfkfkfadadadadadadaadadadadadandadajdjajdajdjadjajdjadjajdjadjajdajdjajdajdjadjajdjadjajdjadjajdajdjajdajdjajdajdjajdajdjajdjajdjajdjsajdjsajdakfkskfdskfkskdfkskfsllaldaldloqoeoqeoqoewieiweiwiewepwpepqpeqpepqprpprepwprpwr[er[w[[ew]rw][rwe]r]w]r]ewt[wtp]',
-                expandText: 'بیشتر',
-                maxLines: 4,
-                style: TextStyle(
-                  fontSize: 16,
-                ),
-                collapseText: 'کم تر',
+            leading: IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                CupertinoIcons.search,
+                color: Colors.white,
               ),
             ),
           ),
           SliverPadding(
-            padding: const EdgeInsets.symmetric(vertical: 10),
-            sliver: SliverToBoxAdapter(
-              child: SizedBox(
-                height: 200,
-                width: double.infinity,
-                child: PageView.builder(
-                  controller: _pageController,
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 3,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 30),
-                      width: 200,
-                      decoration: BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.circular(12)),
-                    );
-                  },
-                ),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 5,
+              vertical: 4,
+            ),
+            sliver: SliverGrid(
+              delegate: SliverChildBuilderDelegate(
+                (context, index) {
+                  return Container(
+                    width: 10,
+                    height: 10,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                        color: Colors.black,
+                        width: .5,
+                      ),
+                    ),
+                    foregroundDecoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      gradient: const LinearGradient(
+                        colors: [
+                          Colors.transparent,
+                          Colors.black,
+                        ],
+                        stops: [.15, 1],
+                        end: Alignment.bottomCenter,
+                        begin: Alignment.center,
+                      ),
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        //TODO FIX HERE **************
+                        const Text(
+                          'Title',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.black,
+                          ),
+                        ),
+                        Row(
+                          children: [],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 5,
+                mainAxisSpacing: 5,
+                childAspectRatio: .8,
               ),
             ),
-          ),
-          SliverToBoxAdapter(
-            child: Center(
-              child: SmoothPageIndicator(
-                controller: _pageController,
-                count: 3,
-                effect: const SwapEffect(
-                    dotColor: Colors.black12,
-                    activeDotColor: Colors.black,
-                    dotHeight: 13,
-                    dotWidth: 13,
-                    type: SwapType.zRotation),
-              ),
-            ),
-          ),
+          )
         ],
       ),
     );
