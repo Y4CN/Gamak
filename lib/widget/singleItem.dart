@@ -3,7 +3,9 @@ import 'dart:ffi';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:game_hacks_chat/bloc/gameDetailBloc/gameDetailBloc.dart';
 import 'package:game_hacks_chat/constant/generallColor.dart';
 import 'package:game_hacks_chat/data/model/gameProductModel.dart';
 import 'package:game_hacks_chat/screens/gameScreen.dart';
@@ -23,8 +25,11 @@ class singleItemGame extends StatelessWidget {
         Navigator.push(
           context,
           PageTransition(
-            child: GameScreen(
-              gameProductModel: gameProductModel,
+            child: BlocProvider(
+              create: (context) => GameDetailsBloc(),
+              child: GameScreen(
+                gameProductModel: gameProductModel,
+              ),
             ),
             type: PageTransitionType.fade,
             duration: const Duration(milliseconds: 200),

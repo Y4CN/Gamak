@@ -2,10 +2,12 @@ import 'package:dio/dio.dart';
 import 'package:game_hacks_chat/data/datasource/authDataSourca.dart';
 import 'package:game_hacks_chat/data/datasource/banner_dataSource.dart';
 import 'package:game_hacks_chat/data/datasource/categoryDataSource.dart';
+import 'package:game_hacks_chat/data/datasource/gameDetailsDataSource.dart';
 import 'package:game_hacks_chat/data/datasource/gameProductDataSource.dart';
 import 'package:game_hacks_chat/data/repository/authRepository.dart';
 import 'package:game_hacks_chat/data/repository/bannerRepository.dart';
 import 'package:game_hacks_chat/data/repository/categoryRepository.dart';
+import 'package:game_hacks_chat/data/repository/gameDetailsRepository.dart';
 import 'package:game_hacks_chat/data/repository/gameProductRepository.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -25,10 +27,12 @@ Future<void> initGet_it() async {
   locator.registerSingleton<IAuthDataSource>(AuthDataSource());
   locator.registerSingleton<IBannerDataSource>(BannerDataSource());
   locator.registerSingleton<IGameProductDataSource>(GameProductDataSource());
+  locator.registerSingleton<IGameDetailsDataSource>(GameDetailsDataSource());
 
   //repository
   locator.registerSingleton<ICategoryRepository>(CategoryRepository());
   locator.registerSingleton<IAuthRepository>(AuthRepository());
   locator.registerSingleton<IBannerRepository>(BannerRepository());
   locator.registerSingleton<IGameProductRepository>(GameProductRepository());
+  locator.registerSingleton<IGameDetailsrepository>(GameDetailsRepository());
 }
