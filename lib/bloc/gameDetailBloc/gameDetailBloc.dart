@@ -10,7 +10,8 @@ class GameDetailsBloc extends Bloc<GameDetailsEvent, GameDetailsState> {
     on<GameDetailsRequestEvent>((event, emit) async {
       emit(GameDetailsLoadingState());
       var des = await _gameDetailsrepository.getDescription(event.gameeId);
-      emit(GameDetailsResponseState(des));
+      var image = await _gameDetailsrepository.getImageGame(event.gameeId);
+      emit(GameDetailsResponseState(des,image));
     });
   }
 }

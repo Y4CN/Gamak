@@ -41,7 +41,7 @@ class GameDetailsDataSource extends IGameDetailsDataSource {
         queryParameters: q,
       );
       return response.data['items']
-          .map((e) => ImageGameModel.fromJson(e))
+          .map<ImageGameModel>((e) => ImageGameModel.fromJson(e))
           .toList();
     } on DioError catch (ex) {
       throw ErrorHandler(ex.response?.statusCode, ex.response?.data['message']);

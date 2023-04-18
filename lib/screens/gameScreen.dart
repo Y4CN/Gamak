@@ -366,31 +366,85 @@ class _GameScreenState extends State<GameScreen> {
                   //     ),
                   //   ),
                   // ),
-                  SliverPadding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    sliver: SliverGrid(
-                      delegate: SliverChildBuilderDelegate(
-                        (context, index) {
-                          return Container(
-                            width: 40,
-                            height: 40,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12),
-                              color: Colors.amber,
-                            ),
-                          );
-                        },
-                        childCount: 10,
-                      ),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        mainAxisSpacing: 12,
-                        crossAxisSpacing: 12,
-                        childAspectRatio: .9,
-                      ),
-                    ),
-                  ),
+                  if (state is GameDetailsResponseState) ...{
+                    state.images.fold((l) {
+                      return SliverToBoxAdapter(
+                        child: Center(
+                          child: Text(l,
+                              style: const TextStyle(
+                                  fontSize: 18, fontFamily: 'vazirm')),
+                        ),
+                      );
+                    }, (r) {
+                      return SliverPadding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        sliver: SliverGrid(
+                          delegate: SliverChildBuilderDelegate(
+                            (context, index) {
+                              return CachedNetworkImage(
+                                imageUrl: r[index].image,
+                                imageBuilder: (context, imageProvider) {
+                                  return Container(
+                                    width: 40,
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(12),
+                                        image: DecorationImage(
+                                          image: imageProvider,
+                                          fit: BoxFit.scaleDown,
+                                        )),
+                                  );
+                                },
+                                placeholder: (context, url) {
+                                  return Container(
+                                    width: 40,
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      color: Colors.black12,
+                                    ),
+                                    alignment: Alignment.center,
+                                    child:
+                                        LoadingAnimationWidget.fourRotatingDots(
+                                      color:
+                                          GenerallColor.appBarBackGroundColor,
+                                      size: 26,
+                                    ),
+                                  );
+                                },
+                                errorWidget: (context, url, error) {
+                                  return Container(
+                                    width: 40,
+                                    height: 40,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      color: Colors.black12,
+                                    ),
+                                    alignment: Alignment.center,
+                                    child: const Text(
+                                      'مشکل در بارگذاری عکس',
+                                      style: TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                            childCount: r.length,
+                          ),
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 12,
+                            crossAxisSpacing: 12,
+                            childAspectRatio: .9,
+                          ),
+                        ),
+                      );
+                    }),
+                  },
                   const SliverPadding(
                     padding: EdgeInsets.only(
                       bottom: 120,
