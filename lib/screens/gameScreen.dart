@@ -296,19 +296,34 @@ class _GameScreenState extends State<GameScreen> {
                       ),
                     ),
                   ),
-                  const SliverToBoxAdapter(
-                    child: Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                      child: ExpandableText(
-                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
-                        expandText: 'بیش تر',
-                        collapseText: 'کم تر',
-                        maxLines: 3,
-                        style: TextStyle(fontSize: 15),
-                      ),
-                    ),
-                  ),
+                  if (state is GameDetailsResponseState) ...{
+                    state.decription.fold((l) {
+                      return SliverToBoxAdapter(
+                        child: Center(
+                          child: Text(
+                            l,
+                            style: const TextStyle(
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                      );
+                    }, (r) {
+                      return SliverToBoxAdapter(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 12, vertical: 10),
+                          child: ExpandableText(
+                            r.description,
+                            expandText: 'بیش تر',
+                            collapseText: 'کم تر',
+                            maxLines: 3,
+                            style: const TextStyle(fontSize: 15),
+                          ),
+                        ),
+                      );
+                    }),
+                  },
                   SliverToBoxAdapter(
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
