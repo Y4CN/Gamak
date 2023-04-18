@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:game_hacks_chat/bloc/bannerDetalsBloc/bannerDetailsBloc.dart';
 import 'package:game_hacks_chat/bloc/homeBloc/homeBloc.dart';
 import 'package:game_hacks_chat/bloc/homeBloc/homeEvent.dart';
 import 'package:game_hacks_chat/bloc/homeBloc/homeState.dart';
@@ -142,8 +143,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                             Navigator.push(
                                               context,
                                               PageTransition(
-                                                child: BannerDetailsScreen(
-                                                  bannerModel: r[index],
+                                                child: BlocProvider(
+                                                  create: (context) => BannerDetailsBloc(),
+                                                  child: BannerDetailsScreen(
+                                                    bannerModel: r[index],
+                                                  ),
                                                 ),
                                                 type: PageTransitionType.fade,
                                                 duration: const Duration(

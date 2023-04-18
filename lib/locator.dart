@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:game_hacks_chat/data/datasource/authDataSourca.dart';
-import 'package:game_hacks_chat/data/datasource/bannet_dataSource.dart';
+import 'package:game_hacks_chat/data/datasource/banner_dataSource.dart';
 import 'package:game_hacks_chat/data/datasource/categoryDataSource.dart';
 import 'package:game_hacks_chat/data/datasource/gameProductDataSource.dart';
 import 'package:game_hacks_chat/data/repository/authRepository.dart';
