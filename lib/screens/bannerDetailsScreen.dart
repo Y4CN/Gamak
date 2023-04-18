@@ -53,8 +53,7 @@ class _BannerDetailsScreenState extends State<BannerDetailsScreen> {
             }, (r) {
               if (r.isEmpty) {
                 return const Center(
-                  child:
-                      Text('متاسفانه اکنون آیتمی برای این بازی موجود نیست'),
+                  child: Text('متاسفانه اکنون آیتمی برای این بازی موجود نیست'),
                 );
               } else {
                 return CustomScrollView(
@@ -121,16 +120,51 @@ class _BannerDetailsScreenState extends State<BannerDetailsScreen> {
                               child: Column(children: [
                                 Expanded(
                                   flex: 2,
-                                  child: Container(
-                                    decoration: const BoxDecoration(
-                                      borderRadius: BorderRadius.vertical(
-                                          top: Radius.circular(16)),
-                                      image: DecorationImage(
-                                        image: AssetImage(
-                                            'assets/images/test2.jpg'),
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
+                                  child: CachedNetworkImage(
+                                    imageUrl: r[index].image,
+                                    imageBuilder: (context, imageProvider) {
+                                      return Container(
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey.shade100,
+                                          borderRadius:
+                                              const BorderRadius.vertical(
+                                                  top: Radius.circular(16)),
+                                          image: DecorationImage(
+                                            image: imageProvider,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    placeholder: (context, url) {
+                                      return Container(
+                                        alignment: Alignment.center,
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey.shade100,
+                                          borderRadius:
+                                              const BorderRadius.vertical(
+                                                  top: Radius.circular(16)),
+                                        ),
+                                        child: LoadingAnimationWidget
+                                            .fourRotatingDots(
+                                                color: GenerallColor
+                                                    .appBarBackGroundColor,
+                                                size: 20),
+                                      );
+                                    },
+                                    errorWidget: (context, url, error) {
+                                      return Container(
+                                        alignment: Alignment.center,
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey.shade100,
+                                          borderRadius:
+                                              const BorderRadius.vertical(
+                                                  top: Radius.circular(16)),
+                                        ),
+                                        child:
+                                            const Text('خطا در بارگذاری عکس'),
+                                      );
+                                    },
                                   ),
                                 ),
                                 Expanded(
@@ -146,11 +180,11 @@ class _BannerDetailsScreenState extends State<BannerDetailsScreen> {
                                       mainAxisAlignment: MainAxisAlignment.end,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.stretch,
-                                      children: const [
+                                      children: [
                                         Center(
                                           child: Text(
-                                            'اسم ایتم',
-                                            style: TextStyle(
+                                            r[index].title,
+                                            style: const TextStyle(
                                               fontWeight: FontWeight.w600,
                                               fontSize: 18,
                                               fontFamily: 'vazirm',
@@ -158,13 +192,13 @@ class _BannerDetailsScreenState extends State<BannerDetailsScreen> {
                                             ),
                                           ),
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 5,
                                         ),
                                         Center(
                                           child: Text(
-                                            'قیمت : ۱۰۰۰۰۰',
-                                            style: TextStyle(
+                                            'قیمت : ${r[index].price}',
+                                            style: const TextStyle(
                                               fontSize: 14,
                                               color: Colors.black,
                                             ),
@@ -172,14 +206,14 @@ class _BannerDetailsScreenState extends State<BannerDetailsScreen> {
                                         ),
                                         Center(
                                           child: Text(
-                                            'قیمت با تخفیف : ۹۰۰۰۰',
-                                            style: TextStyle(
+                                            'قیمت با تخفیف : ${r[index].discountPrice}',
+                                            style: const TextStyle(
                                               fontSize: 14,
                                               color: Colors.black,
                                             ),
                                           ),
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 10,
                                         ),
                                       ],
@@ -189,7 +223,7 @@ class _BannerDetailsScreenState extends State<BannerDetailsScreen> {
                               ]),
                             ),
                           );
-                        }, childCount: 10),
+                        }, childCount: r.length),
                         gridDelegate:
                             const SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,

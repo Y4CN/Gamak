@@ -32,7 +32,7 @@ class BannerDataSource extends IBannerDataSource {
     try {
       Map<String, dynamic> q = {
         'filter': 'banner_id="$bannerId"',
-        'filter': 'show="true"'
+        // 'filter': 'show="true"'
       };
       var response = await _dio.get(
         'collections/banner_details/records',
