@@ -3,6 +3,7 @@ import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:game_hacks_chat/constant/generallColor.dart';
+import 'package:game_hacks_chat/data/model/bannerDetalsModel.dart';
 import 'package:game_hacks_chat/data/model/bannerModel.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -11,8 +12,10 @@ class SellItemScreen extends StatefulWidget {
   SellItemScreen({
     super.key,
     required this.bannerModel,
+    required this.bannerDetailsModel,
   });
   BannerModel bannerModel;
+  BannerDetailsModel bannerDetailsModel;
 
   @override
   State<SellItemScreen> createState() => _SellItemScreenState();
@@ -70,7 +73,7 @@ class _SellItemScreenState extends State<SellItemScreen> {
               child: Row(
                 children: [
                   CachedNetworkImage(
-                    imageUrl: widget.bannerModel.image,
+                    imageUrl: widget.bannerDetailsModel.image,
                     imageBuilder: (context, imageProvider) {
                       return Container(
                         height: 60,
@@ -125,7 +128,7 @@ class _SellItemScreenState extends State<SellItemScreen> {
                     width: 15,
                   ),
                   Text(
-                    widget.bannerModel.title,
+                    widget.bannerDetailsModel.title,
                     style: const TextStyle(fontSize: 16),
                   ),
                 ],

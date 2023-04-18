@@ -107,7 +107,9 @@ class _BannerDetailsScreenState extends State<BannerDetailsScreen> {
                                 context,
                                 PageTransition(
                                   child: SellItemScreen(
-                                      bannerModel: widget.bannerModel),
+                                      bannerModel: widget.bannerModel,
+                                      bannerDetailsModel: r[index],
+                                      ),
                                   type: PageTransitionType.fade,
                                   duration: const Duration(milliseconds: 200),
                                 ),
