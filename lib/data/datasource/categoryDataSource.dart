@@ -32,6 +32,8 @@ class CategoryDataSource extends ICategoryDatasource {
     try {
       Map<String, dynamic> q = {
         'filter': 'category_id="$gameId"',
+        'expand': 'category_id',
+        'sort': '-updated'
       };
       var response = await _dio.get(
         'collections/games_product/records',

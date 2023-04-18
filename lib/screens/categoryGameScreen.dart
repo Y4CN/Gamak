@@ -1,110 +1,100 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:game_hacks_chat/bloc/categoryBloc/categoryBloc.dart';
+import 'package:game_hacks_chat/bloc/categoryBloc/categoryEvent.dart';
+import 'package:game_hacks_chat/bloc/categoryBloc/categoryState.dart';
 import 'package:game_hacks_chat/constant/generallColor.dart';
+import 'package:game_hacks_chat/data/model/categoryModel.dart';
+import 'package:game_hacks_chat/data/model/gameProductModel.dart';
+import 'package:game_hacks_chat/widget/singleItem.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
-class CategoryGameScreen extends StatelessWidget {
-  const CategoryGameScreen({super.key});
+class CategoryGameScreen extends StatefulWidget {
+  CategoryGameScreen({super.key, required this.categoryModel});
+  CategoryModel categoryModel;
+  @override
+  State<CategoryGameScreen> createState() => _CategoryGameScreenState();
+}
+
+class _CategoryGameScreenState extends State<CategoryGameScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    BlocProvider.of<CategoryBloc>(context)
+        .add(CategoryRequestEvent(widget.categoryModel.id));
+  }
 
   @override
   Widget build(BuildContext context) {
     return Directionality(
-      textDirection: TextDirection.ltr,
-      child: Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: const Icon(
-              CupertinoIcons.back,
-              size: 26,
-            ),
-          ),
-          surfaceTintColor: GenerallColor.primaryColor,
-          backgroundColor: GenerallColor.primaryColor,
-          automaticallyImplyLeading: false,
-          title: const Text(
-            'Name Category',
-            style: TextStyle(fontSize: 20),
-          ),
-          centerTitle: true,
-        ),
-        body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
-                childAspectRatio: .7,
-              ),
-              itemBuilder: (context, index) {
-                return Stack(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        image: const DecorationImage(
-                          image: AssetImage('assets/images/test2.jpg'),
-                          fit: BoxFit.cover,
-                        ),
-                        border: Border.all(
-                          color: Colors.grey,
-                          width: .3,
-                        ),
-                        borderRadius: BorderRadius.circular(13),
-                      ),
-                      foregroundDecoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(13),
-                        gradient: const LinearGradient(
-                          colors: [
-                            Colors.black87,
-                            Colors.transparent,
-                          ],
-                          stops: [0.1, 0.9],
-                          end: Alignment.center,
-                          begin: Alignment.bottomCenter,
-                        ),
-                      ),
-                    ),
-                    Positioned(
-                      bottom: 0,
-                      right: 0,
-                      left: 0,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: const [
-                          Text(
-                            'Name Game',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 18,
-                              color: Colors.white,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Text(
-                            'Seatm Rate : 10',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.white,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
-                );
+        textDirection: TextDirection.ltr,
+        child: Scaffold(
+          appBar: AppBar(
+            leading: IconButton(
+              onPressed: () {
+                Navigator.pop(context);
               },
+              icon: const Icon(
+                CupertinoIcons.back,
+                size: 26,
+              ),
             ),
+            surfaceTintColor: GenerallColor.primaryColor,
+            backgroundColor: GenerallColor.primaryColor,
+            automaticallyImplyLeading: false,
+            title: Text(
+              widget.categoryModel.title,
+              style: const TextStyle(fontSize: 20),
+            ),
+            centerTitle: true,
           ),
-        ),
-      ),
-    );
+          body: BlocBuilder<CategoryBloc, CategoryState>(
+            builder: (context, state) {
+              if (state is CategoryLoadingState) {
+                return Center(
+                  child: LoadingAnimationWidget.fallingDot(
+                      color: GenerallColor.appBarBackGroundColor, size: 30),
+                );
+              }
+              if (state is CategoryResponseState) {
+                return state.gameCat.fold((l) {
+                  return Center(
+                    child: Text(l,
+                        style: const TextStyle(
+                            fontSize: 20, fontFamily: 'vazirm')),
+                  );
+                }, (r) {
+                  if (r.isEmpty) {
+                    return const Center(
+                      child: Text(
+                        '! متاسفانه درحال حاضر این بخش خالی است ',
+                        style: TextStyle(fontSize: 20, fontFamily: 'vazirm'),
+                      ),
+                    );
+                  }
+                  return SafeArea(
+                    child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Expanded(
+                          child: ListView.builder(
+                            itemCount: r.length,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.only(bottom: 14),
+                                child:
+                                    singleItemGame(gameProductModel: r[index]),
+                              );
+                            },
+                          ),
+                        )),
+                  );
+                });
+              }
+              return Container();
+            },
+          ),
+        ));
   }
 }

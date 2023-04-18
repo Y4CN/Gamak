@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:game_hacks_chat/bloc/bannerDetalsBloc/bannerDetailsBloc.dart';
+import 'package:game_hacks_chat/bloc/categoryBloc/categoryBloc.dart';
 import 'package:game_hacks_chat/bloc/gameDetailBloc/gameDetailBloc.dart';
 import 'package:game_hacks_chat/bloc/homeBloc/homeBloc.dart';
 import 'package:game_hacks_chat/bloc/homeBloc/homeEvent.dart';
@@ -456,25 +457,32 @@ class categoryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          PageTransition(
-              child: const CategoryGameScreen(), type: PageTransitionType.fade),
-        );
-      },
-      child: SizedBox(
-        height: 130,
-        width: double.infinity,
-        child: ListView.builder(
-          scrollDirection: Axis.horizontal,
-          itemCount: categoryModel.length,
-          itemBuilder: (context, index) {
-            var singleCat = categoryModel[index];
-            String categoryColor = 'ff${singleCat.color}';
-            int hexColor = int.parse(categoryColor, radix: 16);
-            return Padding(
+    return SizedBox(
+      height: 130,
+      width: double.infinity,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: categoryModel.length,
+        itemBuilder: (context, index) {
+          var singleCat = categoryModel[index];
+          String categoryColor = 'ff${singleCat.color}';
+          int hexColor = int.parse(categoryColor, radix: 16);
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                PageTransition(
+                  child: BlocProvider(
+                    create: (context) => CategoryBloc(),
+                    child: CategoryGameScreen(
+                      categoryModel: categoryModel[index],
+                    ),
+                  ),
+                  type: PageTransitionType.fade,
+                ),
+              );
+            },
+            child: Padding(
               padding: EdgeInsets.only(
                   right: index == 0 ? 20 : 15,
                   left: index == categoryModel.length - 1 ? 10 : 0),
@@ -509,9 +517,9 @@ class categoryItem extends StatelessWidget {
                   ),
                 ],
               ),
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }
