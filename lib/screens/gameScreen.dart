@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:game_hacks_chat/bloc/gameDetailBloc/gameDetailBloc.dart';
+import 'package:game_hacks_chat/bloc/gameDetailBloc/gameDetailEvent.dart';
 import 'package:game_hacks_chat/bloc/gameDetailBloc/gameDetailState.dart';
 import 'package:game_hacks_chat/constant/generallColor.dart';
 import 'package:game_hacks_chat/data/model/gameProductModel.dart';
@@ -21,6 +22,13 @@ class GameScreen extends StatefulWidget {
 }
 
 class _GameScreenState extends State<GameScreen> {
+  @override
+  void initState() {
+    super.initState();
+    BlocProvider.of<GameDetailsBloc>(context)
+        .add(GameDetailsRequestEvent(widget.gameProductModel.id));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
