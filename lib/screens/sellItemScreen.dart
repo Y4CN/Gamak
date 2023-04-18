@@ -191,6 +191,48 @@ class _SellItemScreenState extends State<SellItemScreen> {
           ),
         ],
       ),
+      bottomNavigationBar: Container(
+        width: double.infinity,
+        height: 100,
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(16),
+          ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey,
+              blurStyle: BlurStyle.outer,
+              offset: Offset(0, 0),
+              spreadRadius: 1,
+              blurRadius: 12,
+            )
+          ],
+        ),
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            splashFactory: InkSparkle.splashFactory,
+            foregroundColor: Colors.black,
+            minimumSize: const Size(
+              double.infinity,
+              double.infinity,
+            ),
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(
+              top: Radius.circular(12),
+            )),
+            backgroundColor: Colors.white,
+          ),
+          onPressed: () {},
+          child: const Text(
+            'خرید مستقیم آیتم',
+            style: TextStyle(
+              fontSize: 20,
+              fontFamily: 'vazirm',
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
