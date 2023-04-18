@@ -297,72 +297,75 @@ class _GameScreenState extends State<GameScreen> {
                     ),
                   ),
                   if (state is GameDetailsResponseState) ...{
-                    state.decription.fold((l) {
-                      return SliverToBoxAdapter(
-                        child: Center(
-                          child: Text(
-                            l,
-                            style: const TextStyle(
-                              fontSize: 18,
-                            ),
-                          ),
-                        ),
-                      );
-                    }, (r) {
-                      return SliverToBoxAdapter(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 12, vertical: 10),
-                          child: ExpandableText(
-                            r.description,
-                            expandText: 'بیش تر',
-                            collapseText: 'کم تر',
-                            maxLines: 3,
-                            style: const TextStyle(fontSize: 15),
-                          ),
-                        ),
-                      );
-                    }),
-                  },
-                  SliverToBoxAdapter(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 8, horizontal: 12),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Container(
-                            height: 55,
-                            width: 55,
-                            decoration: BoxDecoration(
-                              color: Colors.grey.shade300,
-                              shape: BoxShape.circle,
-                            ),
-                            child: const Center(
-                              child: Icon(
-                                CupertinoIcons.chat_bubble,
-                                color: Colors.black,
-                                size: 20,
-                                shadows: [
-                                  BoxShadow(
-                                    color: Colors.black,
-                                    blurRadius: 2,
-                                  ),
-                                ],
+                    state.decription.fold(
+                      (l) {
+                        return SliverToBoxAdapter(
+                          child: Center(
+                            child: Text(
+                              l,
+                              style: const TextStyle(
+                                fontSize: 18,
                               ),
                             ),
                           ),
-                          const SizedBox(
-                            width: 5,
+                        );
+                      },
+                      (r) {
+                        return SliverToBoxAdapter(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 12, vertical: 10),
+                            child: ExpandableText(
+                              r.description,
+                              expandText: 'بیش تر',
+                              collapseText: 'کم تر',
+                              maxLines: 3,
+                              style: const TextStyle(fontSize: 15),
+                            ),
                           ),
-                          const Text(
-                            '10K',
-                            style: TextStyle(fontSize: 16),
-                          )
-                        ],
-                      ),
+                        );
+                      },
                     ),
-                  ),
+                  },
+                  // SliverToBoxAdapter(
+                  //   child: Padding(
+                  //     padding: const EdgeInsets.symmetric(
+                  //         vertical: 8, horizontal: 12),
+                  //     child: Row(
+                  //       crossAxisAlignment: CrossAxisAlignment.center,
+                  //       children: [
+                  //         Container(
+                  //           height: 55,
+                  //           width: 55,
+                  //           decoration: BoxDecoration(
+                  //             color: Colors.grey.shade300,
+                  //             shape: BoxShape.circle,
+                  //           ),
+                  //           child: const Center(
+                  //             child: Icon(
+                  //               CupertinoIcons.chat_bubble,
+                  //               color: Colors.black,
+                  //               size: 20,
+                  //               shadows: [
+                  //                 BoxShadow(
+                  //                   color: Colors.black,
+                  //                   blurRadius: 2,
+                  //                 ),
+                  //               ],
+                  //             ),
+                  //           ),
+                  //         ),
+                  //         const SizedBox(
+                  //           width: 5,
+                  //         ),
+                  //         const Text(
+                  //           '10K',
+                  //           style: TextStyle(fontSize: 16),
+                  //         )
+                  //       ],
+                  //     ),
+                  //   ),
+                  // ),
                   SliverPadding(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     sliver: SliverGrid(
