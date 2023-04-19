@@ -46,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
             return Center(
               child: LoadingAnimationWidget.fourRotatingDots(
                 color: GenerallColor.appBarBackGroundColor,
-                size: 60,
+                size: 30,
               ),
             );
           }

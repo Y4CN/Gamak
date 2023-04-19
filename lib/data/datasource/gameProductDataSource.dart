@@ -38,7 +38,8 @@ class GameProductDataSource extends IGameProductDataSource {
      try {
       Map<String, dynamic> qpar = {
         'filter':'mode="popular"',
-         'expand': 'category_id'
+         'expand': 'category_id',
+         'sort': '-updated',
       };
       var response = await _dio.get(
         'collections/games_product/records',
