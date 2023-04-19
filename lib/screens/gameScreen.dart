@@ -248,7 +248,9 @@ class _GameScreenState extends State<GameScreen> {
                                 Navigator.push(
                                   context,
                                   PageTransition(
-                                    child: const TrickListScreen(),
+                                    child: TrickListScreen(
+                                      gameProductModel: widget.gameProductModel,
+                                    ),
                                     type: PageTransitionType.fade,
                                     duration: const Duration(milliseconds: 200),
                                   ),

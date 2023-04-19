@@ -1,11 +1,15 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:game_hacks_chat/constant/generallColor.dart';
+import 'package:game_hacks_chat/data/model/gameProductModel.dart';
 import 'package:game_hacks_chat/screens/trickSingleScreen.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:page_transition/page_transition.dart';
 
 class TrickListScreen extends StatelessWidget {
-  const TrickListScreen({super.key});
+  TrickListScreen({super.key, required this.gameProductModel});
+  GameProductModel gameProductModel;
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +52,49 @@ class TrickListScreen extends StatelessWidget {
                     left: 6,
                   ),
                   child: ListTile(
+                    leading: CachedNetworkImage(
+                      imageUrl: gameProductModel.image,
+                      imageBuilder: (context, imageProvider) {
+                        return Container(
+                          height: 75,
+                          width: 75,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              image: DecorationImage(
+                                image: imageProvider,
+                                fit: BoxFit.contain,
+                              )),
+                        );
+                      },
+                      placeholder: (context, url) {
+                        return Container(
+                          height: 75,
+                          width: 75,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: LoadingAnimationWidget.fourRotatingDots(
+                            color: GenerallColor.appBarBackGroundColor,
+                            size: 20,
+                          ),
+                        );
+                      },
+                      errorWidget: (context, url, error) {
+                        return Container(
+                          height: 75,
+                          width: 75,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: const Text(
+                            'خطای بارگذاری عکس',
+                            style: TextStyle(fontSize: 12),
+                          ),
+                        );
+                      },
+                    ),
                     tileColor: Colors.white30,
                     splashColor: GenerallColor.primaryColor,
                     onTap: () {

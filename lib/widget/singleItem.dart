@@ -157,7 +157,7 @@ class singleItemGame extends StatelessWidget {
                 Navigator.push(
                   context,
                   PageTransition(
-                    child: const TrickListScreen(),
+                    child:  TrickListScreen(gameProductModel: gameProductModel),
                     type: PageTransitionType.fade,
                     duration: const Duration(milliseconds: 200),
                   ),
