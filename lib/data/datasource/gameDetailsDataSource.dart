@@ -24,6 +24,13 @@ class GameDetailsDataSource extends IGameDetailsDataSource {
         'collections/game_details/records',
         queryParameters: q,
       );
+      if (response.data['items'].isEmpty) {
+        return DescriptionModel(
+          description: 'متاسفانه اکنون مطلبی برای اراثه نیست',
+          gameId: gameId,
+          id: '-1',
+        );
+      }
       return DescriptionModel.fromJson(response.data['items'][0]);
     } on DioError catch (ex) {
       throw ErrorHandler(ex.response?.statusCode, ex.response?.data['message']);

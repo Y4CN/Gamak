@@ -265,37 +265,52 @@ class _GameScreenState extends State<GameScreen> {
                       ),
                     ),
                   ),
-                  SliverPadding(
-                    padding: const EdgeInsets.symmetric(vertical: 14),
-                    sliver: SliverToBoxAdapter(
-                      child: SizedBox(
-                        height: 35,
-                        width: double.infinity,
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: 10,
-                          itemBuilder: (context, index) {
-                            return Container(
-                              margin:
-                                  EdgeInsets.only(right: index == 0 ? 12 : 7),
-                              alignment: Alignment.center,
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 5),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(1000),
-                                color: Colors.grey.shade300,
-                              ),
-                              child: const Text(
-                                'Platform',
-                                style: TextStyle(
-                                    fontSize: 14, fontWeight: FontWeight.w300),
-                              ),
-                            );
-                          },
+                  if (state is GameDetailsResponseState) ...{
+                    state.platform.fold((l) {
+                      return SliverToBoxAdapter(
+                        child: Center(
+                          child: Text(
+                            l,
+                            style: const TextStyle(
+                                fontSize: 18, fontFamily: 'vazirm'),
+                          ),
                         ),
-                      ),
-                    ),
-                  ),
+                      );
+                    }, (r) {
+                      return SliverPadding(
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                        sliver: SliverToBoxAdapter(
+                          child: SizedBox(
+                            height: 35,
+                            width: double.infinity,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: r.length,
+                              itemBuilder: (context, index) {
+                                return Container(
+                                  margin: EdgeInsets.only(
+                                      right: index == 0 ? 12 : 7),
+                                  alignment: Alignment.center,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 5),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(1000),
+                                    color: Colors.grey.shade300,
+                                  ),
+                                  child: Text(
+                                    r[index].platform,
+                                    style: const TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w300),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                      );
+                    }),
+                  },
                   if (state is GameDetailsResponseState) ...{
                     state.decription.fold(
                       (l) {
