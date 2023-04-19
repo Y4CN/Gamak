@@ -283,6 +283,11 @@ class _TrickSingleScreenState extends State<TrickSingleScreen> {
                 //TODO submit is HERE
               },
               decoration: InputDecoration(
+                suffixIcon: IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      CupertinoIcons.arrow_uturn_left,
+                    )),
                 fillColor: Colors.white,
                 filled: true,
                 contentPadding: const EdgeInsets.symmetric(
