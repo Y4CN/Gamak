@@ -8,9 +8,11 @@ import 'package:game_hacks_chat/bloc/authBloc/authBloc.dart';
 import 'package:game_hacks_chat/bloc/authBloc/authEvent.dart';
 import 'package:game_hacks_chat/bloc/authBloc/authState.dart';
 import 'package:game_hacks_chat/constant/generallColor.dart';
+import 'package:game_hacks_chat/screens/clientTrickScreen.dart';
 import 'package:game_hacks_chat/screens/splashScreen.dart';
 import 'package:game_hacks_chat/utilities/sharManager.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:page_transition/page_transition.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -22,7 +24,6 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     BlocProvider.of<AuthBloc>(context).add(AuthReadUserEvent());
   }
@@ -211,7 +212,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 Icons.lightbulb,
                                 color: Colors.black54,
                               ),
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  PageTransition(
+                                    child: const ClientTrickScreen(),
+                                    type: PageTransitionType.fade,
+                                    duration: const Duration(milliseconds: 200),
+                                  ),
+                                );
+                              },
                               title: const Text(
                                 'ترفند های شما',
                                 style: TextStyle(
