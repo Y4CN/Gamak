@@ -2,14 +2,37 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:game_hacks_chat/constant/generallColor.dart';
+import 'package:game_hacks_chat/data/datasource/trickDataSource.dart';
 import 'package:game_hacks_chat/data/model/gameProductModel.dart';
+import 'package:game_hacks_chat/locator.dart';
 import 'package:game_hacks_chat/screens/trickSingleScreen.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:page_transition/page_transition.dart';
 
-class TrickListScreen extends StatelessWidget {
+class TrickListScreen extends StatefulWidget {
   TrickListScreen({super.key, required this.gameProductModel});
   GameProductModel gameProductModel;
+
+  @override
+  State<TrickListScreen> createState() => _TrickListScreenState();
+}
+
+class _TrickListScreenState extends State<TrickListScreen> {
+
+
+
+@override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    ini();
+  }
+
+  void ini() async {
+    final ITrickDataSource _datasource = locator.get();
+    var r = await _datasource.getTrickGame('vagjyvgtbhheppt');
+    print(r.status);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +40,7 @@ class TrickListScreen extends StatelessWidget {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            backgroundColor: GenerallColor.primaryColor,
+            backgroundColor: Color.fromARGB(255, 74, 75, 84),
             actions: [
               Padding(
                 padding: const EdgeInsets.only(left: 10),
@@ -53,7 +76,7 @@ class TrickListScreen extends StatelessWidget {
                   ),
                   child: ListTile(
                     leading: CachedNetworkImage(
-                      imageUrl: gameProductModel.image,
+                      imageUrl: widget.gameProductModel.image,
                       imageBuilder: (context, imageProvider) {
                         return Container(
                           height: 75,

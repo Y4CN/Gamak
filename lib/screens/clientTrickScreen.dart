@@ -15,9 +15,9 @@ class _ClientTrickScreenState extends State<ClientTrickScreen> {
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 3,
-      child: Scaffold(
-        body: SafeArea(
-          child: NestedScrollView(
+      child: SafeArea(
+        child: Scaffold(
+          body: NestedScrollView(
             headerSliverBuilder: (context, innerBoxIsScrolled) {
               return [
                 Directionality(
@@ -74,7 +74,6 @@ class _ClientTrickScreenState extends State<ClientTrickScreen> {
                     const TabBar(
                       indicatorSize: TabBarIndicatorSize.label,
                       unselectedLabelColor: Colors.black,
-                      labelColor: Colors.white,
                       indicatorPadding: EdgeInsets.only(bottom: 4),
                       // indicatorWeight: 2,
                       indicatorColor: Colors.black,
@@ -84,13 +83,28 @@ class _ClientTrickScreenState extends State<ClientTrickScreen> {
                       ),
                       tabs: [
                         Tab(
-                          child: Text('در حال بررسی'),
+                          child: Text(
+                            'در حال بررسی',
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
                         ),
                         Tab(
-                          child: Text('رد شده'),
+                          child: Text(
+                            'رد شده',
+                            style: TextStyle(
+                              color: Colors.red,
+                            ),
+                          ),
                         ),
                         Tab(
-                          child: Text('قبول شده'),
+                          child: Text(
+                            'قبول شده',
+                            style: TextStyle(
+                              color: Colors.green,
+                            ),
+                          ),
                         ),
                       ],
                     ),

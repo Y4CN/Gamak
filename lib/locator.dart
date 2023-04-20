@@ -4,6 +4,7 @@ import 'package:game_hacks_chat/data/datasource/banner_dataSource.dart';
 import 'package:game_hacks_chat/data/datasource/categoryDataSource.dart';
 import 'package:game_hacks_chat/data/datasource/gameDetailsDataSource.dart';
 import 'package:game_hacks_chat/data/datasource/gameProductDataSource.dart';
+import 'package:game_hacks_chat/data/datasource/trickDataSource.dart';
 import 'package:game_hacks_chat/data/repository/authRepository.dart';
 import 'package:game_hacks_chat/data/repository/bannerRepository.dart';
 import 'package:game_hacks_chat/data/repository/categoryRepository.dart';
@@ -28,6 +29,7 @@ Future<void> initGet_it() async {
   locator.registerSingleton<IBannerDataSource>(BannerDataSource());
   locator.registerSingleton<IGameProductDataSource>(GameProductDataSource());
   locator.registerSingleton<IGameDetailsDataSource>(GameDetailsDataSource());
+  locator.registerSingleton<ITrickDataSource>(TrickDataSource());
 
   //repository
   locator.registerSingleton<ICategoryRepository>(CategoryRepository());
