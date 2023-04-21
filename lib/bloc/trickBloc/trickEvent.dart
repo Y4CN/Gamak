@@ -13,3 +13,11 @@ class TrickRequestCommedEvent extends TrickEvent{
   String trickId;
   TrickRequestCommedEvent(this.trickId);
 }
+
+
+
+class TrickSendCommendEvent extends TrickEvent{
+  String trickId;
+  String commned;
+  TrickSendCommendEvent(this.commned,this.trickId);
+}

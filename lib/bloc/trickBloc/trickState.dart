@@ -19,3 +19,14 @@ class TrickResponseSingleState extends TrickState {
   Either<String, List<TrickCommendModel>> trickCommends;
   TrickResponseSingleState(this.trickCommends);
 }
+
+
+
+class TrickLoadingCommendState extends TrickState{
+
+}
+
+class TrickResponseCommendState extends TrickState{
+  Either<String,bool> trickCommend;
+  TrickResponseCommendState(this.trickCommend);
+}

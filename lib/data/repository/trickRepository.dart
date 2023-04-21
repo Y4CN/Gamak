@@ -5,17 +5,17 @@ import 'package:game_hacks_chat/data/model/trickModel.dart';
 import 'package:game_hacks_chat/locator.dart';
 import 'package:game_hacks_chat/utilities/errorHandler.dart';
 
-abstract class ITrickRepository{
-  Future<Either<String,List<TrickModel>>> getTrickGame(String gameId);
-  Future<Either<String,List<TrickCommendModel>>> getTrickCommed(String trickId);
+abstract class ITrickRepository {
+  Future<Either<String, List<TrickModel>>> getTrickGame(String gameId);
+  Future<Either<String, List<TrickCommendModel>>> getTrickCommed(
+      String trickId);
+  Future<Either<String, bool>> postTrickCommemd(String trickId, String commend);
 }
 
-
-
-class TrickRepository extends ITrickRepository{
+class TrickRepository extends ITrickRepository {
   final ITrickDataSource _dataSource = locator.get();
   @override
-  Future<Either<String, List<TrickModel>>> getTrickGame(String gameId) async{
+  Future<Either<String, List<TrickModel>>> getTrickGame(String gameId) async {
     try {
       var response = await _dataSource.getTrickGame(gameId);
       return Right(response);
@@ -23,9 +23,10 @@ class TrickRepository extends ITrickRepository{
       throw Left(e.message ?? 'خطای ناشناخته');
     }
   }
-  
+
   @override
-  Future<Either<String, List<TrickCommendModel>>> getTrickCommed(String trickId) async {
+  Future<Either<String, List<TrickCommendModel>>> getTrickCommed(
+      String trickId) async {
     try {
       var response = await _dataSource.getTrickCommed(trickId);
       return Right(response);
@@ -33,4 +34,14 @@ class TrickRepository extends ITrickRepository{
       throw Left(e.message ?? 'خطای ناشناخته');
     }
   }
- }
+  
+  @override
+  Future<Either<String, bool>> postTrickCommemd(String trickId, String commend) async{
+      try {
+      var response = await _dataSource.postTrickCommemd(trickId, commend);
+      return Right(response);
+    } on ErrorHandler catch (e) {
+      throw Left(e.message ?? 'خطای ناشناخته');
+    }
+  }
+}
