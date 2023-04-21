@@ -1,10 +1,18 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:game_hacks_chat/constant/generallColor.dart';
+import 'package:game_hacks_chat/data/model/gameProductModel.dart';
+import 'package:game_hacks_chat/data/model/trickModel.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class TrickSingleScreen extends StatefulWidget {
-  const TrickSingleScreen({super.key});
+  TrickSingleScreen(
+      {super.key, required this.trickModel, required this.gameProductModel});
+  TrickModel trickModel;
+  GameProductModel gameProductModel;
 
   @override
   State<TrickSingleScreen> createState() => _TrickSingleScreenState();
@@ -66,8 +74,8 @@ class _TrickSingleScreenState extends State<TrickSingleScreen> {
                   background: Stack(
                     fit: StackFit.expand,
                     children: [
-                      Image.asset(
-                        'assets/images/test2.jpg',
+                      Image.network(
+                        widget.gameProductModel.imaheBanner,
                         fit: BoxFit.cover,
                       ),
                       const Positioned.fill(
@@ -90,27 +98,32 @@ class _TrickSingleScreenState extends State<TrickSingleScreen> {
                 ),
               ),
             ),
-            const SliverPadding(
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            SliverPadding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               sliver: SliverToBoxAdapter(
                 child: Text(
-                  'Title Trick',
+                  widget.trickModel.title,
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
             ),
-            const SliverPadding(
-              padding: EdgeInsets.symmetric(
+            SliverPadding(
+              padding: const EdgeInsets.symmetric(
                 horizontal: 20,
                 vertical: 10,
               ),
               sliver: SliverToBoxAdapter(
-                child: Text(
-                    'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد وزمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.'),
+                child: ExpandableText(
+                  widget.trickModel.description,
+                  style: const TextStyle(wordSpacing: 1),
+                  expandText: 'بیشتر',
+                  collapseText: 'کم تر',
+                  maxLines: 10,
+                ),
               ),
             ),
             // SliverToBoxAdapter(
@@ -160,17 +173,61 @@ class _TrickSingleScreenState extends State<TrickSingleScreen> {
                   children: [
                     PageView.builder(
                       controller: _pageController,
-                      itemCount: 3,
+                      itemCount: widget.trickModel.images.length,
                       itemBuilder: (context, index) {
-                        return Container(
-                          decoration: BoxDecoration(
-                            color: Colors.amber,
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          margin: const EdgeInsets.symmetric(
-                            horizontal: 10,
-                            vertical: 10,
-                          ),
+                        return CachedNetworkImage(
+                          imageUrl: widget.trickModel.images[index],
+                          imageBuilder: (context, imageProvider) {
+                            return Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.amber,
+                                  borderRadius: BorderRadius.circular(12),
+                                  image: DecorationImage(
+                                    image: imageProvider,
+                                    fit: BoxFit.cover,
+                                  )),
+                              margin: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 10,
+                              ),
+                            );
+                          },
+                          errorWidget: (context, url, error) {
+                            return Container(
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                color: Colors.amber,
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              margin: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 10,
+                              ),
+                              child: const Text(
+                                'مشکل در بارگذاری عکس',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                ),
+                              ),
+                            );
+                          },
+                          placeholder: (context, url) {
+                            return Container(
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                color: Colors.amber,
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              margin: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                                vertical: 10,
+                              ),
+                              child: LoadingAnimationWidget.fourRotatingDots(
+                                color: GenerallColor.appBarBackGroundColor,
+                                size: 20,
+                              ),
+                            );
+                          },
                         );
                       },
                     ),
@@ -181,7 +238,7 @@ class _TrickSingleScreenState extends State<TrickSingleScreen> {
                       child: Center(
                         child: SmoothPageIndicator(
                           controller: _pageController,
-                          count: 3,
+                          count: widget.trickModel.images.length,
                           effect: const WormEffect(
                               dotColor: Colors.white,
                               activeDotColor: Colors.black,

@@ -96,8 +96,8 @@ class _TrickListScreenState extends State<TrickListScreen> {
                         return Padding(
                           padding: const EdgeInsets.only(
                             top: 8,
-                            right: 6,
-                            left: 6,
+                            right: 10,
+                            left: 10,
                           ),
                           child: ListTile(
                             leading: CachedNetworkImage(
@@ -151,7 +151,7 @@ class _TrickListScreenState extends State<TrickListScreen> {
                               Navigator.push(
                                 context,
                                 PageTransition(
-                                  child: const TrickSingleScreen(),
+                                  child:  TrickSingleScreen(trickModel: r[index], gameProductModel: widget.gameProductModel,),
                                   type: PageTransitionType.fade,
                                   duration: const Duration(milliseconds: 200),
                                 ),
