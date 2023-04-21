@@ -1,10 +1,12 @@
 import 'package:dio/dio.dart';
+import 'package:game_hacks_chat/data/model/trickCommendModel.dart';
 import 'package:game_hacks_chat/data/model/trickModel.dart';
 import 'package:game_hacks_chat/locator.dart';
 import 'package:game_hacks_chat/utilities/errorHandler.dart';
 
 abstract class ITrickDataSource {
   Future<List<TrickModel>> getTrickGame(String gameId);
+  Future<List<TrickCommendModel>> getTrickCommed(String trickId);
 }
 
 class TrickDataSource extends ITrickDataSource {
@@ -15,7 +17,6 @@ class TrickDataSource extends ITrickDataSource {
       Map<String, dynamic> qpar = {
         'filter': '(game_id="$gameId" && status="good")',
         'expand': 'author_id',
-        
       };
       var response = await _dio.get(
         'collections/trick_games/records',
@@ -23,6 +24,28 @@ class TrickDataSource extends ITrickDataSource {
       );
       return response.data['items']
           .map<TrickModel>((e) => TrickModel.fromJson(e))
+          .toList();
+    } on DioError catch (ex) {
+      throw ErrorHandler(ex.response?.statusCode, ex.response?.data['message']);
+    } catch (ex) {
+      throw ErrorHandler(0, 'unknown erorr');
+    }
+  }
+
+  @override
+  Future<List<TrickCommendModel>> getTrickCommed(String trickId) async {
+    try {
+      Map<String, dynamic> qpar = {
+        'filter': 'trick_id="$trickId"',
+        'expand': 'user_id',
+        'sort': '-created',
+      };
+      var response = await _dio.get(
+        'collections/trick_commend/records',
+        queryParameters: qpar,
+      );
+      return response.data['items']
+          .map<TrickCommendModel>((e) => TrickCommendModel.fromJson(e))
           .toList();
     } on DioError catch (ex) {
       throw ErrorHandler(ex.response?.statusCode, ex.response?.data['message']);
