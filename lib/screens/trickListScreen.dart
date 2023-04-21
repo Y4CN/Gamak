@@ -183,11 +183,33 @@ class _TrickListScreenState extends State<TrickListScreen> {
                       childCount: r.length,
                     ),
                   );
-                })
+                }),
               },
+              const SliverPadding(
+                padding: EdgeInsets.only(
+                  bottom: 70,
+                ),
+              ),
             ],
           );
         },
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
+      floatingActionButton: FloatingActionButton.extended(
+        autofocus: false,
+        backgroundColor: GenerallColor.appBarBackGroundColor,
+        elevation: 6,
+        isExtended: true,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(5),
+          side: BorderSide.none,
+        ),
+        tooltip: 'اضافه کردن ترفند',
+        onPressed: () {},
+        label: const Text(
+          'ترفند اضافه کن !',
+          style: TextStyle(color: Colors.white, fontSize: 16),
+        ),
       ),
     );
   }
