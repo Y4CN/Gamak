@@ -9,6 +9,7 @@ class TrickModel {
   String id;
   List<String> images;
   String status;
+  String title;
 
   TrickModel({
     required this.authorId,
@@ -18,6 +19,7 @@ class TrickModel {
     required this.images,
     required this.status,
     required this.userModel,
+    required this.title,
     required this.collectionId,
   });
 
@@ -35,6 +37,7 @@ class TrickModel {
           .cast<String>(),
       status: jsonData['status'],
       collectionId: jsonData['collectionId'],
+      title: jsonData['title']
     );
   }
 }

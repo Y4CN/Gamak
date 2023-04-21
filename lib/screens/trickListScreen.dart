@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:game_hacks_chat/bloc/trickBloc/trickBloc.dart';
 import 'package:game_hacks_chat/bloc/trickBloc/trickEvent.dart';
+import 'package:game_hacks_chat/bloc/trickBloc/trickState.dart';
 import 'package:game_hacks_chat/constant/generallColor.dart';
 import 'package:game_hacks_chat/data/model/gameProductModel.dart';
 import 'package:game_hacks_chat/screens/trickSingleScreen.dart';
@@ -19,137 +20,174 @@ class TrickListScreen extends StatefulWidget {
 }
 
 class _TrickListScreenState extends State<TrickListScreen> {
-
-@override
+  @override
   void initState() {
     super.initState();
-    BlocProvider.of<TrickBloc>(context).add(TrickRequestEvent(widget.gameProductModel.id));
+    BlocProvider.of<TrickBloc>(context)
+        .add(TrickRequestEvent(widget.gameProductModel.id));
   }
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            backgroundColor: GenerallColor.primaryColor,
-            actions: [
-              Padding(
-                padding: const EdgeInsets.only(left: 10),
-                child: IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: const Icon(
-                    CupertinoIcons.forward,
-                    size: 26,
+      body: BlocBuilder<TrickBloc, TrickState>(
+        builder: (context, state) {
+          return CustomScrollView(
+            slivers: [
+              SliverAppBar(
+                backgroundColor: GenerallColor.primaryColor,
+                actions: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 10),
+                    child: IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: const Icon(
+                        CupertinoIcons.forward,
+                        size: 26,
+                      ),
+                    ),
+                  ),
+                ],
+                automaticallyImplyLeading: false,
+                centerTitle: true,
+                title: Text(
+                  widget.gameProductModel.name,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontFamily: 'vazirm',
                   ),
                 ),
               ),
-            ],
-            automaticallyImplyLeading: false,
-            centerTitle: true,
-            title:  Text(
-              widget.gameProductModel.name,
-              style: const TextStyle(
-                fontSize: 16,
-                fontFamily: 'vazirm',
-              ),
-            ),
-          ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.only(
-                    top: 8,
-                    right: 6,
-                    left: 6,
-                  ),
-                  child: ListTile(
-                    leading: CachedNetworkImage(
-                      imageUrl: widget.gameProductModel.image,
-                      imageBuilder: (context, imageProvider) {
-                        return Container(
-                          height: 75,
-                          width: 75,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              image: DecorationImage(
-                                image: imageProvider,
-                                fit: BoxFit.contain,
-                              )),
-                        );
-                      },
-                      placeholder: (context, url) {
-                        return Container(
-                          height: 75,
-                          width: 75,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: LoadingAnimationWidget.fourRotatingDots(
-                            color: GenerallColor.appBarBackGroundColor,
-                            size: 20,
-                          ),
-                        );
-                      },
-                      errorWidget: (context, url, error) {
-                        return Container(
-                          height: 75,
-                          width: 75,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: const Text(
-                            'خطای بارگذاری عکس',
-                            style: TextStyle(fontSize: 12),
-                          ),
-                        );
-                      },
+              if (state is TrickResponseState) ...{
+                state.trickLst.fold((l) {
+                  return SliverToBoxAdapter(
+                    child: Center(
+                      child: Text(
+                        l,
+                        style:
+                            const TextStyle(fontSize: 18, fontFamily: 'vazirm'),
+                      ),
                     ),
-                    tileColor: Colors.white30,
-                    splashColor: GenerallColor.primaryColor,
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        PageTransition(
-                          child: const TrickSingleScreen(),
-                          type: PageTransitionType.fade,
-                          duration: const Duration(milliseconds: 200),
+                  );
+                }, (r) {
+                  if (r.isEmpty) {
+                    return const SliverPadding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 20,
+                      ),
+                      sliver: SliverToBoxAdapter(
+                        child: Center(
+                          child: Text(
+                            'متاسفانه هنوز ترفندی برای این بازی ارائه نشده شما اولین نفری باشین که ترفند این بازی رو قرار میدین برای این کار روی دکمه پایین کلیک کنین',
+                            textAlign: TextAlign.center,
+                            style:
+                                TextStyle(fontSize: 18, fontFamily: 'vazirm'),
+                          ),
                         ),
-                      );
-                    },
-                    shape: const RoundedRectangleBorder(
-                      side: BorderSide(color: Colors.black, width: .2),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(12),
                       ),
+                    );
+                  }
+                  return SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.only(
+                            top: 8,
+                            right: 6,
+                            left: 6,
+                          ),
+                          child: ListTile(
+                            leading: CachedNetworkImage(
+                              imageUrl: widget.gameProductModel.image,
+                              imageBuilder: (context, imageProvider) {
+                                return Container(
+                                  height: 75,
+                                  width: 75,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    image: DecorationImage(
+                                      image: imageProvider,
+                                      fit: BoxFit.contain,
+                                    ),
+                                  ),
+                                );
+                              },
+                              placeholder: (context, url) {
+                                return Container(
+                                  height: 75,
+                                  width: 75,
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child:
+                                      LoadingAnimationWidget.fourRotatingDots(
+                                    color: GenerallColor.appBarBackGroundColor,
+                                    size: 20,
+                                  ),
+                                );
+                              },
+                              errorWidget: (context, url, error) {
+                                return Container(
+                                  height: 75,
+                                  width: 75,
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: const Text(
+                                    'خطای بارگذاری عکس',
+                                    style: TextStyle(fontSize: 12),
+                                  ),
+                                );
+                              },
+                            ),
+                            tileColor: Colors.white30,
+                            splashColor: GenerallColor.primaryColor,
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                PageTransition(
+                                  child: const TrickSingleScreen(),
+                                  type: PageTransitionType.fade,
+                                  duration: const Duration(milliseconds: 200),
+                                ),
+                              );
+                            },
+                            shape: const RoundedRectangleBorder(
+                              side: BorderSide(color: Colors.black, width: .2),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(12),
+                              ),
+                            ),
+                            title: Text(
+                              r[index].title,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                color: Colors.black,
+                              ),
+                            ),
+                            subtitle: Text(
+                              r[index].userModel.name,
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.grey.shade600,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                      childCount: r.length,
                     ),
-                    title: const Text(
-                      'Title Trick',
-                      style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.black,
-                      ),
-                    ),
-                    subtitle: Text(
-                      'Author',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey.shade600,
-                      ),
-                    ),
-                  ),
-                );
+                  );
+                })
               },
-              childCount: 10,
-            ),
-          ),
-        ],
+            ],
+          );
+        },
       ),
     );
   }
