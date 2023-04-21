@@ -180,12 +180,13 @@ class _TrickSingleScreenState extends State<TrickSingleScreen> {
                           imageBuilder: (context, imageProvider) {
                             return Container(
                               decoration: BoxDecoration(
-                                  color: Colors.amber,
-                                  borderRadius: BorderRadius.circular(12),
-                                  image: DecorationImage(
-                                    image: imageProvider,
-                                    fit: BoxFit.cover,
-                                  )),
+                                color: Colors.amber,
+                                borderRadius: BorderRadius.circular(12),
+                                image: DecorationImage(
+                                  image: imageProvider,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
                               margin: const EdgeInsets.symmetric(
                                 horizontal: 10,
                                 vertical: 10,
@@ -240,11 +241,12 @@ class _TrickSingleScreenState extends State<TrickSingleScreen> {
                           controller: _pageController,
                           count: widget.trickModel.images.length,
                           effect: const WormEffect(
-                              dotColor: Colors.white,
-                              activeDotColor: Colors.black,
-                              dotHeight: 12,
-                              dotWidth: 12,
-                              type: WormType.thin),
+                            dotColor: Colors.white,
+                            activeDotColor: Colors.black,
+                            dotHeight: 12,
+                            dotWidth: 12,
+                            type: WormType.thin,
+                          ),
                         ),
                       ),
                     ),
