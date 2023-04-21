@@ -21,3 +21,9 @@ class TrickSendCommendEvent extends TrickEvent{
   String commned;
   TrickSendCommendEvent(this.commned,this.trickId);
 }
+
+
+class TrickDeleteEvent extends TrickEvent{
+  String commnedId;
+  TrickDeleteEvent(this.commnedId);
+}

@@ -25,5 +25,12 @@ class TrickBloc extends Bloc<TrickEvent, TrickState> {
           await _trickRepository.postTrickCommemd(event.trickId, event.commned);
       emit(TrickResponseCommendState(response));
     });
+
+    on<TrickDeleteEvent>((event, emit) async {
+      emit(TrickLodingDeleteState());
+      var responseDelete =
+          await _trickRepository.deleteTrickCommemd(event.commnedId);
+      emit(TrickResponseDeleteState(responseDelete));
+    });
   }
 }

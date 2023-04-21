@@ -9,6 +9,7 @@ abstract class ITrickDataSource {
   Future<List<TrickModel>> getTrickGame(String gameId);
   Future<List<TrickCommendModel>> getTrickCommed(String trickId);
   Future<bool> postTrickCommemd(String trickId, String commend);
+  Future<bool> deleteTrickCommemd(String commendId);
 }
 
 class TrickDataSource extends ITrickDataSource {
@@ -70,6 +71,20 @@ class TrickDataSource extends ITrickDataSource {
           'user_id': ShareManager.readUserId()
         },
         queryParameters: qpar,
+      );
+      return true;
+    } on DioError catch (ex) {
+      throw ErrorHandler(ex.response?.statusCode, ex.response?.data['message']);
+    } catch (ex) {
+      throw ErrorHandler(0, 'unknown erorr');
+    }
+  }
+
+  @override
+  Future<bool> deleteTrickCommemd(String commendId) async {
+    try {
+      await _dio.delete(
+        'collections/trick_commend/records/$commendId',
       );
       return true;
     } on DioError catch (ex) {

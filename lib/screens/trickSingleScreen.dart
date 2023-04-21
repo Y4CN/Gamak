@@ -12,7 +12,6 @@ import 'package:game_hacks_chat/data/model/trickModel.dart';
 import 'package:game_hacks_chat/utilities/sharManager.dart';
 import 'package:game_hacks_chat/widget/customSnakBar.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class TrickSingleScreen extends StatefulWidget {
@@ -407,8 +406,18 @@ class _TrickSingleScreenState extends State<TrickSingleScreen> {
         bottomNavigationBar: BlocBuilder<TrickBloc, TrickState>(
           builder: (context, state) {
             if (state is TrickResponseCommendState) {
-              BlocProvider.of<TrickBloc>(context)
-                  .add(TrickRequestCommedEvent(widget.trickModel.id));
+              state.trickCommend.fold((l) {
+                CustomSnakBar.getCustomSnakBar(l, context);
+              }, (r) {
+                if (r) {
+                  //TODO Test On Server couse here is TOO Fast and Error for Rebuild
+
+                  // CustomSnakBar.getCustomSnakBar(
+                  // 'نظر شما با موفقیت ثبت شد ❤️', context);
+                  BlocProvider.of<TrickBloc>(context)
+                      .add(TrickRequestCommedEvent(widget.trickModel.id));
+                }
+              });
             }
             return SafeArea(
               child: Container(

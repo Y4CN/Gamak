@@ -10,6 +10,7 @@ abstract class ITrickRepository {
   Future<Either<String, List<TrickCommendModel>>> getTrickCommed(
       String trickId);
   Future<Either<String, bool>> postTrickCommemd(String trickId, String commend);
+  Future<Either<String, bool>> deleteTrickCommemd(String commendId);
 }
 
 class TrickRepository extends ITrickRepository {
@@ -34,11 +35,22 @@ class TrickRepository extends ITrickRepository {
       throw Left(e.message ?? 'خطای ناشناخته');
     }
   }
+
+  @override
+  Future<Either<String, bool>> postTrickCommemd(
+      String trickId, String commend) async {
+    try {
+      var response = await _dataSource.postTrickCommemd(trickId, commend);
+      return Right(response);
+    } on ErrorHandler catch (e) {
+      throw Left(e.message ?? 'خطای ناشناخته');
+    }
+  }
   
   @override
-  Future<Either<String, bool>> postTrickCommemd(String trickId, String commend) async{
-      try {
-      var response = await _dataSource.postTrickCommemd(trickId, commend);
+  Future<Either<String, bool>> deleteTrickCommemd(String commendId) async {
+     try {
+      var response = await _dataSource.deleteTrickCommemd(commendId);
       return Right(response);
     } on ErrorHandler catch (e) {
       throw Left(e.message ?? 'خطای ناشناخته');

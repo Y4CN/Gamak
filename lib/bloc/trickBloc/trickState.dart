@@ -30,3 +30,11 @@ class TrickResponseCommendState extends TrickState{
   Either<String,bool> trickCommend;
   TrickResponseCommendState(this.trickCommend);
 }
+
+
+
+class TrickLodingDeleteState extends TrickState{}
+class TrickResponseDeleteState extends TrickState{
+  Either<String,bool> responseDelete;
+  TrickResponseDeleteState(this.responseDelete); 
+}
