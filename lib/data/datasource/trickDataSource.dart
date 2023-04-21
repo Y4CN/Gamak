@@ -4,13 +4,13 @@ import 'package:game_hacks_chat/locator.dart';
 import 'package:game_hacks_chat/utilities/errorHandler.dart';
 
 abstract class ITrickDataSource {
-  Future<TrickModel> getTrickGame(String gameId);
+  Future<List<TrickModel>> getTrickGame(String gameId);
 }
 
 class TrickDataSource extends ITrickDataSource {
   final Dio _dio = locator.get();
   @override
-  Future<TrickModel> getTrickGame(String gameId) async {
+  Future<List<TrickModel>> getTrickGame(String gameId) async {
     try {
       Map<String, dynamic> qpar = {
         'filter': 'game_id="$gameId"',
@@ -20,8 +20,7 @@ class TrickDataSource extends ITrickDataSource {
         'collections/trick_games/records',
         queryParameters: qpar,
       );
-      print(response.data['items']);
-      return TrickModel.fromJson(response.data['items'][0]);
+      return response.data['items'].map((e) => TrickModel.fromJson(e)).toList();
     } on DioError catch (ex) {
       throw ErrorHandler(ex.response?.statusCode, ex.response?.data['message']);
     } catch (ex) {
