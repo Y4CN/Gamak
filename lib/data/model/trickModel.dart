@@ -3,6 +3,7 @@ import 'package:game_hacks_chat/data/model/userModel.dart';
 class TrickModel {
   String authorId;
   String description;
+  String collectionId;
   UserModel userModel;
   String gameId;
   String id;
@@ -17,34 +18,36 @@ class TrickModel {
     required this.images,
     required this.status,
     required this.userModel,
+    required this.collectionId,
   });
 
   factory TrickModel.fromJson(Map<String, dynamic> jsonData) {
     return TrickModel(
       authorId: jsonData['author_id'],
       description: jsonData['description'],
-      userModel: jsonData['expand']['author_id'],
+      userModel: UserModel.fromJson(jsonData['expand']['author_id']),
       gameId: jsonData['game_id'],
       id: jsonData['id'],
-      images: getListImage(
-        jsonData['image'],
-        jsonData['collectionId'],
-        jsonData['id'],
-      ),
+      images: (jsonData['image'] as List<dynamic>)
+          .map((e) =>
+              'http://127.0.0.1:8090/api/files/${jsonData['collectionId']}/${jsonData['id']}/${e}')
+          .toList()
+          .cast<String>(),
       status: jsonData['status'],
+      collectionId: jsonData['collectionId'],
     );
   }
 }
 
-List<String> getListImage(Map<String, dynamic> map,
-    Map<String, String> collectionId, Map<String, String> id) {
-  List<String> imageLst = [];
-  map.forEach((key, value) {
-    imageLst
-        .add('http://127.0.0.1:8090/api/files/${collectionId}/${id}/${value}');
-  });
-  return imageLst;
-}
+// List<String> getListImage(Map<String, dynamic> map,
+//     Map<String, String> collectionId, Map<String, String> id) {
+//   List<String> imageLst = [];
+//   map.forEach((key, value) {
+//     imageLst
+//         .add('http://127.0.0.1:8090/api/files/${collectionId}/${id}/${value}');
+//   });
+//   return imageLst;
+// }
 
 
 

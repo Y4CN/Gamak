@@ -21,7 +21,7 @@ class TrickDataSource extends ITrickDataSource {
         queryParameters: qpar,
       );
       print(response.data['items']);
-      return TrickModel.fromJson(response.data['items']);
+      return TrickModel.fromJson(response.data['items'][0]);
     } on DioError catch (ex) {
       throw ErrorHandler(ex.response?.statusCode, ex.response?.data['message']);
     } catch (ex) {

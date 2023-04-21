@@ -19,28 +19,13 @@ class TrickListScreen extends StatefulWidget {
 
 class _TrickListScreenState extends State<TrickListScreen> {
 
-
-
-@override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    ini();
-  }
-
-  void ini() async {
-    final ITrickDataSource _datasource = locator.get();
-    var r = await _datasource.getTrickGame('vagjyvgtbhheppt');
-    print(r.status);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            backgroundColor: Color.fromARGB(255, 74, 75, 84),
+            backgroundColor: GenerallColor.primaryColor,
             actions: [
               Padding(
                 padding: const EdgeInsets.only(left: 10),
@@ -57,9 +42,9 @@ class _TrickListScreenState extends State<TrickListScreen> {
             ],
             automaticallyImplyLeading: false,
             centerTitle: true,
-            title: const Text(
-              'NAme Game',
-              style: TextStyle(
+            title:  Text(
+              widget.gameProductModel.name,
+              style: const TextStyle(
                 fontSize: 16,
                 fontFamily: 'vazirm',
               ),

@@ -10,6 +10,7 @@ import 'package:game_hacks_chat/data/repository/bannerRepository.dart';
 import 'package:game_hacks_chat/data/repository/categoryRepository.dart';
 import 'package:game_hacks_chat/data/repository/gameDetailsRepository.dart';
 import 'package:game_hacks_chat/data/repository/gameProductRepository.dart';
+import 'package:game_hacks_chat/data/repository/trickRepository.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -37,4 +38,5 @@ Future<void> initGet_it() async {
   locator.registerSingleton<IBannerRepository>(BannerRepository());
   locator.registerSingleton<IGameProductRepository>(GameProductRepository());
   locator.registerSingleton<IGameDetailsrepository>(GameDetailsRepository());
+  locator.registerSingleton<ITrickRepository>(TrickRepository());
 }
