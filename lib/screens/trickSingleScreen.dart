@@ -10,6 +10,7 @@ import 'package:game_hacks_chat/constant/generallColor.dart';
 import 'package:game_hacks_chat/data/model/gameProductModel.dart';
 import 'package:game_hacks_chat/data/model/trickModel.dart';
 import 'package:game_hacks_chat/utilities/sharManager.dart';
+import 'package:game_hacks_chat/widget/customSnakBar.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -26,12 +27,14 @@ class TrickSingleScreen extends StatefulWidget {
 
 class _TrickSingleScreenState extends State<TrickSingleScreen> {
   late PageController _pageController;
+  late TextEditingController _commendController;
   @override
   void initState() {
     super.initState();
     BlocProvider.of<TrickBloc>(context)
         .add(TrickRequestCommedEvent(widget.trickModel.id));
     _pageController = PageController(viewportFraction: .8);
+    _commendController = TextEditingController();
   }
 
   @override
@@ -239,7 +242,8 @@ class _TrickSingleScreenState extends State<TrickSingleScreen> {
                                     ),
                                     child:
                                         LoadingAnimationWidget.fourRotatingDots(
-                                      color: GenerallColor.appBarBackGroundColor,
+                                      color:
+                                          GenerallColor.appBarBackGroundColor,
                                       size: 20,
                                     ),
                                   );
@@ -283,10 +287,9 @@ class _TrickSingleScreenState extends State<TrickSingleScreen> {
                   SliverToBoxAdapter(
                     child: Center(
                       child: LoadingAnimationWidget.fallingDot(
-                        color: GenerallColor.appBarBackGroundColor, size: 20),
+                          color: GenerallColor.appBarBackGroundColor, size: 20),
                     ),
                   )
-                 
                 },
                 if (state is TrickResponseSingleState) ...{
                   state.trickCommends.fold((l) {
@@ -401,40 +404,70 @@ class _TrickSingleScreenState extends State<TrickSingleScreen> {
             );
           },
         ),
-        bottomNavigationBar: SafeArea(
-          child: Container(
-            width: double.infinity,
-            height: 80,
-            padding: const EdgeInsets.symmetric(
-              horizontal: 12,
-            ),
-            alignment: Alignment.center,
-            child: TextField(
-              onSubmitted: (value) {
-                //TODO submit is HERE
-              },
-              decoration: InputDecoration(
-                suffixIcon: IconButton(
-                    onPressed: () {},
-                    icon: const Icon(
-                      CupertinoIcons.arrow_uturn_left,
-                    )),
-                fillColor: Colors.white,
-                filled: true,
-                contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 10,
+        bottomNavigationBar: BlocBuilder<TrickBloc, TrickState>(
+          builder: (context, state) {
+            if (state is TrickResponseCommendState) {
+              BlocProvider.of<TrickBloc>(context)
+                  .add(TrickRequestCommedEvent(widget.trickModel.id));
+            }
+            return SafeArea(
+              child: Container(
+                width: double.infinity,
+                height: 80,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
                 ),
-                labelText: 'نظر خودتون رو بنویسید',
-                labelStyle: const TextStyle(
-                  fontSize: 14,
-                  fontFamily: 'vazirm',
-                ),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
+                alignment: Alignment.center,
+                child: TextField(
+                  controller: _commendController,
+                  onSubmitted: (value) {
+                    BlocProvider.of<TrickBloc>(context).add(
+                      TrickSendCommendEvent(
+                        value,
+                        widget.trickModel.id,
+                      ),
+                    );
+                    _commendController.clear();
+                    FocusScope.of(context).unfocus();
+                  },
+                  decoration: InputDecoration(
+                    suffixIcon: state is TrickLoadingCommendState
+                        ? LoadingAnimationWidget.fallingDot(
+                            color: GenerallColor.appBarBackGroundColor,
+                            size: 16)
+                        : IconButton(
+                            onPressed: () {
+                              BlocProvider.of<TrickBloc>(context).add(
+                                TrickSendCommendEvent(
+                                  _commendController.text.trim(),
+                                  widget.trickModel.id,
+                                ),
+                              );
+                              _commendController.clear();
+                              FocusScope.of(context).unfocus();
+                            },
+                            icon: const Icon(
+                              CupertinoIcons.arrow_uturn_left,
+                            ),
+                          ),
+                    fillColor: Colors.white,
+                    filled: true,
+                    contentPadding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                    ),
+                    labelText: 'نظر خودتون رو بنویسید',
+                    labelStyle: const TextStyle(
+                      fontSize: 14,
+                      fontFamily: 'vazirm',
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ),
+            );
+          },
         ),
       ),
     );
