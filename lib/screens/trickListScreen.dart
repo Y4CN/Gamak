@@ -1,10 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:game_hacks_chat/bloc/trickBloc/trickBloc.dart';
+import 'package:game_hacks_chat/bloc/trickBloc/trickEvent.dart';
 import 'package:game_hacks_chat/constant/generallColor.dart';
-import 'package:game_hacks_chat/data/datasource/trickDataSource.dart';
 import 'package:game_hacks_chat/data/model/gameProductModel.dart';
-import 'package:game_hacks_chat/locator.dart';
 import 'package:game_hacks_chat/screens/trickSingleScreen.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:page_transition/page_transition.dart';
@@ -18,6 +19,13 @@ class TrickListScreen extends StatefulWidget {
 }
 
 class _TrickListScreenState extends State<TrickListScreen> {
+
+@override
+  void initState() {
+    super.initState();
+    BlocProvider.of<TrickBloc>(context).add(TrickRequestEvent(widget.gameProductModel.id));
+  }
+
 
   @override
   Widget build(BuildContext context) {

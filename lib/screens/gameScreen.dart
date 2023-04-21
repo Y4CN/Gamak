@@ -7,6 +7,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:game_hacks_chat/bloc/gameDetailBloc/gameDetailBloc.dart';
 import 'package:game_hacks_chat/bloc/gameDetailBloc/gameDetailEvent.dart';
 import 'package:game_hacks_chat/bloc/gameDetailBloc/gameDetailState.dart';
+import 'package:game_hacks_chat/bloc/trickBloc/trickBloc.dart';
 import 'package:game_hacks_chat/constant/generallColor.dart';
 import 'package:game_hacks_chat/data/model/gameProductModel.dart';
 import 'package:game_hacks_chat/screens/trickListScreen.dart';
@@ -248,8 +249,11 @@ class _GameScreenState extends State<GameScreen> {
                                 Navigator.push(
                                   context,
                                   PageTransition(
-                                    child: TrickListScreen(
+                                    child: BlocProvider(
+                                      create: (context) => TrickBloc(),
+                                      child: TrickListScreen(
                                       gameProductModel: widget.gameProductModel,
+                                    ),
                                     ),
                                     type: PageTransitionType.fade,
                                     duration: const Duration(milliseconds: 200),

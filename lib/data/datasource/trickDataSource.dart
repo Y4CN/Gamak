@@ -20,7 +20,7 @@ class TrickDataSource extends ITrickDataSource {
         'collections/trick_games/records',
         queryParameters: qpar,
       );
-      return response.data['items'].map((e) => TrickModel.fromJson(e)).toList();
+      return response.data['items'].map<TrickModel>((e) => TrickModel.fromJson(e)).toList();
     } on DioError catch (ex) {
       throw ErrorHandler(ex.response?.statusCode, ex.response?.data['message']);
     } catch (ex) {
