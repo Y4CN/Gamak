@@ -371,12 +371,179 @@ class _TrickSingleScreenState extends State<TrickSingleScreen> {
                                     Visibility(
                                       visible: ShareManager.readUserId() ==
                                           r[index].userModel.id,
-                                      child: IconButton(
-                                        onPressed: () {},
-                                        icon: const Icon(
-                                          CupertinoIcons.delete,
-                                          color: Colors.red,
-                                        ),
+                                      child: BlocBuilder<TrickBloc, TrickState>(
+                                        builder: (context, state) {
+                                          if (state is TrickLodingDeleteState) {
+                                            return LoadingAnimationWidget
+                                                .fourRotatingDots(
+                                                    color: GenerallColor
+                                                        .appBarBackGroundColor,
+                                                    size: 12);
+                                          }
+                                          if (state
+                                              is TrickResponseDeleteState) {
+                                            state.responseDelete.fold((l) {
+                                              CustomSnakBar.getCustomSnakBar(
+                                                  l, context);
+                                            }, (r) {
+                                              if (r) {
+                                                BlocProvider.of<TrickBloc>(
+                                                        context)
+                                                    .add(
+                                                  TrickRequestCommedEvent(
+                                                      widget.trickModel.id),
+                                                );
+                                              }
+                                            });
+                                          }
+                                          return IconButton(
+                                            onPressed: () {
+                                              showDialog(
+                                                useSafeArea: true,
+                                                barrierDismissible: false,
+                                                context: context,
+                                                builder: (context) {
+                                                  return BlocProvider(
+                                                    create: (context) =>
+                                                        TrickBloc(),
+                                                    child: AlertDialog(
+                                                      backgroundColor:
+                                                          GenerallColor
+                                                              .primaryColor,
+                                                      shadowColor: GenerallColor
+                                                          .primaryColor,
+                                                      surfaceTintColor:
+                                                          Colors.white,
+                                                      elevation: 10,
+                                                      scrollable: false,
+                                                      content: const Padding(
+                                                        padding: EdgeInsets
+                                                            .symmetric(
+                                                                vertical: 10),
+                                                        child: Text(
+                                                          'آيا مطمئن هستین که میخواهید این نظر را پاک کنین ؟',
+                                                          style: TextStyle(
+                                                            fontSize: 14,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      shape:
+                                                          RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8),
+                                                      ),
+                                                      title: const Text(
+                                                        'پاک کردن نظر',
+                                                        style: TextStyle(
+                                                            fontSize: 18),
+                                                      ),
+                                                      actions: [
+                                                        ElevatedButton(
+                                                          style: ElevatedButton
+                                                              .styleFrom(
+                                                                  minimumSize:
+                                                                      const Size(
+                                                                          70,
+                                                                          40),
+                                                                  shape:
+                                                                      RoundedRectangleBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius
+                                                                            .circular(8),
+                                                                  ),
+                                                                  backgroundColor:
+                                                                      GenerallColor
+                                                                          .appBarBackGroundColor),
+                                                          onPressed: () {
+                                                            Navigator.pop(
+                                                                context);
+                                                          },
+                                                          child: const Text(
+                                                            'خیر',
+                                                            style: TextStyle(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: 16,
+                                                              fontFamily:
+                                                                  'vazirm',
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        ElevatedButton(
+                                                          style: ElevatedButton.styleFrom(
+                                                              minimumSize:
+                                                                  const Size(
+                                                                      70, 40),
+                                                              shape: RoundedRectangleBorder(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              8)),
+                                                              backgroundColor:
+                                                                  GenerallColor
+                                                                      .appBarBackGroundColor),
+                                                          onPressed: () {
+                                                            BlocProvider.of<
+                                                                        TrickBloc>(
+                                                                    context)
+                                                                .add(
+                                                              TrickDeleteEvent(
+                                                                r[index].id,
+                                                              ),
+                                                            );
+                                                            Navigator.pop(
+                                                                context);
+                                                          },
+                                                          child: const Text(
+                                                            'بله',
+                                                            style: TextStyle(
+                                                              color:
+                                                                  Colors.white,
+                                                              fontSize: 16,
+                                                              fontFamily:
+                                                                  'vazirm',
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  );
+                                                  // return CupertinoDialogAction(
+                                                  //   child: Container(
+                                                  //     color: Colors.white,
+                                                  //     child: Padding(
+                                                  //       padding: const EdgeInsets.all(8.0),
+                                                  //       child: Column(
+                                                  //         mainAxisSize:
+                                                  //             MainAxisSize.min,
+                                                  //         children: [
+                                                  //           ElevatedButton(
+                                                  //             onPressed: () {
+                                                  //               Navigator.pop(context);
+                                                  //             },
+                                                  //             child: const Text(
+                                                  //               'خیر',
+                                                  //               style: TextStyle(
+                                                  //                 fontSize: 16,
+                                                  //                 fontFamily: 'vazirm',
+                                                  //               ),
+                                                  //             ),
+                                                  //           ),
+                                                  //         ],
+                                                  //       ),
+                                                  //     ),
+                                                  //   ),
+                                                  // );
+                                                },
+                                              );
+                                            },
+                                            icon: const Icon(
+                                              CupertinoIcons.delete,
+                                              color: Colors.red,
+                                            ),
+                                          );
+                                        },
                                       ),
                                     ),
                                   ],
