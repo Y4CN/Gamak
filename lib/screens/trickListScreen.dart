@@ -7,6 +7,7 @@ import 'package:game_hacks_chat/bloc/trickBloc/trickEvent.dart';
 import 'package:game_hacks_chat/bloc/trickBloc/trickState.dart';
 import 'package:game_hacks_chat/constant/generallColor.dart';
 import 'package:game_hacks_chat/data/model/gameProductModel.dart';
+import 'package:game_hacks_chat/screens/addTrickScreen.dart';
 import 'package:game_hacks_chat/screens/trickSingleScreen.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:page_transition/page_transition.dart';
@@ -211,7 +212,16 @@ class _TrickListScreenState extends State<TrickListScreen> {
           side: BorderSide.none,
         ),
         tooltip: 'اضافه کردن ترفند',
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            PageTransition(
+              child: const AddTrickScreen(),
+              type: PageTransitionType.fade,
+              duration: const Duration(milliseconds: 200),
+            ),
+          );
+        },
         label: const Text(
           'ترفند اضافه کن !',
           style: TextStyle(color: Colors.white, fontSize: 16),
