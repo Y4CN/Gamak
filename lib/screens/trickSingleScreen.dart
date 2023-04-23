@@ -106,7 +106,7 @@ class _TrickSingleScreenState extends State<TrickSingleScreen> {
                                 ),
                               ),
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),
@@ -372,37 +372,8 @@ class _TrickSingleScreenState extends State<TrickSingleScreen> {
                                     Visibility(
                                       visible: ShareManager.readUserId() ==
                                           r[index].userModel.id,
-                                      child: state is TrickLodingDeleteState
-                                          ? LoadingAnimationWidget
-                                              .fourRotatingDots(
-                                                  color: GenerallColor
-                                                      .appBarBackGroundColor,
-                                                  size: 12)
-                                          : IconButton(
-                                              onPressed: () {
-                                                showDialog(
-                                                  useSafeArea: true,
-                                                  barrierDismissible: false,
-                                                  context: context,
-                                                  builder: (context) {
-                                                    return BlocProvider(
-                                                      create: (context) =>
-                                                          TrickBloc(),
-                                                      child: _CustomDialog(
-                                                        trickModel:
-                                                            widget.trickModel,
-                                                        trickCommendModel:
-                                                            r[index],
-                                                      ),
-                                                    );
-                                                  },
-                                                );
-                                              },
-                                              icon: const Icon(
-                                                CupertinoIcons.delete,
-                                                color: Colors.red,
-                                              ),
-                                            ),
+                                      child: deletIconStatus(state, context,
+                                          widget.trickModel, r[index]),
                                     ),
                                   ],
                                 ),
@@ -508,6 +479,51 @@ class _TrickSingleScreenState extends State<TrickSingleScreen> {
   }
 }
 
+Widget deletIconStatus(TrickState state, context, TrickModel trickModel,
+    TrickCommendModel trickCommendModel) {
+  if (state is TrickLaodingDeleteState) {
+    LoadingAnimationWidget.fourRotatingDots(
+      color: GenerallColor.appBarBackGroundColor,
+      size: 12,
+    );
+  }
+  if (state is TrickResponseDeleteState) {
+    state.responseDelete.fold((l) {
+      return CustomSnakBar.getCustomSnakBar(l, context);
+    }, (r) {
+      if (r) {
+        BlocProvider.of<TrickBloc>(context).add(
+          TrickRequestCommedEvent(trickModel.id),
+        );
+      }
+    });
+  }
+  return IconButton(
+    onPressed: () {
+      showDialog(
+        useSafeArea: true,
+        barrierDismissible: false,
+        context: context,
+        builder: (context) {
+          return BlocProvider.value(
+            value: TrickBloc(),
+            child: _CustomDialog(
+              trickCommendModel: trickCommendModel,
+              trickModel: trickModel,
+            ),
+          );
+        },
+      );
+    },
+    icon: const Icon(
+      CupertinoIcons.delete,
+      color: Colors.red,
+    ),
+  );
+}
+
+
+
 class _CustomDialog extends StatelessWidget {
   _CustomDialog({
     super.key,
@@ -571,7 +587,8 @@ class _CustomDialog extends StatelessWidget {
             BlocProvider.of<TrickBloc>(context).add(
               TrickDeleteEvent(trickCommendModel.id),
             );
-            
+            CustomSnakBar.getCustomSnakBar('نظر شما با موفقیت حذف شد', context);
+            // BlocProvider.of<TrickBloc>(context).add(TrickRequestCommedEvent(trickModel.id));
             Navigator.pop(context);
           },
           child: const Text(
