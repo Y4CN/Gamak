@@ -28,7 +28,9 @@ class TrickSingleScreen extends StatefulWidget {
 class _TrickSingleScreenState extends State<TrickSingleScreen> {
   late PageController _pageController;
   late TextEditingController _commendController;
-  late ValueNotifier _editValueNotivier ;
+  late ValueNotifier _editValueNotivier;
+  late bool _isEdit;
+  late String _commendId;
   @override
   void initState() {
     super.initState();
@@ -36,7 +38,9 @@ class _TrickSingleScreenState extends State<TrickSingleScreen> {
         .add(TrickRequestCommedEvent(widget.trickModel.id));
     _pageController = PageController(viewportFraction: .8);
     _commendController = TextEditingController();
+    _isEdit = false;
     _editValueNotivier = ValueNotifier<String>('');
+    _commendId = '';
   }
 
   @override
@@ -367,8 +371,12 @@ class _TrickSingleScreenState extends State<TrickSingleScreen> {
                                           r[index].userModel.id,
                                       child: IconButton(
                                         onPressed: () {
-                                          _commendController.text = r[index].commend; 
-                                          _editValueNotivier.value = _commendController.text;
+                                          _commendController.text =
+                                              r[index].commend;
+                                          _isEdit = true;
+                                          _commendId = r[index].id;
+                                          _editValueNotivier.value =
+                                              _commendController.text;
                                           _editValueNotivier.notifyListeners();
                                         },
                                         icon: const Icon(CupertinoIcons.pen,
@@ -410,6 +418,16 @@ class _TrickSingleScreenState extends State<TrickSingleScreen> {
               EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
           child: BlocBuilder<TrickBloc, TrickState>(
             builder: (context, state) {
+              if (state is TrickUpdateResponseState) {
+                state.updateResponse.fold((l) {
+                  CustomSnakBar.getCustomSnakBar(l, context);
+                }, (r) {
+                  if (r) {
+                    BlocProvider.of<TrickBloc>(context)
+                        .add(TrickRequestCommedEvent(widget.trickModel.id));
+                  }
+                });
+              }
               if (state is TrickResponseCommendState) {
                 state.trickCommend.fold((l) {
                   CustomSnakBar.getCustomSnakBar(l, context);
@@ -426,8 +444,7 @@ class _TrickSingleScreenState extends State<TrickSingleScreen> {
               }
               return ValueListenableBuilder(
                 valueListenable: _editValueNotivier,
-                builder: (context, value, child) => 
-                 SafeArea(
+                builder: (context, value, child) => SafeArea(
                   child: Container(
                     width: double.infinity,
                     height: 80,
@@ -438,12 +455,31 @@ class _TrickSingleScreenState extends State<TrickSingleScreen> {
                     child: TextField(
                       controller: _commendController,
                       onSubmitted: (value) {
-                        BlocProvider.of<TrickBloc>(context).add(
-                          TrickSendCommendEvent(
-                            value,
-                            widget.trickModel.id,
-                          ),
-                        );
+                        if (_commendController.text.trim().isEmpty) {
+                          CustomSnakBar.getCustomSnakBar(
+                            'نظر شما خالی است !',
+                            context,
+                          );
+                          return;
+                        }
+                        if (_isEdit) {
+                          _isEdit = false;
+                          BlocProvider.of<TrickBloc>(context).add(
+                            TrickUpdateEvent(
+                              commend: value.trim(),
+                              commendId: _commendId,
+                              trickId: widget.trickModel.id,
+                            ),
+                          );
+                          _commendId = '';
+                        } else {
+                          BlocProvider.of<TrickBloc>(context).add(
+                            TrickSendCommendEvent(
+                              value.trim(),
+                              widget.trickModel.id,
+                            ),
+                          );
+                        }
                         _commendController.clear();
                         FocusScope.of(context).unfocus();
                       },
@@ -454,17 +490,29 @@ class _TrickSingleScreenState extends State<TrickSingleScreen> {
                                 size: 16)
                             : IconButton(
                                 onPressed: () {
-                                  if (_commendController.text.trim().isNotEmpty) {
+                                  if (_commendController.text.trim().isEmpty) {
+                                    CustomSnakBar.getCustomSnakBar(
+                                      'نظر شما خالی است !',
+                                      context,
+                                    );
+                                    return;
+                                  }
+                                  if (_isEdit) {
+                                    _isEdit = false;
+                                    BlocProvider.of<TrickBloc>(context).add(
+                                      TrickUpdateEvent(
+                                        commend: _commendController.text.trim(),
+                                        commendId: _commendId,
+                                        trickId: widget.trickModel.id,
+                                      ),
+                                    );
+                                    _commendId = '';
+                                  } else {
                                     BlocProvider.of<TrickBloc>(context).add(
                                       TrickSendCommendEvent(
                                         _commendController.text.trim(),
                                         widget.trickModel.id,
                                       ),
-                                    );
-                                  } else {
-                                    CustomSnakBar.getCustomSnakBar(
-                                      'نظر شما خالی است !',
-                                      context,
                                     );
                                   }
                                   _commendController.clear();
