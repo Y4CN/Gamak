@@ -10,6 +10,8 @@ abstract class ITrickDataSource {
   Future<List<TrickCommendModel>> getTrickCommed(String trickId);
   Future<bool> postTrickCommemd(String trickId, String commend);
   Future<bool> deleteTrickCommemd(String commendId);
+  Future<bool> updateTrickcommend(
+      String commendId, String commend, String trickId);
 }
 
 class TrickDataSource extends ITrickDataSource {
@@ -85,6 +87,30 @@ class TrickDataSource extends ITrickDataSource {
     try {
       await _dio.delete(
         'collections/trick_commend/records/$commendId',
+      );
+      return true;
+    } on DioError catch (ex) {
+      throw ErrorHandler(ex.response?.statusCode, ex.response?.data['message']);
+    } catch (ex) {
+      throw ErrorHandler(0, 'unknown erorr');
+    }
+  }
+
+  @override
+  Future<bool> updateTrickcommend(
+      String commendId, String commend, String trickId) async {
+    try {
+      Map<String, dynamic> qpar = {
+        'expand': 'user_id',
+      };
+      await _dio.patch(
+        'collections/trick_commend/records/$commendId',
+        data: {
+          'commend': commend,
+          'trick_id': trickId,
+          'user_id': ShareManager.readUserId()
+        },
+        queryParameters: qpar,
       );
       return true;
     } on DioError catch (ex) {

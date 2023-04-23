@@ -28,6 +28,7 @@ class TrickSingleScreen extends StatefulWidget {
 class _TrickSingleScreenState extends State<TrickSingleScreen> {
   late PageController _pageController;
   late TextEditingController _commendController;
+  late ValueNotifier _editValueNotivier ;
   @override
   void initState() {
     super.initState();
@@ -35,6 +36,7 @@ class _TrickSingleScreenState extends State<TrickSingleScreen> {
         .add(TrickRequestCommedEvent(widget.trickModel.id));
     _pageController = PageController(viewportFraction: .8);
     _commendController = TextEditingController();
+    _editValueNotivier = ValueNotifier<String>('');
   }
 
   @override
@@ -364,7 +366,11 @@ class _TrickSingleScreenState extends State<TrickSingleScreen> {
                                       visible: ShareManager.readUserId() ==
                                           r[index].userModel.id,
                                       child: IconButton(
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          _commendController.text = r[index].commend; 
+                                          _editValueNotivier.value = _commendController.text;
+                                          _editValueNotivier.notifyListeners();
+                                        },
                                         icon: const Icon(CupertinoIcons.pen,
                                             color: Colors.green),
                                       ),
@@ -399,80 +405,95 @@ class _TrickSingleScreenState extends State<TrickSingleScreen> {
             );
           },
         ),
-        bottomNavigationBar: BlocBuilder<TrickBloc, TrickState>(
-          builder: (context, state) {
-            if (state is TrickResponseCommendState) {
-              state.trickCommend.fold((l) {
-                CustomSnakBar.getCustomSnakBar(l, context);
-              }, (r) {
-                if (r) {
-                  //TODO Test On Server couse here is TOO Fast and Error for Rebuild
+        bottomNavigationBar: Padding(
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: BlocBuilder<TrickBloc, TrickState>(
+            builder: (context, state) {
+              if (state is TrickResponseCommendState) {
+                state.trickCommend.fold((l) {
+                  CustomSnakBar.getCustomSnakBar(l, context);
+                }, (r) {
+                  if (r) {
+                    //TODO Test On Server couse here is TOO Fast and Error for Rebuild
 
-                  // CustomSnakBar.getCustomSnakBar(
-                  // 'نظر شما با موفقیت ثبت شد ❤️', context);
-                  BlocProvider.of<TrickBloc>(context)
-                      .add(TrickRequestCommedEvent(widget.trickModel.id));
-                }
-              });
-            }
-            return SafeArea(
-              child: Container(
-                width: double.infinity,
-                height: 80,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 12,
-                ),
-                alignment: Alignment.center,
-                child: TextField(
-                  controller: _commendController,
-                  onSubmitted: (value) {
-                    BlocProvider.of<TrickBloc>(context).add(
-                      TrickSendCommendEvent(
-                        value,
-                        widget.trickModel.id,
-                      ),
-                    );
-                    _commendController.clear();
-                    FocusScope.of(context).unfocus();
-                  },
-                  decoration: InputDecoration(
-                    suffixIcon: state is TrickLoadingCommendState
-                        ? LoadingAnimationWidget.fallingDot(
-                            color: GenerallColor.appBarBackGroundColor,
-                            size: 16)
-                        : IconButton(
-                            onPressed: () {
-                              BlocProvider.of<TrickBloc>(context).add(
-                                TrickSendCommendEvent(
-                                  _commendController.text.trim(),
-                                  widget.trickModel.id,
-                                ),
-                              );
-                              _commendController.clear();
-                              FocusScope.of(context).unfocus();
-                            },
-                            icon: const Icon(
-                              CupertinoIcons.arrow_uturn_left,
-                            ),
+                    // CustomSnakBar.getCustomSnakBar(
+                    // 'نظر شما با موفقیت ثبت شد ❤️', context);
+                    BlocProvider.of<TrickBloc>(context)
+                        .add(TrickRequestCommedEvent(widget.trickModel.id));
+                  }
+                });
+              }
+              return ValueListenableBuilder(
+                valueListenable: _editValueNotivier,
+                builder: (context, value, child) => 
+                 SafeArea(
+                  child: Container(
+                    width: double.infinity,
+                    height: 80,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                    ),
+                    alignment: Alignment.center,
+                    child: TextField(
+                      controller: _commendController,
+                      onSubmitted: (value) {
+                        BlocProvider.of<TrickBloc>(context).add(
+                          TrickSendCommendEvent(
+                            value,
+                            widget.trickModel.id,
                           ),
-                    fillColor: Colors.white,
-                    filled: true,
-                    contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                    ),
-                    labelText: 'نظر خودتون رو بنویسید',
-                    labelStyle: const TextStyle(
-                      fontSize: 14,
-                      fontFamily: 'vazirm',
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                        );
+                        _commendController.clear();
+                        FocusScope.of(context).unfocus();
+                      },
+                      decoration: InputDecoration(
+                        suffixIcon: state is TrickLoadingCommendState
+                            ? LoadingAnimationWidget.fallingDot(
+                                color: GenerallColor.appBarBackGroundColor,
+                                size: 16)
+                            : IconButton(
+                                onPressed: () {
+                                  if (_commendController.text.trim().isNotEmpty) {
+                                    BlocProvider.of<TrickBloc>(context).add(
+                                      TrickSendCommendEvent(
+                                        _commendController.text.trim(),
+                                        widget.trickModel.id,
+                                      ),
+                                    );
+                                  } else {
+                                    CustomSnakBar.getCustomSnakBar(
+                                      'نظر شما خالی است !',
+                                      context,
+                                    );
+                                  }
+                                  _commendController.clear();
+                                  FocusScope.of(context).unfocus();
+                                },
+                                icon: const Icon(
+                                  CupertinoIcons.arrow_uturn_left,
+                                ),
+                              ),
+                        fillColor: Colors.white,
+                        filled: true,
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                        ),
+                        labelText: 'نظر خودتون رو بنویسید',
+                        labelStyle: const TextStyle(
+                          fontSize: 14,
+                          fontFamily: 'vazirm',
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                      ),
                     ),
                   ),
                 ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
     );
@@ -492,9 +513,8 @@ Widget deletIconStatus(TrickState state, context, TrickModel trickModel,
       return CustomSnakBar.getCustomSnakBar(l, context);
     }, (r) {
       if (r) {
-        BlocProvider.of<TrickBloc>(context).add(
-          TrickRequestCommedEvent(trickModel.id),
-        );
+        BlocProvider.of<TrickBloc>(context)
+            .add(TrickRequestCommedEvent(trickModel.id));
       }
     });
   }
@@ -505,11 +525,28 @@ Widget deletIconStatus(TrickState state, context, TrickModel trickModel,
         barrierDismissible: false,
         context: context,
         builder: (context) {
-          return BlocProvider.value(
-            value: TrickBloc(),
-            child: _CustomDialog(
-              trickCommendModel: trickCommendModel,
-              trickModel: trickModel,
+          //TODO I have to Fix here
+          return BlocProvider(
+            create: (context) => TrickBloc(),
+            child: BlocConsumer<TrickBloc, TrickState>(
+              listener: (context, state) {
+                if (state is TrickResponseDeleteState) {
+                  return state.responseDelete.fold((l) {
+                    CustomSnakBar.getCustomSnakBar(l, context);
+                  }, (r) {
+                    if (r) {
+                      BlocProvider.of<TrickBloc>(context)
+                          .add(TrickRequestCommedEvent(trickModel.id));
+                    }
+                  });
+                }
+              },
+              builder: (context, state) {
+                return _CustomDialog(
+                  trickCommendModel: trickCommendModel,
+                  trickModel: trickModel,
+                );
+              },
             ),
           );
         },
@@ -521,8 +558,6 @@ Widget deletIconStatus(TrickState state, context, TrickModel trickModel,
     ),
   );
 }
-
-
 
 class _CustomDialog extends StatelessWidget {
   _CustomDialog({

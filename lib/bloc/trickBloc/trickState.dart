@@ -38,3 +38,14 @@ class TrickResponseDeleteState extends TrickState{
   Either<String,bool> responseDelete;
   TrickResponseDeleteState(this.responseDelete); 
 }
+
+
+class TrickUpdateLoadingState extends TrickState{
+
+}
+
+
+class TrickUpdateResponseState extends TrickState{
+  Either<String,bool> updateResponse;
+  TrickUpdateResponseState(this.updateResponse);
+}

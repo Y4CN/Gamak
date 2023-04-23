@@ -11,6 +11,8 @@ abstract class ITrickRepository {
       String trickId);
   Future<Either<String, bool>> postTrickCommemd(String trickId, String commend);
   Future<Either<String, bool>> deleteTrickCommemd(String commendId);
+  Future<Either<String, bool>> updateTrickcommend(
+      String commendId, String commend, String trickId);
 }
 
 class TrickRepository extends ITrickRepository {
@@ -46,11 +48,22 @@ class TrickRepository extends ITrickRepository {
       throw Left(e.message ?? 'خطای ناشناخته');
     }
   }
-  
+
   @override
   Future<Either<String, bool>> deleteTrickCommemd(String commendId) async {
-     try {
+    try {
       var response = await _dataSource.deleteTrickCommemd(commendId);
+      return Right(response);
+    } on ErrorHandler catch (e) {
+      throw Left(e.message ?? 'خطای ناشناخته');
+    }
+  }
+
+  @override
+  Future<Either<String, bool>> updateTrickcommend(
+      String commendId, String commend, String trickId) async {
+    try {
+      var response = await _dataSource.updateTrickcommend(commendId, commend, trickId);
       return Right(response);
     } on ErrorHandler catch (e) {
       throw Left(e.message ?? 'خطای ناشناخته');
