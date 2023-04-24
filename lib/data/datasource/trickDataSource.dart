@@ -128,23 +128,22 @@ class TrickDataSource extends ITrickDataSource {
   Future<bool> addTrick(String title, String description, List<File> images,
       String gameID) async {
     try {
-      
-       sendingMultiFile() async {
-        for (var element in images) {
-          await MultipartFile.fromFile(element.path);
-        }
-      }
-
       FormData _formData = FormData.fromMap({
         'author_id': ShareManager.readUserId(),
         'game_id': gameID,
         'status': 'checking',
         'description': description,
-        'image':
-            // ignore: unnecessary_null_comparison
-            images == null ? null : sendingMultiFile(),
         'title': title,
       });
+
+      for (var element in images) {
+        _formData.files.add(
+          MapEntry(
+            'image',
+            await MultipartFile.fromFile(element.path),
+          ),
+        );
+      }
 
       await _dio.post(
         'collections/trick_games/records',
