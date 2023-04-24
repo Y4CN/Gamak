@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:game_hacks_chat/data/model/clientTrickModel.dart';
 import 'package:game_hacks_chat/data/model/trickCommendModel.dart';
 import 'package:game_hacks_chat/data/model/trickModel.dart';
 
@@ -60,4 +61,13 @@ class TrickLoadingAddTrickState extends TrickState{
 class TrcikResponseAddTrickState extends TrickState{
   Either<String , bool> addTrick;
   TrcikResponseAddTrickState(this.addTrick);
+}
+
+
+class TrickGetTrickUserLoadingState extends TrickState{}
+
+
+class TrickGetTriclResponseState extends TrickState{
+  Either<String,List<ClientTrickModel>> trickUser;
+  TrickGetTriclResponseState(this.trickUser);
 }

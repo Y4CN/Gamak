@@ -44,3 +44,6 @@ class TrickAddTrickEvent extends TrickEvent{
 
   TrickAddTrickEvent(this.description,this.gameId,this.images,this.title);
 }
+
+
+class TrickGetTrickUser extends TrickEvent{}
