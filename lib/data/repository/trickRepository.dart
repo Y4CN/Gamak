@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
 import 'package:game_hacks_chat/data/datasource/trickDataSource.dart';
 import 'package:game_hacks_chat/data/model/trickCommendModel.dart';
@@ -9,6 +11,8 @@ abstract class ITrickRepository {
   Future<Either<String, List<TrickModel>>> getTrickGame(String gameId);
   Future<Either<String, List<TrickCommendModel>>> getTrickCommed(
       String trickId);
+  Future<Either<String, TrickModel>> addTrick(
+      String title, String description, List<File> images, String gameID);
   Future<Either<String, bool>> postTrickCommemd(String trickId, String commend);
   Future<Either<String, bool>> deleteTrickCommemd(String commendId);
   Future<Either<String, bool>> updateTrickcommend(
@@ -63,7 +67,20 @@ class TrickRepository extends ITrickRepository {
   Future<Either<String, bool>> updateTrickcommend(
       String commendId, String commend, String trickId) async {
     try {
-      var response = await _dataSource.updateTrickcommend(commendId, commend, trickId);
+      var response =
+          await _dataSource.updateTrickcommend(commendId, commend, trickId);
+      return Right(response);
+    } on ErrorHandler catch (e) {
+      throw Left(e.message ?? 'خطای ناشناخته');
+    }
+  }
+
+  @override
+  Future<Either<String, TrickModel>> addTrick(String title, String description,
+      List<File> images, String gameID) async {
+    try {
+      var response =
+          await _dataSource.addTrick(title, description, images, gameID);
       return Right(response);
     } on ErrorHandler catch (e) {
       throw Left(e.message ?? 'خطای ناشناخته');

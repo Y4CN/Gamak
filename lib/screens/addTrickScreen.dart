@@ -205,7 +205,9 @@ class _AddTrickScreenState extends State<AddTrickScreen> {
                     onPressed: () async {
                       if (images.length >= 10) {
                         CustomSnakBar.getCustomSnakBar(
-                            'بیشتر از ۱۰ عکس نمیتوانید قرار دهید !', context);
+                          'بیشتر از ۱۰ عکس نمیتوانید قرار دهید !',
+                          context,
+                        );
                         return;
                       }
                       var file = await FileManager.pickFile();

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:game_hacks_chat/data/model/trickCommendModel.dart';
 import 'package:game_hacks_chat/data/model/trickModel.dart';
@@ -7,6 +9,8 @@ import 'package:game_hacks_chat/utilities/sharManager.dart';
 
 abstract class ITrickDataSource {
   Future<List<TrickModel>> getTrickGame(String gameId);
+  Future<TrickModel> addTrick(
+      String title, String description, List<File> images, String gameID);
   Future<List<TrickCommendModel>> getTrickCommed(String trickId);
   Future<bool> postTrickCommemd(String trickId, String commend);
   Future<bool> deleteTrickCommemd(String commendId);
@@ -113,6 +117,34 @@ class TrickDataSource extends ITrickDataSource {
         queryParameters: qpar,
       );
       return true;
+    } on DioError catch (ex) {
+      throw ErrorHandler(ex.response?.statusCode, ex.response?.data['message']);
+    } catch (ex) {
+      throw ErrorHandler(0, 'unknown erorr');
+    }
+  }
+
+  @override
+  Future<TrickModel> addTrick(String title, String description,
+      List<File> images, String gameID) async {
+    try {
+      Map<String, dynamic> qpar = {
+        'expand': 'user_id',
+      };
+      FormData _formData = FormData.fromMap({
+        'author_id': ShareManager.readUserId(),
+        'game_id': gameID,
+        'status': 'checking',
+        'description': description,
+        'image': images,
+        'title': title,
+      });
+      var response = await _dio.post(
+        'collections/trick_games/records',
+        queryParameters: qpar,
+        data: _formData,
+      );
+      return TrickModel.fromJson(response.data);
     } on DioError catch (ex) {
       throw ErrorHandler(ex.response?.statusCode, ex.response?.data['message']);
     } catch (ex) {
