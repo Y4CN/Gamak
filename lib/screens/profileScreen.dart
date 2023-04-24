@@ -7,6 +7,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:game_hacks_chat/bloc/authBloc/authBloc.dart';
 import 'package:game_hacks_chat/bloc/authBloc/authEvent.dart';
 import 'package:game_hacks_chat/bloc/authBloc/authState.dart';
+import 'package:game_hacks_chat/bloc/trickBloc/trickBloc.dart';
+import 'package:game_hacks_chat/bloc/trickBloc/trickEvent.dart';
 import 'package:game_hacks_chat/constant/generallColor.dart';
 import 'package:game_hacks_chat/screens/clientTrickScreen.dart';
 import 'package:game_hacks_chat/screens/splashScreen.dart';
@@ -216,7 +218,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 Navigator.push(
                                   context,
                                   PageTransition(
-                                    child: const ClientTrickScreen(),
+                                    child: BlocProvider(
+                                      create: (context) => TrickBloc()..add(TrickGetTrickUser()),
+                                      child: const ClientTrickScreen(),
+                                    ),
                                     type: PageTransitionType.fade,
                                     duration: const Duration(milliseconds: 200),
                                   ),

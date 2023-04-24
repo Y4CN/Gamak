@@ -172,7 +172,7 @@ class TrickDataSource extends ITrickDataSource {
         queryParameters: qpar,
       );
       return response.data['items']
-          .map<TrickModel>((e) => TrickModel.fromJson(e))
+          .map<ClientTrickModel>((e) => ClientTrickModel.fromJson(e))
           .toList();
     } on DioError catch (ex) {
       throw ErrorHandler(ex.response?.statusCode, ex.response?.data['message']);
