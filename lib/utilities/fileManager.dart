@@ -4,6 +4,7 @@ import 'package:dartz/dartz.dart';
 import 'package:file_picker/file_picker.dart';
 
 class FileManager {
+  FileManager._();
   static Future<Either<String, File>> pickFile() async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       type: FileType.image,

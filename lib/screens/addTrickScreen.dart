@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:game_hacks_chat/constant/generallColor.dart';
+import 'package:game_hacks_chat/utilities/fileManager.dart';
 import 'package:game_hacks_chat/widget/customSnakBar.dart';
 
 class AddTrickScreen extends StatefulWidget {
@@ -14,6 +17,8 @@ class _AddTrickScreenState extends State<AddTrickScreen> {
   late TextEditingController _titleTextEditController;
   late TextEditingController _descriptionTexrEditController;
   late PageController _pageController;
+  ValueNotifier _imageNotifier = ValueNotifier<int>(0);
+  List<File> images = [];
 
   @override
   void initState() {
@@ -127,29 +132,65 @@ class _AddTrickScreenState extends State<AddTrickScreen> {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 200,
-                  width: double.infinity,
-                  child: PageView.builder(
-                    controller: _pageController,
-                    itemCount: 10,
-                    itemBuilder: (context, index) {
-                      return Container(
-                        margin: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                          vertical: 8,
+                ValueListenableBuilder(
+                  valueListenable: _imageNotifier,
+                  builder: (context, value, child) {
+                    return Visibility(
+                      visible: images.isNotEmpty,
+                      child: SizedBox(
+                        height: 200,
+                        width: double.infinity,
+                        child: PageView.builder(
+                          controller: _pageController,
+                          itemCount: images.length,
+                          itemBuilder: (context, index) {
+                            return Stack(
+                              children: [
+                                Container(
+                                  margin: const EdgeInsets.symmetric(
+                                    horizontal: 10,
+                                    vertical: 8,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: FileImage(images[index]),
+                                      fit: BoxFit.cover,
+                                    ),
+                                    color: Colors.white,
+                                    border: Border.all(
+                                      color: Colors.black,
+                                      width: .2,
+                                    ),
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                ),
+                                Positioned(
+                                  top: 10,
+                                  right: 10,
+                                  child: IconButton(
+                                    onPressed: () {
+                                      images.removeAt(index);
+                                      _imageNotifier.value = images.length;
+                                      _imageNotifier.notifyListeners();
+                                      CustomSnakBar.getCustomSnakBar(
+                                        'عکس با موفقیت حذف شد',
+                                        context,
+                                      );
+                                    },
+                                    icon: const Icon(
+                                      CupertinoIcons.trash_circle,
+                                      color: Colors.red,
+                                      size: 40,
+                                    ),
+                                  ),
+                                )
+                              ],
+                            );
+                          },
                         ),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(
-                            color: Colors.black,
-                            width: .2,
-                          ),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      );
-                    },
-                  ),
+                      ),
+                    );
+                  },
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -161,7 +202,32 @@ class _AddTrickScreenState extends State<AddTrickScreen> {
                       ),
                       minimumSize: const Size(150, 40),
                     ),
-                    onPressed: () {},
+                    onPressed: () async {
+                      if (images.length >= 10) {
+                        CustomSnakBar.getCustomSnakBar(
+                            'بیشتر از ۱۰ عکس نمیتوانید قرار دهید !', context);
+                        return;
+                      }
+                      var file = await FileManager.pickFile();
+                      file.fold((l) {
+                        CustomSnakBar.getCustomSnakBar(l, context);
+                      }, (r) async {
+                        var sizeFile = await r.length();
+                        if (sizeFile >= 10485760) {
+                          // ignore: use_build_context_synchronously
+                          CustomSnakBar.getCustomSnakBar(
+                              'فایل شما باید کم تر از ۱۰ مگابایت باشد !',
+                              context);
+                          return;
+                        }
+                        images.add(r);
+                        _imageNotifier.value = images.length;
+                        _imageNotifier.notifyListeners();
+                        // ignore: use_build_context_synchronously
+                        CustomSnakBar.getCustomSnakBar(
+                            'عکس شما با موفقیت اضافه شد !', context);
+                      });
+                    },
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: const [
@@ -196,7 +262,7 @@ class _AddTrickScreenState extends State<AddTrickScreen> {
                       ),
                       minimumSize: const Size(double.infinity, 50),
                     ),
-                    onPressed: () {
+                    onPressed: () async {
                       if (_titleTextEditController.text.trim().isEmpty) {
                         CustomSnakBar.getCustomSnakBar(
                             'لطفا اسم ترفند را وارد کنین', context);
@@ -206,7 +272,9 @@ class _AddTrickScreenState extends State<AddTrickScreen> {
                           _descriptionTexrEditController.text.trim().length <=
                               10) {
                         CustomSnakBar.getCustomSnakBar(
-                            'لطفا ترفند خودتون رو بنویسین', context);
+                          'لطفا ترفند خودتون رو بنویسین',
+                          context,
+                        );
                         return;
                       }
                     },
