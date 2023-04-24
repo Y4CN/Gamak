@@ -216,7 +216,10 @@ class _TrickListScreenState extends State<TrickListScreen> {
           Navigator.push(
             context,
             PageTransition(
-              child: const AddTrickScreen(),
+              child: BlocProvider(
+                create: (context) => TrickBloc(),
+                child: const AddTrickScreen(),
+              ),
               type: PageTransitionType.fade,
               duration: const Duration(milliseconds: 200),
             ),

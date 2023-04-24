@@ -39,5 +39,11 @@ class TrickBloc extends Bloc<TrickEvent, TrickState> {
           event.commendId, event.commend, event.trickId);
       emit(TrickUpdateResponseState(updateResponse));
     });
+
+    on<TrickAddTrickEvent>((event, emit) async {
+      emit(TrickLoadingAddTrickState());
+      var addTrick = await _trickRepository.addTrick(event.title, event.description, event.images, event.gameId);
+      emit(TrcikResponseAddTrickState(addTrick));
+    });
   }
 }

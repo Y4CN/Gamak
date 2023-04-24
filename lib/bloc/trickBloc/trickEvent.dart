@@ -1,3 +1,5 @@
+import 'dart:io';
+
 class TrickEvent {}
 
 class TrickRequestEvent extends TrickEvent {
@@ -31,4 +33,14 @@ class TrickUpdateEvent extends TrickEvent {
     required this.commendId,
     required this.trickId,
   });
+}
+
+
+class TrickAddTrickEvent extends TrickEvent{
+  String title;
+  String description;
+  String gameId;
+  List<File> images;
+
+  TrickAddTrickEvent(this.description,this.gameId,this.images,this.title);
 }
