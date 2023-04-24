@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:game_hacks_chat/data/datasource/trickDataSource.dart';
+import 'package:game_hacks_chat/data/model/clientTrickModel.dart';
 import 'package:game_hacks_chat/data/model/trickCommendModel.dart';
 import 'package:game_hacks_chat/data/model/trickModel.dart';
 import 'package:game_hacks_chat/locator.dart';
@@ -17,6 +18,7 @@ abstract class ITrickRepository {
   Future<Either<String, bool>> deleteTrickCommemd(String commendId);
   Future<Either<String, bool>> updateTrickcommend(
       String commendId, String commend, String trickId);
+  Future<Either<String, List<ClientTrickModel>>> getAllTrickUser();
 }
 
 class TrickRepository extends ITrickRepository {
@@ -81,6 +83,16 @@ class TrickRepository extends ITrickRepository {
     try {
       var response =
           await _dataSource.addTrick(title, description, images, gameID);
+      return Right(response);
+    } on ErrorHandler catch (e) {
+      throw Left(e.message ?? 'خطای ناشناخته');
+    }
+  }
+
+  @override
+  Future<Either<String, List<ClientTrickModel>>> getAllTrickUser() async {
+    try {
+      var response = await _dataSource.getAllTrickUser();
       return Right(response);
     } on ErrorHandler catch (e) {
       throw Left(e.message ?? 'خطای ناشناخته');
