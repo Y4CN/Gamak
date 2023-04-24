@@ -58,6 +58,6 @@ class TrickLoadingAddTrickState extends TrickState{
 
 
 class TrcikResponseAddTrickState extends TrickState{
-  Either<String , TrickModel> addTrick;
+  Either<String , bool> addTrick;
   TrcikResponseAddTrickState(this.addTrick);
 }

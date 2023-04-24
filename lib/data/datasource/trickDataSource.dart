@@ -9,7 +9,7 @@ import 'package:game_hacks_chat/utilities/sharManager.dart';
 
 abstract class ITrickDataSource {
   Future<List<TrickModel>> getTrickGame(String gameId);
-  Future<TrickModel> addTrick(
+  Future<bool> addTrick(
       String title, String description, List<File> images, String gameID);
   Future<List<TrickCommendModel>> getTrickCommed(String trickId);
   Future<bool> postTrickCommemd(String trickId, String commend);
@@ -125,27 +125,34 @@ class TrickDataSource extends ITrickDataSource {
   }
 
   @override
-  Future<TrickModel> addTrick(String title, String description,
-      List<File> images, String gameID) async {
+  Future<bool> addTrick(String title, String description, List<File> images,
+      String gameID) async {
     try {
-      Map<String, dynamic> qpar = {
-        'expand': 'user_id',
-      };
+      
+       sendingMultiFile() async {
+        for (var element in images) {
+          await MultipartFile.fromFile(element.path);
+        }
+      }
+
       FormData _formData = FormData.fromMap({
         'author_id': ShareManager.readUserId(),
         'game_id': gameID,
         'status': 'checking',
         'description': description,
-        'image': images,
+        'image':
+            // ignore: unnecessary_null_comparison
+            images == null ? null : sendingMultiFile(),
         'title': title,
       });
-      var response = await _dio.post(
+
+      await _dio.post(
         'collections/trick_games/records',
-        queryParameters: qpar,
         data: _formData,
       );
-      return TrickModel.fromJson(response.data);
+      return true;
     } on DioError catch (ex) {
+      print(ex);
       throw ErrorHandler(ex.response?.statusCode, ex.response?.data['message']);
     } catch (ex) {
       throw ErrorHandler(0, 'unknown erorr');

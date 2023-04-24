@@ -11,7 +11,7 @@ abstract class ITrickRepository {
   Future<Either<String, List<TrickModel>>> getTrickGame(String gameId);
   Future<Either<String, List<TrickCommendModel>>> getTrickCommed(
       String trickId);
-  Future<Either<String, TrickModel>> addTrick(
+  Future<Either<String, bool>> addTrick(
       String title, String description, List<File> images, String gameID);
   Future<Either<String, bool>> postTrickCommemd(String trickId, String commend);
   Future<Either<String, bool>> deleteTrickCommemd(String commendId);
@@ -76,7 +76,7 @@ class TrickRepository extends ITrickRepository {
   }
 
   @override
-  Future<Either<String, TrickModel>> addTrick(String title, String description,
+  Future<Either<String, bool>> addTrick(String title, String description,
       List<File> images, String gameID) async {
     try {
       var response =

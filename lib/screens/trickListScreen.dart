@@ -218,7 +218,9 @@ class _TrickListScreenState extends State<TrickListScreen> {
             PageTransition(
               child: BlocProvider(
                 create: (context) => TrickBloc(),
-                child: const AddTrickScreen(),
+                child: AddTrickScreen(
+                  gameProductModel: widget.gameProductModel,
+                ),
               ),
               type: PageTransitionType.fade,
               duration: const Duration(milliseconds: 200),
