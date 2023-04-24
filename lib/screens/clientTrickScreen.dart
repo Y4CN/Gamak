@@ -40,7 +40,8 @@ class _ClientTrickScreenState extends State<ClientTrickScreen> {
                               width: 50,
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                color: GenerallColor.primaryColor.withOpacity(.6),
+                                color:
+                                    GenerallColor.primaryColor.withOpacity(.6),
                               ),
                               child: const Center(
                                 child: Icon(
@@ -112,17 +113,11 @@ class _ClientTrickScreenState extends State<ClientTrickScreen> {
                 ),
               ];
             },
-            body: TabBarView(
+            body: const TabBarView(
               children: [
-                Container(
-                  color: Colors.red,
-                ),
-                Container(
-                  color: Colors.blue,
-                ),
-                Container(
-                  color: Colors.green,
-                ),
+                _UnChechedTrick(),
+                _BadTrick(),
+               _GoodTrick()
               ],
             ),
           ),
@@ -154,5 +149,63 @@ class TabBarViewDelegate extends SliverPersistentHeaderDelegate {
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
     return false;
+  }
+}
+
+
+
+
+
+class _UnChechedTrick extends StatelessWidget {
+  const _UnChechedTrick({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: 10,
+      itemBuilder: (context, index) {
+        return Container(
+          height: 30,
+          margin: const EdgeInsets.all(10),
+          color: Colors.red,
+        );
+      },
+    );
+  }
+}
+
+class _BadTrick extends StatelessWidget {
+  const _BadTrick({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: 10,
+      itemBuilder: (context, index) {
+        return Container(
+          height: 30,
+          margin: const EdgeInsets.all(10),
+          color: Colors.green,
+        );
+      },
+    );
+  }
+}
+
+class _GoodTrick extends StatelessWidget {
+  const _GoodTrick({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: 10,
+      itemBuilder: (context, index) {
+        return Container(
+          height: 30,
+          margin: const EdgeInsets.all(10),
+          color: Colors.black,
+        );
+      },
+    );
   }
 }
