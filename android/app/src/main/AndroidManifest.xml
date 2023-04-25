@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.game_hacks_chat">
+    package="com.Y4CN.gamak">
    <application
-        android:label="game_hacks_chat"
+        android:label="گیمک"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
