@@ -197,14 +197,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               color: Colors.grey,
                               height: .2,
                             ),
-                            ListTile(
-                              leading: const Icon(
-                                CupertinoIcons.game_controller_solid,
-                                color: Colors.black54,
-                              ),
-                              onTap: () {},
-                              title: const Text('سفارش های شما'),
-                            ),
+                            // ListTile(
+                            //   leading: const Icon(
+                            //     CupertinoIcons.game_controller_solid,
+                            //     color: Colors.black54,
+                            //   ),
+                            //   onTap: () {},
+                            //   title: const Text('سفارش های شما'),
+                            // ),
                             const Divider(
                               color: Colors.grey,
                               height: .2,
