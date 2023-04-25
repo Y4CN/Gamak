@@ -185,7 +185,8 @@ class _ClientTrickScreenState extends State<ClientTrickScreen> {
                             : _GoodTrick(
                                 clientTrickModel: r
                                     .where(
-                                        (element) => element.status == 'good')
+                                      (element) => element.status == 'good',
+                                    )
                                     .toList(),
                               ),
                       ],
@@ -323,7 +324,6 @@ class _singleShowTrickWidget extends StatelessWidget {
                     return Container(
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
-                          color: Colors.amber,
                           borderRadius: BorderRadius.circular(12),
                           image: DecorationImage(
                               image: imageProvider, fit: BoxFit.cover)),
@@ -337,7 +337,6 @@ class _singleShowTrickWidget extends StatelessWidget {
                     return Container(
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
-                        color: Colors.amber,
                         borderRadius: BorderRadius.circular(12),
                       ),
                       margin: const EdgeInsets.symmetric(
@@ -354,7 +353,6 @@ class _singleShowTrickWidget extends StatelessWidget {
                     return Container(
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
-                        color: Colors.amber,
                         borderRadius: BorderRadius.circular(12),
                       ),
                       margin: const EdgeInsets.symmetric(
