@@ -355,8 +355,12 @@ class _TrickSingleScreenState extends State<TrickSingleScreen> {
                                   children: [
                                     CircleAvatar(
                                       minRadius: 20,
+                                      backgroundColor: GenerallColor
+                                          .appBarBackGroundColor
+                                          .withOpacity(.6),
                                       backgroundImage: NetworkImage(
-                                          r[index].userModel.avatar),
+                                        r[index].userModel.avatar,
+                                      ),
                                     ),
                                     const SizedBox(
                                       width: 10,

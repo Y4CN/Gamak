@@ -11,6 +11,7 @@ import 'package:game_hacks_chat/data/model/gameProductModel.dart';
 import 'package:game_hacks_chat/utilities/fileManager.dart';
 import 'package:game_hacks_chat/widget/customSnakBar.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:pushpole/pushpole.dart';
 
 class AddTrickScreen extends StatefulWidget {
   AddTrickScreen({super.key, required this.gameProductModel});
@@ -352,10 +353,24 @@ class _AddTrickScreenState extends State<AddTrickScreen> {
                   (l) {
                     CustomSnakBar.getCustomSnakBar(l, context);
                   },
-                  (r) {
-                    CustomSnakBar.getCustomSnakBar(
-                        'ترفند شما با موفقیت ثبت شد و پس از بررسی قرار داده می شود ',
-                        context);
+                  (r) async {
+                    if (r) {
+                      CustomSnakBar.getCustomSnakBar(
+                          'ترفند شما با موفقیت ثبت شد و پس از بررسی قرار داده می شود ',
+                          context);
+                      _descriptionTexrEditController.clear();
+                      _titleTextEditController.clear();
+                      images.clear();
+                      var pushpoleId = await PushPole.getId();
+
+                      PushPole.sendSimpleNotifToUser(
+                          pushpoleId,
+                          'ممنون از ثبت ترفند',
+                          'ترفند شما پس از بررسی قرار داده خواهد شد و در قسمت پروفایل خود میتوانین ترفند خود را ببینین');
+                    } else {
+                      CustomSnakBar.getCustomSnakBar(
+                          'ارسال ترفند شما به مشکل خورده است', context);
+                    }
                   },
                 );
               }
