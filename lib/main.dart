@@ -7,7 +7,7 @@ import 'package:game_hacks_chat/screens/splashScreen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await PushPole.initialize();
+  PushPole.initialize();
   await initGet_it();
   runApp(const MyApp());
 }
