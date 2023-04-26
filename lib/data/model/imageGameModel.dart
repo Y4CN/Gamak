@@ -1,3 +1,5 @@
+import 'package:game_hacks_chat/constant/mainAddress.dart';
+
 class ImageGameModel {
   String id;
   String image;
@@ -13,7 +15,7 @@ class ImageGameModel {
     return ImageGameModel(
       gameId: jsonData['game_id'],
       id: jsonData['id'],
-      image: 'http://127.0.0.1:8090/api/files/${jsonData['collectionId']}/${jsonData['id']}/${jsonData['image']}',
+      image: '${MainAddress.apiAddress}files/${jsonData['collectionId']}/${jsonData['id']}/${jsonData['image']}',
     );
   }
 }

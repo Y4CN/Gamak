@@ -1,3 +1,4 @@
+import 'package:game_hacks_chat/constant/mainAddress.dart';
 import 'package:game_hacks_chat/data/model/categoryModel.dart';
 
 class GameProductModel {
@@ -26,13 +27,13 @@ class GameProductModel {
       categoryId: jsonData['category_id'],
       id: jsonData['id'],
       image:
-          'http://127.0.0.1:8090/api/files/${jsonData['collectionId']}/${jsonData['id']}/${jsonData['image']}',
+          '${MainAddress.apiAddress}files/${jsonData['collectionId']}/${jsonData['id']}/${jsonData['image']}',
       rate: jsonData['rate'],
       name: jsonData['name'],
       categoryModel: CategoryModel.fromJson(jsonData['expand']['category_id']),
       mode: jsonData['mode'],
       imaheBanner:
-          'http://127.0.0.1:8090/api/files/${jsonData['collectionId']}/${jsonData['id']}/${jsonData['banner_image']}',
+          '${MainAddress.apiAddress}files/${jsonData['collectionId']}/${jsonData['id']}/${jsonData['banner_image']}',
     );
   }
 }

@@ -1,3 +1,5 @@
+import 'package:game_hacks_chat/constant/mainAddress.dart';
+
 class BannerModel {
   String collectionId;
   String id;
@@ -15,7 +17,7 @@ class BannerModel {
       collectionId: jsonData['collectionId'],
       id: jsonData['id'],
       image:
-          'http://127.0.0.1:8090/api/files/${jsonData['collectionId']}/${jsonData['id']}/${jsonData['image']}',
+          '${MainAddress.apiAddress}files/${jsonData['collectionId']}/${jsonData['id']}/${jsonData['image']}',
       title: jsonData['title'],
     );
   }

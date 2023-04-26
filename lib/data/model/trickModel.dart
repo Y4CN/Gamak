@@ -1,3 +1,4 @@
+import 'package:game_hacks_chat/constant/mainAddress.dart';
 import 'package:game_hacks_chat/data/model/userModel.dart';
 
 class TrickModel {
@@ -32,7 +33,7 @@ class TrickModel {
       id: jsonData['id'],
       images: (jsonData['image'] as List<dynamic>)
           .map((e) =>
-              'http://127.0.0.1:8090/api/files/${jsonData['collectionId']}/${jsonData['id']}/${e}')
+              '${MainAddress.apiAddress}files/${jsonData['collectionId']}/${jsonData['id']}/${e}')
           .toList()
           .cast<String>(),
       status: jsonData['status'],

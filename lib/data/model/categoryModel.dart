@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:game_hacks_chat/constant/mainAddress.dart';
 
 class CategoryModel {
   String id;
@@ -19,7 +20,7 @@ class CategoryModel {
       id: jsonData['id'],
       color: jsonData['color'],
       image:
-          'http://127.0.0.1:8090/api/files/${jsonData['collectionId']}/${jsonData['id']}/${jsonData['image']}',
+          '${MainAddress.apiAddress}files/${jsonData['collectionId']}/${jsonData['id']}/${jsonData['image']}',
       title: jsonData['title'],
     );
   }

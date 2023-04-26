@@ -1,3 +1,5 @@
+import 'package:game_hacks_chat/constant/mainAddress.dart';
+
 class BannerDetailsModel {
   String bannerId;
   String discountPrice;
@@ -23,7 +25,7 @@ class BannerDetailsModel {
       price: jsonData['price'],
       title: jsonData['title'],
       image:
-          'http://127.0.0.1:8090/api/files/${jsonData['collectionId']}/${jsonData['id']}/${jsonData['image']}',
+          '${MainAddress.apiAddress}files/${jsonData['collectionId']}/${jsonData['id']}/${jsonData['image']}',
     );
   }
 }

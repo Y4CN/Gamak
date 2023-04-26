@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:game_hacks_chat/constant/mainAddress.dart';
 import 'package:game_hacks_chat/data/datasource/authDataSourca.dart';
 import 'package:game_hacks_chat/data/datasource/banner_dataSource.dart';
 import 'package:game_hacks_chat/data/datasource/categoryDataSource.dart';
@@ -26,7 +27,7 @@ Future<void> initGet_it() async {
   locator.registerSingleton<Dio>(
     Dio(
       
-      BaseOptions(baseUrl:Platform.isAndroid? 'http://10.0.2.2:8090/api/' : 'http://127.0.0.1:8090/api/'),
+      BaseOptions(baseUrl:MainAddress.apiAddress),
     ),
   );
 
