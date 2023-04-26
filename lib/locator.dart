@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:game_hacks_chat/data/datasource/authDataSourca.dart';
 import 'package:game_hacks_chat/data/datasource/banner_dataSource.dart';
@@ -22,7 +24,11 @@ Future<void> initGet_it() async {
   );
 
   locator.registerSingleton<Dio>(
-      Dio(BaseOptions(baseUrl: 'http://127.0.0.1:8090/api/')));
+    Dio(
+      
+      BaseOptions(baseUrl:Platform.isAndroid? 'http://10.0.2.2:8090/api/' : 'http://127.0.0.1:8090/api/'),
+    ),
+  );
 
   //dataSource
   locator.registerSingleton<ICategoryDatasource>(CategoryDataSource());
