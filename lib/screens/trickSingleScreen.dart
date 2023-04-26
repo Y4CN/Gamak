@@ -147,45 +147,6 @@ class _TrickSingleScreenState extends State<TrickSingleScreen> {
                     ),
                   ),
                 ),
-                // SliverToBoxAdapter(
-                //   child: Container(
-                //     margin: const EdgeInsets.symmetric(
-                //       vertical: 10,
-                //       horizontal: 10,
-                //     ),
-                //     height: 80,
-                //     width: double.infinity,
-                //     decoration: BoxDecoration(
-                //       color: Colors.white,
-                //       borderRadius: BorderRadius.circular(15),
-                //       border: Border.all(
-                //         color: Colors.black54,
-                //         width: 1,
-                //       ),
-                //     ),
-                //     child: Padding(
-                //       padding: const EdgeInsets.symmetric(horizontal: 15),
-                //       child: Row(
-                //         children: const [
-                //           CircleAvatar(
-                //             radius: 30,
-                //           ),
-                //           Padding(
-                //             padding: EdgeInsets.only(
-                //               right: 10,
-                //             ),
-                //             child: Text(
-                //               'Author',
-                //               style: TextStyle(
-                //                 fontSize: 16,
-                //               ),
-                //             ),
-                //           )
-                //         ],
-                //       ),
-                //     ),
-                //   ),
-                // ),
                 SliverToBoxAdapter(
                   child: Visibility(
                     visible: widget.trickModel.images.isNotEmpty,
@@ -275,6 +236,49 @@ class _TrickSingleScreenState extends State<TrickSingleScreen> {
                               ),
                             ),
                           ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: Container(
+                    margin: const EdgeInsets.symmetric(
+                      vertical: 10,
+                      horizontal: 10,
+                    ),
+                    height: 60,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(15),
+                      border: Border.all(
+                        color: Colors.black54,
+                        width: 1,
+                      ),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: Row(
+                        children: [
+                          CircleAvatar(
+                            backgroundColor: Colors.transparent,
+                            radius: 20,
+                            backgroundImage: NetworkImage(
+                              widget.trickModel.userModel.avatar,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              right: 10,
+                            ),
+                            child: Text(
+                              'نویسنده : ${widget.trickModel.userModel.name}',
+                              style: const TextStyle(
+                                fontSize: 16,
+                              ),
+                            ),
+                          )
                         ],
                       ),
                     ),
