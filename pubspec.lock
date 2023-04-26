@@ -469,6 +469,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.0.5"
+  pushpole:
+    dependency: "direct main"
+    description:
+      name: pushpole
+      sha256: c6ac5f5ebf9a012546915a14b0035b4f0b41925ed29de5a4bb35da175e6f0d39
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.7.8"
   rive:
     dependency: "direct main"
     description:
