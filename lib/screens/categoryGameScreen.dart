@@ -29,7 +29,7 @@ class _CategoryGameScreenState extends State<CategoryGameScreen> {
   @override
   Widget build(BuildContext context) {
     return Directionality(
-        textDirection: TextDirection.ltr,
+        textDirection: TextDirection.rtl,
         child: Scaffold(
           appBar: AppBar(
             leading: IconButton(

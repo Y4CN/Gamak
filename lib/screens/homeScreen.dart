@@ -227,39 +227,39 @@ class _HomeScreenState extends State<HomeScreen> {
               //                             ),
               //                           );
               //                         },
-                                    // ),
-                              //       Visibility(
-                              //         visible: r.length > 1,
-                              //         child: Positioned(
-                              //           bottom: 4,
-                              //           left: 0,
-                              //           right: 0,
-                              //           child: Center(
-                              //             child: SmoothPageIndicator(
-                              //               controller: _bannerPageController,
-                              //               count: r.length,
-                              //               effect: const ScrollingDotsEffect(
-                              //                 fixedCenter: true,
-                              //                 activeDotColor: Colors.black,
-                              //                 dotColor: Colors.white,
-                              //                 dotHeight: 12,
-                              //                 dotWidth: 12,
-                              //                 spacing: 10,
-                              //               ),
-                              //             ),
-                              //           ),
-                              //         ),
-                              //       )
-                              //     ],
-                              //   ),
-                              // ),
-                            // ],
-                          // ),
-                        // )
-                      // : const SliverToBoxAdapter(
-                      //     child: Spacer(),
-                      //   );
-                // }),
+              // ),
+              //       Visibility(
+              //         visible: r.length > 1,
+              //         child: Positioned(
+              //           bottom: 4,
+              //           left: 0,
+              //           right: 0,
+              //           child: Center(
+              //             child: SmoothPageIndicator(
+              //               controller: _bannerPageController,
+              //               count: r.length,
+              //               effect: const ScrollingDotsEffect(
+              //                 fixedCenter: true,
+              //                 activeDotColor: Colors.black,
+              //                 dotColor: Colors.white,
+              //                 dotHeight: 12,
+              //                 dotWidth: 12,
+              //                 spacing: 10,
+              //               ),
+              //             ),
+              //           ),
+              //         ),
+              //       )
+              //     ],
+              //   ),
+              // ),
+              // ],
+              // ),
+              // )
+              // : const SliverToBoxAdapter(
+              //     child: Spacer(),
+              //   );
+              // }),
               // },
               if (state is HomeResponseState) ...{
                 state.getAllCategory.fold((l) {
@@ -400,17 +400,45 @@ class _HomeScreenState extends State<HomeScreen> {
               const SliverPadding(
                 padding: EdgeInsets.symmetric(vertical: 10),
               ),
-              const SliverToBoxAdapter(
+              SliverToBoxAdapter(
                 child: Padding(
-                  padding: EdgeInsets.only(right: 20, bottom: 10),
-                  child: Text(
-                    'جدید ترین بازی ها',
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.black,
-                      fontFamily: 'vazirm',
-                      fontWeight: FontWeight.w600,
-                    ),
+                  padding: const EdgeInsets.only(
+                    right: 20,
+                    bottom: 10,
+                    left: 20,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'بازی های آپدیت شده',
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.black,
+                          fontFamily: 'vazirm',
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      TextButton(
+                        style: TextButton.styleFrom(
+                          splashFactory: NoSplash.splashFactory,
+                          backgroundColor: GenerallColor.appBarBackGroundColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          )
+                        ),
+                        onPressed: () {
+                          
+                        },
+                        child: const Text(
+                          'بیشتر',
+                          style: TextStyle(
+                            fontFamily: 'vazirm',
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -434,7 +462,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         );
                       },
-                      childCount: r.length,
+                      childCount: r.length < 5 ? r.length : 5,
                     ),
                   );
                 }),
