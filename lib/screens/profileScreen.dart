@@ -155,13 +155,38 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 Padding(
                                   padding:
                                       const EdgeInsets.symmetric(vertical: 10),
-                                  child: Text(
-                                    r.name,
-                                    style: const TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Visibility(
+                                        visible: r.isBlocked,
+                                        child: const Icon(
+                                          Icons.block,
+                                          color: Colors.red,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        r.name,
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Visibility(
+                                        visible: r.verified,
+                                        child: const Icon(
+                                          Icons.verified,
+                                          color: Colors.blueAccent,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                                 Text(
@@ -219,7 +244,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   context,
                                   PageTransition(
                                     child: BlocProvider(
-                                      create: (context) => TrickBloc()..add(TrickGetTrickUser()),
+                                      create: (context) =>
+                                          TrickBloc()..add(TrickGetTrickUser()),
                                       child: const ClientTrickScreen(),
                                     ),
                                     type: PageTransitionType.fade,
