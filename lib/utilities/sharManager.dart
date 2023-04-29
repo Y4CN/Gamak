@@ -31,7 +31,7 @@ class ShareManager {
   }
 
   static void saveBlockedUser(bool blocked) {
-    _sharedPref.getBool('blocked');
+    _sharedPref.setBool('blocked',blocked);
   }
 
   static bool getBlockedUser() {

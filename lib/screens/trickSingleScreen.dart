@@ -450,104 +450,130 @@ class _TrickSingleScreenState extends State<TrickSingleScreen> {
                   }
                 });
               }
-              return ValueListenableBuilder(
-                valueListenable: _editValueNotivier,
-                builder: (context, value, child) => SafeArea(
-                  child: Container(
-                    width: double.infinity,
-                    height: 80,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 12,
-                    ),
-                    alignment: Alignment.center,
-                    child: TextField(
-                      controller: _commendController,
-                      onSubmitted: (value) {
-                        if (_commendController.text.trim().isEmpty) {
-                          CustomSnakBar.getCustomSnakBar(
-                            'نظر شما خالی است !',
-                            context,
-                          );
-                          return;
-                        }
-                        if (_isEdit) {
-                          _isEdit = false;
-                          BlocProvider.of<TrickBloc>(context).add(
-                            TrickUpdateEvent(
-                              commend: value.trim(),
-                              commendId: _commendId,
-                              trickId: widget.trickModel.id,
-                            ),
-                          );
-                          _commendId = '';
-                        } else {
-                          BlocProvider.of<TrickBloc>(context).add(
-                            TrickSendCommendEvent(
-                              value.trim(),
-                              widget.trickModel.id,
-                            ),
-                          );
-                        }
-                        _commendController.clear();
-                        FocusScope.of(context).unfocus();
-                      },
-                      decoration: InputDecoration(
-                        suffixIcon: state is TrickLoadingCommendState
-                            ? LoadingAnimationWidget.fallingDot(
-                                color: GenerallColor.appBarBackGroundColor,
-                                size: 16)
-                            : IconButton(
-                                onPressed: () {
-                                  if (_commendController.text.trim().isEmpty) {
-                                    CustomSnakBar.getCustomSnakBar(
-                                      'نظر شما خالی است !',
-                                      context,
-                                    );
-                                    return;
-                                  }
-                                  if (_isEdit) {
-                                    _isEdit = false;
-                                    BlocProvider.of<TrickBloc>(context).add(
-                                      TrickUpdateEvent(
-                                        commend: _commendController.text.trim(),
-                                        commendId: _commendId,
-                                        trickId: widget.trickModel.id,
-                                      ),
-                                    );
-                                    _commendId = '';
-                                  } else {
-                                    BlocProvider.of<TrickBloc>(context).add(
-                                      TrickSendCommendEvent(
-                                        _commendController.text.trim(),
-                                        widget.trickModel.id,
-                                      ),
-                                    );
-                                  }
-                                  _commendController.clear();
-                                  FocusScope.of(context).unfocus();
-                                },
-                                icon: const Icon(
-                                  CupertinoIcons.arrow_uturn_left,
-                                ),
-                              ),
-                        fillColor: Colors.white,
-                        filled: true,
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                        ),
-                        labelText: 'نظر خودتون رو بنویسید',
-                        labelStyle: const TextStyle(
-                          fontSize: 14,
-                          fontFamily: 'vazirm',
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
+              return ShareManager.getBlockedUser()
+                  ? Container(
+                      height: 80,
+                      width: double.infinity,
+                      alignment: Alignment.center,
+                      decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.vertical(
+                            top: Radius.circular(20),
+                          ),
+                          boxShadow: [
+                            BoxShadow(color: Colors.black, blurRadius: 6)
+                          ]),
+                      child: const Text(
+                        'شما مسدود شدید نمیتوانین نظر قرار دهید',
+                        style: TextStyle(
+                          fontSize: 18,
                         ),
                       ),
-                    ),
-                  ),
-                ),
-              );
+                    )
+                  : ValueListenableBuilder(
+                      valueListenable: _editValueNotivier,
+                      builder: (context, value, child) => SafeArea(
+                        child: Container(
+                          width: double.infinity,
+                          height: 80,
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                          ),
+                          alignment: Alignment.center,
+                          child: TextField(
+                            controller: _commendController,
+                            onSubmitted: (value) {
+                              if (_commendController.text.trim().isEmpty) {
+                                CustomSnakBar.getCustomSnakBar(
+                                  'نظر شما خالی است !',
+                                  context,
+                                );
+                                return;
+                              }
+                              if (_isEdit) {
+                                _isEdit = false;
+                                BlocProvider.of<TrickBloc>(context).add(
+                                  TrickUpdateEvent(
+                                    commend: value.trim(),
+                                    commendId: _commendId,
+                                    trickId: widget.trickModel.id,
+                                  ),
+                                );
+                                _commendId = '';
+                              } else {
+                                BlocProvider.of<TrickBloc>(context).add(
+                                  TrickSendCommendEvent(
+                                    value.trim(),
+                                    widget.trickModel.id,
+                                  ),
+                                );
+                              }
+                              _commendController.clear();
+                              FocusScope.of(context).unfocus();
+                            },
+                            decoration: InputDecoration(
+                              suffixIcon: state is TrickLoadingCommendState
+                                  ? LoadingAnimationWidget.fallingDot(
+                                      color:
+                                          GenerallColor.appBarBackGroundColor,
+                                      size: 16)
+                                  : IconButton(
+                                      onPressed: () {
+                                        if (_commendController.text
+                                            .trim()
+                                            .isEmpty) {
+                                          CustomSnakBar.getCustomSnakBar(
+                                            'نظر شما خالی است !',
+                                            context,
+                                          );
+                                          return;
+                                        }
+                                        if (_isEdit) {
+                                          _isEdit = false;
+                                          BlocProvider.of<TrickBloc>(context)
+                                              .add(
+                                            TrickUpdateEvent(
+                                              commend: _commendController.text
+                                                  .trim(),
+                                              commendId: _commendId,
+                                              trickId: widget.trickModel.id,
+                                            ),
+                                          );
+                                          _commendId = '';
+                                        } else {
+                                          BlocProvider.of<TrickBloc>(context)
+                                              .add(
+                                            TrickSendCommendEvent(
+                                              _commendController.text.trim(),
+                                              widget.trickModel.id,
+                                            ),
+                                          );
+                                        }
+                                        _commendController.clear();
+                                        FocusScope.of(context).unfocus();
+                                      },
+                                      icon: const Icon(
+                                        CupertinoIcons.arrow_uturn_left,
+                                      ),
+                                    ),
+                              fillColor: Colors.white,
+                              filled: true,
+                              contentPadding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                              ),
+                              labelText: 'نظر خودتون رو بنویسید',
+                              labelStyle: const TextStyle(
+                                fontSize: 14,
+                                fontFamily: 'vazirm',
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
             },
           ),
         ),
