@@ -9,6 +9,8 @@ import 'package:game_hacks_chat/constant/generallColor.dart';
 import 'package:game_hacks_chat/data/model/gameProductModel.dart';
 import 'package:game_hacks_chat/screens/addTrickScreen.dart';
 import 'package:game_hacks_chat/screens/trickSingleScreen.dart';
+import 'package:game_hacks_chat/utilities/sharManager.dart';
+import 'package:game_hacks_chat/widget/customSnakBar.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -213,6 +215,11 @@ class _TrickListScreenState extends State<TrickListScreen> {
         ),
         tooltip: 'اضافه کردن ترفند',
         onPressed: () {
+          if (ShareManager.getBlockedUser()) {
+            CustomSnakBar.getCustomSnakBar(
+                'شما مسدود شدید نمیتوانین ترفند اضافه کنین', context);
+            return;
+          }
           Navigator.push(
             context,
             PageTransition(

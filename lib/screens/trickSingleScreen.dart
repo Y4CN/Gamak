@@ -456,13 +456,14 @@ class _TrickSingleScreenState extends State<TrickSingleScreen> {
                       width: double.infinity,
                       alignment: Alignment.center,
                       decoration: const BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.vertical(
-                            top: Radius.circular(20),
-                          ),
-                          boxShadow: [
-                            BoxShadow(color: Colors.black, blurRadius: 6)
-                          ]),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(20),
+                        ),
+                        boxShadow: [
+                          BoxShadow(color: Colors.black, blurRadius: 6)
+                        ],
+                      ),
                       child: const Text(
                         'شما مسدود شدید نمیتوانین نظر قرار دهید',
                         style: TextStyle(
