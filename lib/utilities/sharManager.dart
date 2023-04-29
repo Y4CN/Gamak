@@ -29,4 +29,12 @@ class ShareManager {
   static String readUserId() {
     return _sharedPref.getString('userId') ?? '';
   }
+
+  static void saveBlockedUser(bool blocked) {
+    _sharedPref.getBool('blocked');
+  }
+
+  static bool getBlockedUser() {
+    return _sharedPref.getBool('blocked') ?? false;
+  }
 }
