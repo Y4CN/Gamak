@@ -5,38 +5,39 @@ import 'package:game_hacks_chat/locator.dart';
 
 import '../../utilities/errorHandler.dart';
 
-abstract class IGameProductRepository{
-  Future<Either<String,List<GameProductModel>>> getAllgameProduct();
-  Future<Either<String,List<GameProductModel>>> getPopulargameProduct();
-  Future<Either<String,List<GameProductModel>>> getSearhGames(String txt);
+abstract class IGameProductRepository {
+  Future<Either<String, List<GameProductModel>>> getAllgameProduct();
+  Future<Either<String, List<GameProductModel>>> getNewGameProduct();
+  Future<Either<String, List<GameProductModel>>> getPopulargameProduct();
+  Future<Either<String, List<GameProductModel>>> getSearhGames(String txt);
 }
 
-
-class GameProductRepository extends IGameProductRepository{
+class GameProductRepository extends IGameProductRepository {
   final IGameProductDataSource _gameProductDataSource = locator.get();
   @override
-  Future<Either<String, List<GameProductModel>>> getAllgameProduct() async{
-  try {
-      var response = await _gameProductDataSource.getNewgames();
+  Future<Either<String, List<GameProductModel>>> getAllgameProduct() async {
+    try {
+      var response = await _gameProductDataSource.getUpdategames();
       return Right(response);
     } on ErrorHandler catch (e) {
       throw Left(e.message ?? 'خطای ناشناخته');
     }
   }
-  
+
   @override
   Future<Either<String, List<GameProductModel>>> getPopulargameProduct() async {
-     try {
+    try {
       var response = await _gameProductDataSource.getPopulargames();
       return Right(response);
     } on ErrorHandler catch (e) {
       throw Left(e.message ?? 'خطای ناشناخته');
     }
   }
-  
+
   @override
-  Future<Either<String, List<GameProductModel>>> getSearhGames(String txt) async{
-     try {
+  Future<Either<String, List<GameProductModel>>> getSearhGames(
+      String txt) async {
+    try {
       var response = await _gameProductDataSource.getSearhGames(txt);
       return Right(response);
     } on ErrorHandler catch (e) {
@@ -44,4 +45,13 @@ class GameProductRepository extends IGameProductRepository{
     }
   }
 
+  @override
+  Future<Either<String, List<GameProductModel>>> getNewGameProduct() async {
+    try {
+      var response = await _gameProductDataSource.getNewGames();
+      return Right(response);
+    } on ErrorHandler catch (e) {
+      throw Left(e.message ?? 'خطای ناشناخته');
+    }
+  }
 }

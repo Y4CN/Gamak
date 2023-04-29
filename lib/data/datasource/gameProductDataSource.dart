@@ -5,7 +5,8 @@ import 'package:game_hacks_chat/locator.dart';
 import '../../utilities/errorHandler.dart';
 
 abstract class IGameProductDataSource {
-  Future<List<GameProductModel>> getNewgames();
+  Future<List<GameProductModel>> getUpdategames();
+  Future<List<GameProductModel>> getNewGames();
   Future<List<GameProductModel>> getPopulargames();
   Future<List<GameProductModel>> getSearhGames(String txt);
 }
@@ -13,7 +14,7 @@ abstract class IGameProductDataSource {
 class GameProductDataSource extends IGameProductDataSource {
   final Dio _dio = locator.get();
   @override
-  Future<List<GameProductModel>> getNewgames() async {
+  Future<List<GameProductModel>> getUpdategames() async {
     try {
       Map<String, dynamic> qExpanded = {
         'expand': 'category_id',
@@ -65,6 +66,27 @@ class GameProductDataSource extends IGameProductDataSource {
       var response = await _dio.get(
         'collections/games_product/records',
         queryParameters: qpar,
+      );
+      return response.data['items']
+          .map<GameProductModel>((e) => GameProductModel.fromJson(e))
+          .toList();
+    } on DioError catch (ex) {
+      throw ErrorHandler(ex.response?.statusCode, ex.response?.data['message']);
+    } catch (ex) {
+      throw ErrorHandler(0, 'unknown erorr');
+    }
+  }
+  
+  @override
+  Future<List<GameProductModel>> getNewGames() async {
+     try {
+      Map<String, dynamic> qExpanded = {
+        'expand': 'category_id',
+        'sort': '-created'
+      };
+      var response = await _dio.get(
+        'collections/games_product/records',
+        queryParameters: qExpanded,
       );
       return response.data['items']
           .map<GameProductModel>((e) => GameProductModel.fromJson(e))

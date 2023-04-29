@@ -20,7 +20,9 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       var readBanner = await _bannerRepository.getAllBanner();
       var games = await _gameProductRepository.getAllgameProduct();
       var popularGames = await _gameProductRepository.getPopulargameProduct();
-      emit(HomeResponseState(getAllCategory, userResponse, readBanner, games,popularGames));
+      var newsGames = await _gameProductRepository.getNewGameProduct();
+      emit(HomeResponseState(getAllCategory, userResponse, readBanner, games,
+          popularGames, newsGames));
     });
   }
 }
