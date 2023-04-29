@@ -5,6 +5,7 @@ import 'package:game_hacks_chat/bloc/searchBloc/searchBloc.dart';
 import 'package:game_hacks_chat/bloc/searchBloc/searchEvent.dart';
 import 'package:game_hacks_chat/bloc/searchBloc/searchState.dart';
 import 'package:game_hacks_chat/constant/generallColor.dart';
+import 'package:game_hacks_chat/widget/customSnakBar.dart';
 import 'package:game_hacks_chat/widget/singleItem.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
@@ -42,6 +43,11 @@ class _SearchScreenState extends State<SearchScreen> {
                 keyboardType: TextInputType.text,
                 textInputAction: TextInputAction.search,
                 onSubmitted: (value) {
+                  if (_saerchController.text.trim().isEmpty) {
+                    CustomSnakBar.getCustomSnakBar(
+                        'جست و جوی شما خالی است!', context);
+                    return;
+                  }
                   BlocProvider.of<SearchBloc>(context).add(
                     SearchRequestEvent(value),
                   );
@@ -50,6 +56,11 @@ class _SearchScreenState extends State<SearchScreen> {
                 decoration: InputDecoration(
                   prefixIcon: IconButton(
                     onPressed: () {
+                      if (_saerchController.text.trim().isEmpty) {
+                        CustomSnakBar.getCustomSnakBar(
+                            'جست و جوی شما خالی است!', context);
+                        return;
+                      }
                       BlocProvider.of<SearchBloc>(context).add(
                         SearchRequestEvent(_saerchController.text.trim()),
                       );

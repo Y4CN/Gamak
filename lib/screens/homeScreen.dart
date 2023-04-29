@@ -398,7 +398,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 })
               },
               const SliverPadding(
-                padding: EdgeInsets.symmetric(vertical: 10),
+                padding: EdgeInsets.symmetric(
+                  vertical: 10,
+                ),
               ),
               SliverToBoxAdapter(
                 child: Padding(
@@ -407,6 +409,60 @@ class _HomeScreenState extends State<HomeScreen> {
                     bottom: 10,
                     left: 20,
                   ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'بازی های جدید',
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.black,
+                          fontFamily: 'vazirm',
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      TextButton(
+                        style: TextButton.styleFrom(
+                          splashFactory: NoSplash.splashFactory,
+                          backgroundColor: GenerallColor.appBarBackGroundColor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        onPressed: () {},
+                        child: const Text(
+                          'بیشتر',
+                          style: TextStyle(
+                            fontFamily: 'vazirm',
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SliverList(
+                delegate: SliverChildBuilderDelegate((context, index) {
+                  return Padding(
+                    padding: EdgeInsets.only(
+                        top: index == 0 ? 10 : 15, left: 20, right: 20),
+                    // child: singleItemGame(
+                    //   gameProductModel: r[index],
+                    // ),
+                    child: Container(
+                      height: 20,
+                      color: Colors.red,
+                    ),
+                  );
+                },
+                    // childCount: r.length < 5 ? r.length : 5,
+                    childCount: 10),
+              ),
+              SliverToBoxAdapter(
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                      right: 20, bottom: 10, left: 20, top: 20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -421,15 +477,13 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       TextButton(
                         style: TextButton.styleFrom(
-                          splashFactory: NoSplash.splashFactory,
-                          backgroundColor: GenerallColor.appBarBackGroundColor,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          )
-                        ),
-                        onPressed: () {
-                          
-                        },
+                            splashFactory: NoSplash.splashFactory,
+                            backgroundColor:
+                                GenerallColor.appBarBackGroundColor,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            )),
+                        onPressed: () {},
                         child: const Text(
                           'بیشتر',
                           style: TextStyle(
