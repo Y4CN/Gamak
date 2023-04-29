@@ -442,23 +442,31 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-              SliverList(
-                delegate: SliverChildBuilderDelegate((context, index) {
-                  return Padding(
-                    padding: EdgeInsets.only(
-                        top: index == 0 ? 10 : 15, left: 20, right: 20),
-                    // child: singleItemGame(
-                    //   gameProductModel: r[index],
-                    // ),
-                    child: Container(
-                      height: 20,
-                      color: Colors.red,
+              if (state is HomeResponseState) ...{
+                state.newGames.fold((l) {
+                  return SliverToBoxAdapter(
+                    child: Text(
+                      l,
+                      style: const TextStyle(fontSize: 18),
                     ),
                   );
-                },
-                    // childCount: r.length < 5 ? r.length : 5,
-                    childCount: 10),
-              ),
+                }, (r) {
+                  return SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) {
+                        return Padding(
+                          padding: EdgeInsets.only(
+                              top: index == 0 ? 10 : 15, left: 20, right: 20),
+                          child: singleItemGame(
+                            gameProductModel: r[index],
+                          ),
+                        );
+                      },
+                      childCount: r.length < 5 ? r.length : 5,
+                    ),
+                  );
+                }),
+              },
               SliverToBoxAdapter(
                 child: Padding(
                   padding: const EdgeInsets.only(
