@@ -32,15 +32,20 @@ class _CategoryGameScreenState extends State<CategoryGameScreen> {
         textDirection: TextDirection.rtl,
         child: Scaffold(
           appBar: AppBar(
-            leading: IconButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              icon: const Icon(
-                CupertinoIcons.back,
-                size: 26,
+            actions: [
+              IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: const Icon(
+                  CupertinoIcons.forward,
+                  size: 26,
+                ),
               ),
-            ),
+              const SizedBox(
+                width: 10,
+              ),
+            ],
             surfaceTintColor: GenerallColor.primaryColor,
             backgroundColor: GenerallColor.primaryColor,
             automaticallyImplyLeading: false,
