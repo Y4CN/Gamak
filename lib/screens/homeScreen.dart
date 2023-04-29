@@ -12,6 +12,7 @@ import 'package:game_hacks_chat/data/model/categoryModel.dart';
 import 'package:game_hacks_chat/screens/bannerDetailsScreen.dart';
 import 'package:game_hacks_chat/screens/categoryGameScreen.dart';
 import 'package:game_hacks_chat/screens/gameScreen.dart';
+import 'package:game_hacks_chat/screens/listGameScreen.dart';
 import 'package:game_hacks_chat/widget/singleItem.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:page_transition/page_transition.dart';
@@ -429,7 +430,19 @@ class _HomeScreenState extends State<HomeScreen> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            PageTransition(
+                              child: BlocProvider(
+                                create: (context) => HomeBloc(),
+                                child: ListGameScreen(title: 'بازی های جدید'),
+                              ),
+                              type: PageTransitionType.fade,
+                              duration: const Duration(milliseconds: 200),
+                            ),
+                          );
+                        },
                         child: const Text(
                           'بیشتر',
                           style: TextStyle(
@@ -491,7 +504,19 @@ class _HomeScreenState extends State<HomeScreen> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
                             )),
-                        onPressed: () {},
+                        onPressed: () {
+                           Navigator.push(
+                            context,
+                            PageTransition(
+                              child: BlocProvider(
+                                create: (context) => HomeBloc(),
+                                child: ListGameScreen(title: 'بازی های آپدیت شده'),
+                              ),
+                              type: PageTransitionType.fade,
+                              duration: const Duration(milliseconds: 200),
+                            ),
+                          );
+                        },
                         child: const Text(
                           'بیشتر',
                           style: TextStyle(
