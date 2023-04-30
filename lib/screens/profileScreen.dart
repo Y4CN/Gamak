@@ -7,11 +7,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:game_hacks_chat/bloc/authBloc/authBloc.dart';
 import 'package:game_hacks_chat/bloc/authBloc/authEvent.dart';
 import 'package:game_hacks_chat/bloc/authBloc/authState.dart';
+import 'package:game_hacks_chat/bloc/supportBloc/supportBloc.dart';
 import 'package:game_hacks_chat/bloc/trickBloc/trickBloc.dart';
 import 'package:game_hacks_chat/bloc/trickBloc/trickEvent.dart';
 import 'package:game_hacks_chat/constant/generallColor.dart';
 import 'package:game_hacks_chat/screens/clientTrickScreen.dart';
 import 'package:game_hacks_chat/screens/splashScreen.dart';
+import 'package:game_hacks_chat/screens/supportScreen.dart';
 import 'package:game_hacks_chat/utilities/sharManager.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:page_transition/page_transition.dart';
@@ -270,7 +272,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 CupertinoIcons.bubble_left_fill,
                                 color: Colors.black54,
                               ),
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  PageTransition(
+                                    child: BlocProvider(
+                                      create: (context) => SupportBloc(),
+                                      child: const SupportScreen(),
+                                    ),
+                                    type: PageTransitionType.fade,
+                                    duration: const Duration(milliseconds: 200),
+                                  ),
+                                );
+                              },
                               title: const Text(
                                 'پشتیبانی',
                                 style: TextStyle(
