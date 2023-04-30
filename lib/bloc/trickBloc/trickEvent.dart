@@ -4,7 +4,8 @@ class TrickEvent {}
 
 class TrickRequestEvent extends TrickEvent {
   String gameId;
-  TrickRequestEvent(this.gameId);
+  int page;
+  TrickRequestEvent(this.gameId,this.page);
 }
 
 class TrickRequestCommedEvent extends TrickEvent {

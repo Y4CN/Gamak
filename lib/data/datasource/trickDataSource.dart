@@ -9,10 +9,10 @@ import 'package:game_hacks_chat/utilities/errorHandler.dart';
 import 'package:game_hacks_chat/utilities/sharManager.dart';
 
 abstract class ITrickDataSource {
-  Future<List<TrickModel>> getTrickGame(String gameId);
+  Future<List<TrickModel>> getTrickGame(String gameId,int page);
   Future<bool> addTrick(
       String title, String description, List<File> images, String gameID);
-  Future<List<TrickCommendModel>> getTrickCommed(String trickId,int page);
+  Future<List<TrickCommendModel>> getTrickCommed(String trickId, int page);
   Future<bool> postTrickCommemd(String trickId, String commend);
   Future<bool> deleteTrickCommemd(String commendId);
   Future<bool> updateTrickcommend(
@@ -24,11 +24,13 @@ abstract class ITrickDataSource {
 class TrickDataSource extends ITrickDataSource {
   final Dio _dio = locator.get();
   @override
-  Future<List<TrickModel>> getTrickGame(String gameId) async {
+  Future<List<TrickModel>> getTrickGame(String gameId, int page) async {
     try {
       Map<String, dynamic> qpar = {
         'filter': '(game_id="$gameId" && status="good")',
         'expand': 'author_id',
+        'sort': '-created',
+        'page': page,
       };
       var response = await _dio.get(
         'collections/trick_games/records',

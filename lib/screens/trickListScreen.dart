@@ -23,11 +23,14 @@ class TrickListScreen extends StatefulWidget {
 }
 
 class _TrickListScreenState extends State<TrickListScreen> {
+  late int page;
+
   @override
   void initState() {
     super.initState();
+    page = 1;
     BlocProvider.of<TrickBloc>(context)
-        .add(TrickRequestEvent(widget.gameProductModel.id));
+        .add(TrickRequestEvent(widget.gameProductModel.id, page));
   }
 
   @override
@@ -96,6 +99,37 @@ class _TrickListScreenState extends State<TrickListScreen> {
                   return SliverList(
                     delegate: SliverChildBuilderDelegate(
                       (context, index) {
+                        if (index == 30) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 12, vertical: 12),
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  minimumSize: const Size(double.infinity, 40),
+                                  backgroundColor:
+                                      GenerallColor.appBarBackGroundColor,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                  )),
+                              onPressed: () {
+                                BlocProvider.of<TrickBloc>(context).add(
+                                  TrickRequestEvent(
+                                    widget.gameProductModel.id,
+                                    ++page,
+                                  ),
+                                );
+                              },
+                              child: const Text(
+                                'ترفند های قدیمی تر',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontFamily: 'vazirm',
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          );
+                        }
                         return Padding(
                           padding: const EdgeInsets.only(
                             top: 8,
@@ -189,7 +223,7 @@ class _TrickListScreenState extends State<TrickListScreen> {
                           ),
                         );
                       },
-                      childCount: r.length,
+                      childCount: r.length == 30 ? r.length + 1 : r.length,
                     ),
                   );
                 }),

@@ -9,7 +9,7 @@ class TrickBloc extends Bloc<TrickEvent, TrickState> {
   TrickBloc() : super(TrickInitState()) {
     on<TrickRequestEvent>((event, emit) async {
       emit(TrickLoadingState());
-      var trickLst = await _trickRepository.getTrickGame(event.gameId);
+      var trickLst = await _trickRepository.getTrickGame(event.gameId,event.page);
       emit(TrickResponseState(trickLst));
     });
 

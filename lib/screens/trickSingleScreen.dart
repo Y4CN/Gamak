@@ -519,11 +519,12 @@ class _TrickSingleScreenState extends State<TrickSingleScreen> {
                 }, (r) {
                   if (r) {
                     //TODO Test On Server couse here is TOO Fast and Error for Rebuild
-
+                    
                     // CustomSnakBar.getCustomSnakBar(
                     // 'نظر شما با موفقیت ثبت شد ❤️', context);
-                    BlocProvider.of<TrickBloc>(context)
-                        .add(TrickRequestCommedEvent(widget.trickModel.id, 1));
+                    BlocProvider.of<TrickBloc>(context).add(
+                      TrickRequestCommedEvent(widget.trickModel.id, 1),
+                    );
                   }
                 });
               }
@@ -540,7 +541,7 @@ class _TrickSingleScreenState extends State<TrickSingleScreen> {
                         boxShadow: [
                           BoxShadow(
                             color: Colors.black,
-                            blurRadius: 6,
+                            blurRadius: 3,
                           )
                         ],
                       ),
@@ -661,6 +662,7 @@ class _TrickSingleScreenState extends State<TrickSingleScreen> {
       ),
     );
   }
+
   @override
   void dispose() {
     super.dispose();
