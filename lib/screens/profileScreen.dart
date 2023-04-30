@@ -15,6 +15,7 @@ import 'package:game_hacks_chat/screens/splashScreen.dart';
 import 'package:game_hacks_chat/utilities/sharManager.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:share_plus/share_plus.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -272,6 +273,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               onTap: () {},
                               title: const Text(
                                 'پشتیبانی',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                            const Divider(
+                              color: Colors.grey,
+                              height: .2,
+                            ),
+                            ListTile(
+                              leading: const Icon(
+                                CupertinoIcons.share,
+                                color: Colors.black54,
+                              ),
+                              onTap: () {
+                                Share.share(
+                                  'بیا از برنامه گینک اسنفاده کن میتونی باهاش ترفند بزاری و ترفند های بقیه رو ببینی و دربارش نظر بدی ❤️',
+                                );
+                              },
+                              title: const Text(
+                                'برنامه رو معرفی کنید',
                                 style: TextStyle(
                                   color: Colors.black,
                                 ),

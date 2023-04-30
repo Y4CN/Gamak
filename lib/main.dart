@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
       ],
       supportedLocales: const [
         Locale('en'), // English
-        Locale('fa'), // fa
+        Locale('fa'), // Fa
       ],
       locale: const Locale('fa'),
       theme: ThemeData(
