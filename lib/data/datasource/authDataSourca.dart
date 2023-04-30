@@ -5,6 +5,7 @@ import 'package:game_hacks_chat/data/model/userModel.dart';
 import 'package:game_hacks_chat/locator.dart';
 import 'package:game_hacks_chat/utilities/errorHandler.dart';
 import 'package:game_hacks_chat/utilities/sharManager.dart';
+import 'package:pushpole/pushpole.dart';
 
 abstract class IAuthDataSource {
   Future<void> register(
@@ -37,6 +38,9 @@ class AuthDataSource extends IAuthDataSource {
         },
       );
       if (response.statusCode == 200) {
+        var notifId = await PushPole.getId();
+        PushPole.sendSimpleNotifToUser(
+            notifId, 'خوش آمدین', 'به برنامه گیمک خوش اومدین');
         ShareManager.saveToken(response.data['token']);
         ShareManager.saveUserId(response.data['record']['id']);
       }

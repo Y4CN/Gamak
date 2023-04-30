@@ -284,12 +284,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                             ListTile(
                               leading: const Icon(
-                                CupertinoIcons.share,
+                                Icons.share_rounded,
                                 color: Colors.black54,
                               ),
                               onTap: () {
                                 Share.share(
-                                  'بیا از برنامه گینک اسنفاده کن میتونی باهاش ترفند بزاری و ترفند های بقیه رو ببینی و دربارش نظر بدی ❤️',
+                                  'بیا از برنامه گیمک استفاده کن ! میتونی باهاش ترفند قرار بدی و ترفند های بقیه رو ببینی و دربارش نظر بدی ❤️',
                                 );
                               },
                               title: const Text(

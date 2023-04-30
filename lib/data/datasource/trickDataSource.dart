@@ -166,6 +166,7 @@ class TrickDataSource extends ITrickDataSource {
     try {
       Map<String, dynamic> qpar = {
         'filter': 'author_id="${ShareManager.readUserId()}"',
+        'sort':'-updated'
       };
       var response = await _dio.get(
         'collections/trick_games/records',
