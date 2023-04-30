@@ -31,16 +31,32 @@ class _TrickSingleScreenState extends State<TrickSingleScreen> {
   late ValueNotifier _editValueNotivier;
   late bool _isEdit;
   late String _commendId;
+  late ScrollController _scrollController;
+  late int page;
   @override
   void initState() {
     super.initState();
     BlocProvider.of<TrickBloc>(context)
-        .add(TrickRequestCommedEvent(widget.trickModel.id));
+        .add(TrickRequestCommedEvent(widget.trickModel.id, 1));
     _pageController = PageController(viewportFraction: .8);
     _commendController = TextEditingController();
     _isEdit = false;
     _editValueNotivier = ValueNotifier<String>('');
     _commendId = '';
+    page = 1;
+    _scrollController = ScrollController();
+    // ..addListener(
+    //   () {
+    //     // print('listen');
+    //     if (_scrollController.position.atEdge) {
+    //       bool isTop = _scrollController.position.pixels == 0;
+    //       if (!isTop) {
+    //         BlocProvider.of<TrickBloc>(context)
+    //             .add(TrickRequestCommedEvent(widget.trickModel.id, page++));
+    //       }
+    //     }
+    //   },
+    // );
   }
 
   @override
@@ -53,6 +69,7 @@ class _TrickSingleScreenState extends State<TrickSingleScreen> {
         body: BlocBuilder<TrickBloc, TrickState>(
           builder: (context, state) {
             return CustomScrollView(
+              controller: _scrollController,
               slivers: [
                 Directionality(
                   textDirection: TextDirection.ltr,
@@ -330,92 +347,135 @@ class _TrickSingleScreenState extends State<TrickSingleScreen> {
                       );
                     }
                     return SliverList(
-                      delegate: SliverChildBuilderDelegate((context, index) {
-                        return Container(
-                          margin: const EdgeInsets.only(
-                            top: 8,
-                            right: 10,
-                            left: 10,
-                          ),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(10),
-                            boxShadow: const [
-                              BoxShadow(
-                                blurRadius: 1,
-                                color: Colors.grey,
-                                spreadRadius: -1,
-                                offset: Offset(0, 2),
-                              )
-                            ],
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                child: Row(
-                                  children: [
-                                    CircleAvatar(
-                                      minRadius: 20,
-                                      backgroundColor: GenerallColor
-                                          .appBarBackGroundColor
-                                          .withOpacity(.6),
-                                      backgroundImage: NetworkImage(
-                                        r[index].userModel.avatar,
-                                      ),
+                      delegate: SliverChildBuilderDelegate(
+                        (context, index) {
+                          if (index == 30) {
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 12, vertical: 12),
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor:
+                                      GenerallColor.appBarBackGroundColor,
+                                  minimumSize: const Size(double.infinity, 40),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  alignment: Alignment.center,
+                                  elevation: 0,
+                                ),
+                                onPressed: () {
+                                  BlocProvider.of<TrickBloc>(context).add(
+                                    TrickRequestCommedEvent(
+                                      widget.trickModel.id,
+                                      ++page,
                                     ),
-                                    const SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                      r[index].userModel.name,
-                                      style: const TextStyle(fontSize: 12),
-                                    ),
-                                    const Spacer(),
-                                    Visibility(
-                                      visible: ShareManager.readUserId() ==
-                                          r[index].userModel.id,
-                                      child: IconButton(
-                                        onPressed: () {
-                                          _commendController.text =
-                                              r[index].commend;
-                                          _isEdit = true;
-                                          _commendId = r[index].id;
-                                          _editValueNotivier.value =
-                                              _commendController.text;
-                                          _editValueNotivier.notifyListeners();
-                                        },
-                                        icon: const Icon(CupertinoIcons.pen,
-                                            color: Colors.green),
-                                      ),
-                                    ),
-                                    Visibility(
-                                      visible: ShareManager.readUserId() ==
-                                          r[index].userModel.id,
-                                      child: deletIconStatus(state, context,
-                                          widget.trickModel, r[index]),
-                                    ),
-                                  ],
+                                  );
+                                  _scrollController.animateTo(
+                                    10,
+                                    duration: const Duration(milliseconds: 200),
+                                    curve: Curves.linear,
+                                  );
+                                },
+                                child: const Text(
+                                  'صفحه بعدی',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontFamily: 'vazirm',
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.all(9),
-                                child: Text(
-                                  r[index].commend,
-                                  textDirection: TextDirection.rtl,
+                            );
+                          }
+                          return Container(
+                            margin: const EdgeInsets.only(
+                              top: 8,
+                              right: 10,
+                              left: 10,
+                            ),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                              boxShadow: const [
+                                BoxShadow(
+                                  blurRadius: 1,
+                                  color: Colors.grey,
+                                  spreadRadius: -1,
+                                  offset: Offset(0, 2),
+                                )
+                              ],
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10),
+                                  child: Row(
+                                    children: [
+                                      CircleAvatar(
+                                        minRadius: 20,
+                                        backgroundColor: GenerallColor
+                                            .appBarBackGroundColor
+                                            .withOpacity(.6),
+                                        backgroundImage: NetworkImage(
+                                          r[index].userModel.avatar,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        r[index].userModel.name,
+                                        style: const TextStyle(fontSize: 12),
+                                      ),
+                                      const Spacer(),
+                                      Visibility(
+                                        visible: ShareManager.readUserId() ==
+                                            r[index].userModel.id,
+                                        child: IconButton(
+                                          onPressed: () {
+                                            _commendController.text =
+                                                r[index].commend;
+                                            _isEdit = true;
+                                            _commendId = r[index].id;
+                                            _editValueNotivier.value =
+                                                _commendController.text;
+                                            _editValueNotivier
+                                                .notifyListeners();
+                                          },
+                                          icon: const Icon(CupertinoIcons.pen,
+                                              color: Colors.green),
+                                        ),
+                                      ),
+                                      Visibility(
+                                        visible: ShareManager.readUserId() ==
+                                            r[index].userModel.id,
+                                        child: deletIconStatus(state, context,
+                                            widget.trickModel, r[index]),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        );
-                      }, childCount: r.length),
+                                Padding(
+                                  padding: const EdgeInsets.all(9),
+                                  child: Text(
+                                    r[index].commend,
+                                    textDirection: TextDirection.rtl,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                        childCount: r.length == 30 ? r.length + 1 : r.length,
+                      ),
                     );
                   })
                 },
                 const SliverPadding(
-                  padding: EdgeInsets.only(bottom: 70),
+                  padding: EdgeInsets.only(bottom: 40),
                 ),
               ],
             );
@@ -432,7 +492,7 @@ class _TrickSingleScreenState extends State<TrickSingleScreen> {
                 }, (r) {
                   if (r) {
                     BlocProvider.of<TrickBloc>(context)
-                        .add(TrickRequestCommedEvent(widget.trickModel.id));
+                        .add(TrickRequestCommedEvent(widget.trickModel.id, 1));
                   }
                 });
               }
@@ -446,7 +506,7 @@ class _TrickSingleScreenState extends State<TrickSingleScreen> {
                     // CustomSnakBar.getCustomSnakBar(
                     // 'نظر شما با موفقیت ثبت شد ❤️', context);
                     BlocProvider.of<TrickBloc>(context)
-                        .add(TrickRequestCommedEvent(widget.trickModel.id));
+                        .add(TrickRequestCommedEvent(widget.trickModel.id, 1));
                   }
                 });
               }
@@ -461,7 +521,10 @@ class _TrickSingleScreenState extends State<TrickSingleScreen> {
                           top: Radius.circular(20),
                         ),
                         boxShadow: [
-                          BoxShadow(color: Colors.black, blurRadius: 6)
+                          BoxShadow(
+                            color: Colors.black,
+                            blurRadius: 6,
+                          )
                         ],
                       ),
                       child: const Text(
@@ -597,7 +660,7 @@ Widget deletIconStatus(TrickState state, context, TrickModel trickModel,
     }, (r) {
       if (r) {
         BlocProvider.of<TrickBloc>(context)
-            .add(TrickRequestCommedEvent(trickModel.id));
+            .add(TrickRequestCommedEvent(trickModel.id, 1));
       }
     });
   }
@@ -619,7 +682,7 @@ Widget deletIconStatus(TrickState state, context, TrickModel trickModel,
                   }, (r) {
                     if (r) {
                       BlocProvider.of<TrickBloc>(context)
-                          .add(TrickRequestCommedEvent(trickModel.id));
+                          .add(TrickRequestCommedEvent(trickModel.id, 1));
                     }
                   });
                 }

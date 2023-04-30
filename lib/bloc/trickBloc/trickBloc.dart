@@ -15,7 +15,7 @@ class TrickBloc extends Bloc<TrickEvent, TrickState> {
 
     on<TrickRequestCommedEvent>((event, emit) async {
       emit(TrickLoadingSingleState());
-      var trickCommends = await _trickRepository.getTrickCommed(event.trickId);
+      var trickCommends = await _trickRepository.getTrickCommed(event.page,event.trickId);
       emit(TrickResponseSingleState(trickCommends));
     });
 

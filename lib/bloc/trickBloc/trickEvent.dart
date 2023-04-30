@@ -9,7 +9,8 @@ class TrickRequestEvent extends TrickEvent {
 
 class TrickRequestCommedEvent extends TrickEvent {
   String trickId;
-  TrickRequestCommedEvent(this.trickId);
+  int page;
+  TrickRequestCommedEvent(this.trickId,this.page);
 }
 
 class TrickSendCommendEvent extends TrickEvent {

@@ -12,7 +12,7 @@ abstract class ITrickDataSource {
   Future<List<TrickModel>> getTrickGame(String gameId);
   Future<bool> addTrick(
       String title, String description, List<File> images, String gameID);
-  Future<List<TrickCommendModel>> getTrickCommed(String trickId);
+  Future<List<TrickCommendModel>> getTrickCommed(String trickId,int page);
   Future<bool> postTrickCommemd(String trickId, String commend);
   Future<bool> deleteTrickCommemd(String commendId);
   Future<bool> updateTrickcommend(
@@ -45,12 +45,14 @@ class TrickDataSource extends ITrickDataSource {
   }
 
   @override
-  Future<List<TrickCommendModel>> getTrickCommed(String trickId) async {
+  Future<List<TrickCommendModel>> getTrickCommed(
+      String trickId, int page) async {
     try {
       Map<String, dynamic> qpar = {
         'filter': 'trick_id="$trickId"',
         'expand': 'user_id',
         'sort': '-created',
+        'page': page
       };
       var response = await _dio.get(
         'collections/trick_commend/records',
@@ -166,7 +168,7 @@ class TrickDataSource extends ITrickDataSource {
     try {
       Map<String, dynamic> qpar = {
         'filter': 'author_id="${ShareManager.readUserId()}"',
-        'sort':'-updated'
+        'sort': '-updated'
       };
       var response = await _dio.get(
         'collections/trick_games/records',

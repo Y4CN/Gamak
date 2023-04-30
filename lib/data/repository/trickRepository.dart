@@ -11,7 +11,7 @@ import 'package:game_hacks_chat/utilities/errorHandler.dart';
 abstract class ITrickRepository {
   Future<Either<String, List<TrickModel>>> getTrickGame(String gameId);
   Future<Either<String, List<TrickCommendModel>>> getTrickCommed(
-      String trickId);
+      int page, String trickId);
   Future<Either<String, bool>> addTrick(
       String title, String description, List<File> images, String gameID);
   Future<Either<String, bool>> postTrickCommemd(String trickId, String commend);
@@ -35,9 +35,9 @@ class TrickRepository extends ITrickRepository {
 
   @override
   Future<Either<String, List<TrickCommendModel>>> getTrickCommed(
-      String trickId) async {
+      int page, String trickId) async {
     try {
-      var response = await _dataSource.getTrickCommed(trickId);
+      var response = await _dataSource.getTrickCommed(trickId, page);
       return Right(response);
     } on ErrorHandler catch (e) {
       throw Left(e.message ?? 'خطای ناشناخته');

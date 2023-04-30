@@ -451,7 +451,8 @@ class _GameScreenState extends State<GameScreen> {
                                       'مشکل در بارگذاری عکس',
                                       style: TextStyle(
                                         fontSize: 14,
-                                        color: Colors.white,
+                                        color: Colors.black,
+                                        fontFamily: 'vazirm'
                                       ),
                                     ),
                                   );
@@ -478,37 +479,37 @@ class _GameScreenState extends State<GameScreen> {
                   )
                 ],
               ),
-              Positioned(
-                bottom: 50,
-                right: 20,
-                left: 20,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    surfaceTintColor: Colors.transparent,
-                    shadowColor: Colors.white,
-                    elevation: 20,
-                    backgroundColor: Colors.green.shade300,
-                    minimumSize: const Size(double.infinity, 50),
-                    shape: RoundedRectangleBorder(
-                      side: const BorderSide(
-                        color: Colors.black,
-                        width: 2,
-                        strokeAlign: .1,
-                      ),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  onPressed: () {},
-                  child: const Text(
-                    'خرید مستقیم بازی',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontFamily: 'vazirm',
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                ),
-              )
+              // Positioned(
+              //   bottom: 50,
+              //   right: 20,
+              //   left: 20,
+              //   child: ElevatedButton(
+              //     style: ElevatedButton.styleFrom(
+              //       surfaceTintColor: Colors.transparent,
+              //       shadowColor: Colors.white,
+              //       elevation: 20,
+              //       backgroundColor: Colors.green.shade300,
+              //       minimumSize: const Size(double.infinity, 50),
+              //       shape: RoundedRectangleBorder(
+              //         side: const BorderSide(
+              //           color: Colors.black,
+              //           width: 2,
+              //           strokeAlign: .1,
+              //         ),
+              //         borderRadius: BorderRadius.circular(12),
+              //       ),
+              //     ),
+              //     onPressed: () {},
+              //     child: const Text(
+              //       'خرید مستقیم بازی',
+              //       style: TextStyle(
+              //         fontSize: 20,
+              //         fontFamily: 'vazirm',
+              //         fontWeight: FontWeight.w600,
+              //       ),
+              //     ),
+              //   ),
+              // )
             ],
           );
         },

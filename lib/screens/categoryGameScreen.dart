@@ -82,17 +82,15 @@ class _CategoryGameScreenState extends State<CategoryGameScreen> {
                   return SafeArea(
                     child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Expanded(
-                          child: ListView.builder(
-                            itemCount: r.length,
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                padding: const EdgeInsets.only(bottom: 14),
-                                child:
-                                    singleItemGame(gameProductModel: r[index]),
-                              );
-                            },
-                          ),
+                        child: ListView.builder(
+                          itemCount: r.length,
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: const EdgeInsets.only(top: 14),
+                              child:
+                                  singleItemGame(gameProductModel: r[index]),
+                            );
+                          },
                         )),
                   );
                 });
