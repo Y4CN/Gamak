@@ -11,6 +11,7 @@ import 'package:game_hacks_chat/bloc/trickBloc/trickBloc.dart';
 import 'package:game_hacks_chat/constant/generallColor.dart';
 import 'package:game_hacks_chat/data/model/gameProductModel.dart';
 import 'package:game_hacks_chat/screens/trickListScreen.dart';
+import 'package:game_hacks_chat/widget/singlePic.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -252,8 +253,9 @@ class _GameScreenState extends State<GameScreen> {
                                     child: BlocProvider(
                                       create: (context) => TrickBloc(),
                                       child: TrickListScreen(
-                                      gameProductModel: widget.gameProductModel,
-                                    ),
+                                        gameProductModel:
+                                            widget.gameProductModel,
+                                      ),
                                     ),
                                     type: PageTransitionType.fade,
                                     duration: const Duration(milliseconds: 200),
@@ -407,56 +409,68 @@ class _GameScreenState extends State<GameScreen> {
                         sliver: SliverGrid(
                           delegate: SliverChildBuilderDelegate(
                             (context, index) {
-                              return CachedNetworkImage(
-                                imageUrl: r[index].image,
-                                imageBuilder: (context, imageProvider) {
-                                  return Container(
-                                    width: 40,
-                                    height: 40,
-                                    decoration: BoxDecoration(
+                              return GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    PageTransition(
+                                      child: SinglePicture(image: r[index].image),
+                                      type: PageTransitionType.fade,
+                                      duration: const Duration(milliseconds: 200),
+                                    ),
+                                  );
+                                },
+                                child: CachedNetworkImage(
+                                  imageUrl: r[index].image,
+                                  imageBuilder: (context, imageProvider) {
+                                    return Container(
+                                      width: 40,
+                                      height: 40,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                          image: DecorationImage(
+                                            image: imageProvider,
+                                            fit: BoxFit.scaleDown,
+                                          )),
+                                    );
+                                  },
+                                  placeholder: (context, url) {
+                                    return Container(
+                                      width: 40,
+                                      height: 40,
+                                      decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(12),
-                                        image: DecorationImage(
-                                          image: imageProvider,
-                                          fit: BoxFit.scaleDown,
-                                        )),
-                                  );
-                                },
-                                placeholder: (context, url) {
-                                  return Container(
-                                    width: 40,
-                                    height: 40,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12),
-                                      color: Colors.black12,
-                                    ),
-                                    alignment: Alignment.center,
-                                    child:
-                                        LoadingAnimationWidget.fourRotatingDots(
-                                      color:
-                                          GenerallColor.appBarBackGroundColor,
-                                      size: 26,
-                                    ),
-                                  );
-                                },
-                                errorWidget: (context, url, error) {
-                                  return Container(
-                                    width: 40,
-                                    height: 40,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12),
-                                      color: Colors.black12,
-                                    ),
-                                    alignment: Alignment.center,
-                                    child: const Text(
-                                      'مشکل در بارگذاری عکس',
-                                      style: TextStyle(
-                                        fontSize: 14,
-                                        color: Colors.black,
-                                        fontFamily: 'vazirm'
+                                        color: Colors.black12,
                                       ),
-                                    ),
-                                  );
-                                },
+                                      alignment: Alignment.center,
+                                      child: LoadingAnimationWidget
+                                          .fourRotatingDots(
+                                        color:
+                                            GenerallColor.appBarBackGroundColor,
+                                        size: 26,
+                                      ),
+                                    );
+                                  },
+                                  errorWidget: (context, url, error) {
+                                    return Container(
+                                      width: 40,
+                                      height: 40,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(12),
+                                        color: Colors.black12,
+                                      ),
+                                      alignment: Alignment.center,
+                                      child: const Text(
+                                        'مشکل در بارگذاری عکس',
+                                        style: TextStyle(
+                                            fontSize: 14,
+                                            color: Colors.black,
+                                            fontFamily: 'vazirm'),
+                                      ),
+                                    );
+                                  },
+                                ),
                               );
                             },
                             childCount: r.length,

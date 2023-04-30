@@ -12,7 +12,9 @@ import 'package:game_hacks_chat/data/model/trickCommendModel.dart';
 import 'package:game_hacks_chat/data/model/trickModel.dart';
 import 'package:game_hacks_chat/utilities/sharManager.dart';
 import 'package:game_hacks_chat/widget/customSnakBar.dart';
+import 'package:game_hacks_chat/widget/singlePic.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class TrickSingleScreen extends StatefulWidget {
@@ -176,62 +178,77 @@ class _TrickSingleScreenState extends State<TrickSingleScreen> {
                             controller: _pageController,
                             itemCount: widget.trickModel.images.length,
                             itemBuilder: (context, index) {
-                              return CachedNetworkImage(
-                                imageUrl: widget.trickModel.images[index],
-                                imageBuilder: (context, imageProvider) {
-                                  return Container(
-                                    decoration: BoxDecoration(
-                                      color: Colors.transparent,
-                                      borderRadius: BorderRadius.circular(12),
-                                      image: DecorationImage(
-                                        image: imageProvider,
-                                        fit: BoxFit.cover,
+                              return GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    PageTransition(
+                                      child: SinglePicture(
+                                          image:
+                                              widget.trickModel.images[index]),
+                                      type: PageTransitionType.fade,
+                                      duration:
+                                          const Duration(milliseconds: 200),
+                                    ),
+                                  );
+                                },
+                                child: CachedNetworkImage(
+                                  imageUrl: widget.trickModel.images[index],
+                                  imageBuilder: (context, imageProvider) {
+                                    return Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.transparent,
+                                        borderRadius: BorderRadius.circular(12),
+                                        image: DecorationImage(
+                                          image: imageProvider,
+                                          fit: BoxFit.cover,
+                                        ),
                                       ),
-                                    ),
-                                    margin: const EdgeInsets.symmetric(
-                                      horizontal: 10,
-                                      vertical: 10,
-                                    ),
-                                  );
-                                },
-                                errorWidget: (context, url, error) {
-                                  return Container(
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                      color: Colors.amber,
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    margin: const EdgeInsets.symmetric(
-                                      horizontal: 10,
-                                      vertical: 10,
-                                    ),
-                                    child: const Text(
-                                      'مشکل در بارگذاری عکس',
-                                      style: TextStyle(
-                                        fontSize: 20,
+                                      margin: const EdgeInsets.symmetric(
+                                        horizontal: 10,
+                                        vertical: 10,
                                       ),
-                                    ),
-                                  );
-                                },
-                                placeholder: (context, url) {
-                                  return Container(
-                                    alignment: Alignment.center,
-                                    decoration: BoxDecoration(
-                                      color: Colors.amber,
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    margin: const EdgeInsets.symmetric(
-                                      horizontal: 10,
-                                      vertical: 10,
-                                    ),
-                                    child:
-                                        LoadingAnimationWidget.fourRotatingDots(
-                                      color:
-                                          GenerallColor.appBarBackGroundColor,
-                                      size: 20,
-                                    ),
-                                  );
-                                },
+                                    );
+                                  },
+                                  errorWidget: (context, url, error) {
+                                    return Container(
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                        color: Colors.amber,
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      margin: const EdgeInsets.symmetric(
+                                        horizontal: 10,
+                                        vertical: 10,
+                                      ),
+                                      child: const Text(
+                                        'مشکل در بارگذاری عکس',
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  placeholder: (context, url) {
+                                    return Container(
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                        color: Colors.amber,
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      margin: const EdgeInsets.symmetric(
+                                        horizontal: 10,
+                                        vertical: 10,
+                                      ),
+                                      child: LoadingAnimationWidget
+                                          .fourRotatingDots(
+                                        color:
+                                            GenerallColor.appBarBackGroundColor,
+                                        size: 20,
+                                      ),
+                                    );
+                                  },
+                                ),
                               );
                             },
                           ),
@@ -643,6 +660,11 @@ class _TrickSingleScreenState extends State<TrickSingleScreen> {
         ),
       ),
     );
+  }
+  @override
+  void dispose() {
+    super.dispose();
+    _scrollController.dispose();
   }
 }
 
