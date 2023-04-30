@@ -49,14 +49,14 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            Spacer(),
-            SizedBox(
-                height: 200,
-                width: 200,
-                child: RiveAnimation.asset('assets/rive/loading.riv')),
-            Spacer(),
-            Text(
+          children: [
+            const Spacer(),
+            Image.asset(
+              'assets/images/logo_transparent.png',
+              width: 350,
+            ),
+            const Spacer(),
+            const Text(
               'گیمک',
               style: TextStyle(
                 color: Colors.black,
@@ -65,8 +65,12 @@ class _SplashScreenState extends State<SplashScreen> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(
-              height: 100,
+            const SizedBox(
+                height: 120,
+                width: 120,
+                child: RiveAnimation.asset('assets/rive/loading.riv')),
+            const SizedBox(
+              height: 50,
             ),
           ],
         ),

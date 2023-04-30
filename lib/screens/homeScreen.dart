@@ -59,13 +59,23 @@ class _HomeScreenState extends State<HomeScreen> {
                 toolbarHeight: 100,
                 centerTitle: false,
                 backgroundColor: GenerallColor.appBarBackGroundColor,
-                title: const Text(
-                  'به برنامه گیمک خوش اومدین',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      'به برنامه گیمک خوش اومدین',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                    Image.asset(
+                      'assets/images/logo_t.png',
+                      width: 90,
+                      color: Colors.white,
+                    )
+                  ],
                 ),
                 bottom: PreferredSize(
                   preferredSize: const Size(double.infinity, 50),
@@ -505,12 +515,13 @@ class _HomeScreenState extends State<HomeScreen> {
                               borderRadius: BorderRadius.circular(10),
                             )),
                         onPressed: () {
-                           Navigator.push(
+                          Navigator.push(
                             context,
                             PageTransition(
                               child: BlocProvider(
                                 create: (context) => HomeBloc(),
-                                child: ListGameScreen(title: 'بازی های آپدیت شده'),
+                                child:
+                                    ListGameScreen(title: 'بازی های آپدیت شده'),
                               ),
                               type: PageTransitionType.fade,
                               duration: const Duration(milliseconds: 200),
