@@ -78,21 +78,23 @@ class _GameScreenState extends State<GameScreen> {
                                 ),
                               ),
                             ),
-                            Container(
-                              height: 50,
-                              width: 50,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color:
-                                    GenerallColor.primaryColor.withOpacity(.6),
-                              ),
-                              child: const Center(
-                                child: Icon(
-                                  CupertinoIcons.ellipsis_vertical,
-                                  color: GenerallColor.primaryColor,
-                                ),
-                              ),
-                            ),
+                            //TODO here is Menu bar for games
+
+                            // Container(
+                            //   height: 50,
+                            //   width: 50,
+                            //   decoration: BoxDecoration(
+                            //     shape: BoxShape.circle,
+                            //     color:
+                            //         GenerallColor.primaryColor.withOpacity(.6),
+                            //   ),
+                            //   child: const Center(
+                            //     child: Icon(
+                            //       CupertinoIcons.ellipsis_vertical,
+                            //       color: GenerallColor.primaryColor,
+                            //     ),
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),
