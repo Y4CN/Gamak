@@ -249,6 +249,11 @@ class _TrickListScreenState extends State<TrickListScreen> {
         ),
         tooltip: 'اضافه کردن ترفند',
         onPressed: () {
+          if (!ShareManager.getVerifUser()) {
+            CustomSnakBar.getCustomSnakBar(
+                'برای ثبت ترفند باید ایمیل خود را وریفای کنین', context);
+            return;
+          }
           if (ShareManager.getBlockedUser()) {
             CustomSnakBar.getCustomSnakBar(
                 'شما مسدود شدید نمیتوانین ترفند اضافه کنین', context);

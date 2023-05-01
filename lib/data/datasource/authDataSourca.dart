@@ -94,6 +94,7 @@ class AuthDataSource extends IAuthDataSource {
       var response = await _dio.get(
         'collections/users/records/$id',
       );
+      ShareManager.saveVerifUser(response.data['verified']);
       ShareManager.saveBlockedUser(response.data['block']);
       return UserModel.fromJson(response.data);
     } on DioError catch (ex) {

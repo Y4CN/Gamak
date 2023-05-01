@@ -470,7 +470,7 @@ class _TrickSingleScreenState extends State<TrickSingleScreen> {
                                         visible: ShareManager.readUserId() ==
                                             r[index].userModel.id,
                                         child: deletIconStatus(state, context,
-                                            widget.trickModel, r[index]),
+                                            widget.trickModel, r[index], page),
                                       ),
                                     ],
                                   ),
@@ -519,7 +519,7 @@ class _TrickSingleScreenState extends State<TrickSingleScreen> {
                 }, (r) {
                   if (r) {
                     //TODO Test On Server couse here is TOO Fast and Error for Rebuild
-                    
+
                     // CustomSnakBar.getCustomSnakBar(
                     // 'نظر شما با موفقیت ثبت شد ❤️', context);
                     BlocProvider.of<TrickBloc>(context).add(
@@ -601,6 +601,12 @@ class _TrickSingleScreenState extends State<TrickSingleScreen> {
                                       size: 16)
                                   : IconButton(
                                       onPressed: () {
+                                        if (!ShareManager.getVerifUser()) {
+                                          CustomSnakBar.getCustomSnakBar(
+                                              'برای ثبت نظر باید ایمیل خود را وریفای کنین',
+                                              context);
+                                          return;
+                                        }
                                         if (_commendController.text
                                             .trim()
                                             .isEmpty) {
@@ -671,7 +677,7 @@ class _TrickSingleScreenState extends State<TrickSingleScreen> {
 }
 
 Widget deletIconStatus(TrickState state, context, TrickModel trickModel,
-    TrickCommendModel trickCommendModel) {
+    TrickCommendModel trickCommendModel, int page) {
   if (state is TrickLaodingDeleteState) {
     LoadingAnimationWidget.fourRotatingDots(
       color: GenerallColor.appBarBackGroundColor,
@@ -706,7 +712,7 @@ Widget deletIconStatus(TrickState state, context, TrickModel trickModel,
                   }, (r) {
                     if (r) {
                       BlocProvider.of<TrickBloc>(context)
-                          .add(TrickRequestCommedEvent(trickModel.id, 1));
+                          .add(TrickRequestCommedEvent(trickModel.id, page));
                     }
                   });
                 }

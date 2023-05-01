@@ -31,10 +31,18 @@ class ShareManager {
   }
 
   static void saveBlockedUser(bool blocked) {
-    _sharedPref.setBool('blocked',blocked);
+    _sharedPref.setBool('blocked', blocked);
   }
 
   static bool getBlockedUser() {
     return _sharedPref.getBool('blocked') ?? false;
+  }
+
+  static void saveVerifUser(bool isVerif) {
+    _sharedPref.setBool('verif', isVerif);
+  }
+
+  static bool getVerifUser() {
+    return _sharedPref.getBool('verif') ?? false;
   }
 }
