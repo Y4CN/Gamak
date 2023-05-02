@@ -71,9 +71,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     Image.asset(
-                      'assets/images/logo_t.png',
-                      width: 90,
-                      color: Colors.white,
+                      'assets/images/logo_transparent.png',
+                      width: 80,
                     )
                   ],
                 ),

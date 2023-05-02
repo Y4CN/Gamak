@@ -60,14 +60,14 @@ class _SplashScreenState extends State<SplashScreen> {
               'گیمک',
               style: TextStyle(
                 color: Colors.black,
-                fontSize: 18,
+                fontSize: 24,
                 fontFamily: 'vazirm',
                 fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(
-                height: 120,
-                width: 120,
+                height: 140,
+                width: 140,
                 child: RiveAnimation.asset('assets/rive/loading.riv')),
             const SizedBox(
               height: 50,
