@@ -20,6 +20,7 @@ abstract class IAuthRepository {
     String password,
   );
   Future<Either<String, UserModel>> readUser();
+  Future<Either<String, bool>> verify(String email);
 }
 
 class AuthRepository extends IAuthRepository {
@@ -62,6 +63,16 @@ class AuthRepository extends IAuthRepository {
   Future<Either<String, UserModel>> readUser() async {
     try {
       var response = await _authDataSource.readUser();
+      return Right(response);
+    } on ErrorHandler catch (e) {
+      throw Left(e.message ?? 'خطای ناشناخته');
+    }
+  }
+
+  @override
+  Future<Either<String, bool>> verify(String email) async {
+    try {
+      var response = await _authDataSource.verify(email);
       return Right(response);
     } on ErrorHandler catch (e) {
       throw Left(e.message ?? 'خطای ناشناخته');

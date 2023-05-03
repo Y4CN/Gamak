@@ -22,6 +22,7 @@ abstract class IAuthDataSource {
   );
 
   Future<UserModel> readUser();
+  Future<bool> verify(String email);
 }
 
 class AuthDataSource extends IAuthDataSource {
@@ -98,7 +99,26 @@ class AuthDataSource extends IAuthDataSource {
       ShareManager.saveBlockedUser(response.data['block']);
       return UserModel.fromJson(response.data);
     } on DioError catch (ex) {
-      print(ex.message);
+      throw ErrorHandler(ex.response?.statusCode, ex.response?.data['message']);
+    } catch (ex) {
+      throw ErrorHandler(0, 'unknown erorr');
+    }
+  }
+
+  @override
+  Future<bool> verify(String email) async {
+    try {
+      var response = await _dio.post(
+        'collections/users/request-verification',
+        data: {
+          'email': email,
+        },
+      );
+      if (response.statusCode == 204) {
+        return true;
+      }
+      return false;
+    } on DioError catch (ex) {
       throw ErrorHandler(ex.response?.statusCode, ex.response?.data['message']);
     } catch (ex) {
       throw ErrorHandler(0, 'unknown erorr');

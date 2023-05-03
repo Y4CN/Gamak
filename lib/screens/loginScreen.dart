@@ -5,6 +5,7 @@ import 'package:game_hacks_chat/bloc/authBloc/authBloc.dart';
 import 'package:game_hacks_chat/bloc/authBloc/authEvent.dart';
 import 'package:game_hacks_chat/bloc/authBloc/authState.dart';
 import 'package:game_hacks_chat/constant/generallColor.dart';
+import 'package:game_hacks_chat/screens/forgotPassScreen.dart';
 import 'package:game_hacks_chat/screens/mainScreen.dart';
 import 'package:game_hacks_chat/widget/customSnakBar.dart';
 import 'package:game_hacks_chat/widget/customTextField.dart';
@@ -146,6 +147,36 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     );
                   },
+                ),
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size(double.infinity, 50),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    backgroundColor:
+                        GenerallColor.appBarBackGroundColor.withOpacity(.8),
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ForgotPassScreen(),
+                      ),
+                    );
+                  },
+                  child: const Text(
+                    'فراموشی رمز عبور',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15,
+                    ),
+                  ),
                 ),
               ),
             ),

@@ -31,3 +31,8 @@ class AuthRegisterEvent extends AuthEvent {
 class AuthReadUserEvent extends AuthEvent{
   
 }
+
+class AuthVerifyEvent extends AuthEvent{
+  String email;
+  AuthVerifyEvent(this.email);
+}

@@ -22,3 +22,9 @@ class AuthReadUserResponseState extends AuthState{
 
   AuthReadUserResponseState(this.readUser);
 }
+
+
+class AuthVerifyResponseState extends AuthState{
+  Either<String, bool> response;
+  AuthVerifyResponseState(this.response);
+}
