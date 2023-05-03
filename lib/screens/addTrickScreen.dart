@@ -387,7 +387,7 @@ class _AddTrickScreenState extends State<AddTrickScreen> {
                   ),
                 );
               }
-              return const Spacer();
+              return  const SizedBox();
             },
           )
         ],
