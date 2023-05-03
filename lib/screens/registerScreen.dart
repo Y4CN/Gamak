@@ -29,7 +29,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   late TextEditingController _passController;
   late TextEditingController _confirmPassController;
   File? userAvatar;
-  ValueNotifier _notifier = ValueNotifier<bool>(false);
+  final ValueNotifier _notifier = ValueNotifier<bool>(false);
 
   @override
   void initState() {
@@ -146,31 +146,31 @@ class _RegisterScreenState extends State<RegisterScreen> {
             SliverToBoxAdapter(
               child: CustomTextFeild(
                 controller: _emailController,
-                txt: 'ایمیل',
+                txt: 'ایمیل', isPassword: false,
               ),
             ),
             SliverToBoxAdapter(
               child: CustomTextFeild(
                 controller: _usernameController,
-                txt: ' اسم کاربری',
+                txt: ' اسم کاربری', isPassword: false,
               ),
             ),
             SliverToBoxAdapter(
               child: CustomTextFeild(
                 controller: _nameController,
-                txt: 'اسم',
+                txt: 'اسم', isPassword: false,
               ),
             ),
             SliverToBoxAdapter(
               child: CustomTextFeild(
                 controller: _passController,
-                txt: 'رمز عبور',
+                txt: 'رمز عبور', isPassword: true,
               ),
             ),
             SliverToBoxAdapter(
               child: CustomTextFeild(
                 controller: _confirmPassController,
-                txt: 'تایید رمز عبور',
+                txt: 'تایید رمز عبور', isPassword: true,
               ),
             ),
             SliverToBoxAdapter(

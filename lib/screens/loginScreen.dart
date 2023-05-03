@@ -59,11 +59,15 @@ class _LoginScreenState extends State<LoginScreen> {
               child: CustomTextFeild(
                 controller: _emailOruserNameController,
                 txt: 'نام کاربری / ایمیل',
+                isPassword: false,
               ),
             ),
             SliverToBoxAdapter(
-              child:
-                  CustomTextFeild(controller: _passController, txt: 'رمز عبور'),
+              child: CustomTextFeild(
+                controller: _passController,
+                txt: 'رمز عبور',
+                isPassword: false,
+              ),
             ),
             SliverToBoxAdapter(
               child: Padding(
