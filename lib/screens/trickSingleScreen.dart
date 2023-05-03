@@ -35,6 +35,7 @@ class _TrickSingleScreenState extends State<TrickSingleScreen> {
   late String _commendId;
   late ScrollController _scrollController;
   late int page;
+  late ValueNotifier deleteNotif;
   @override
   void initState() {
     super.initState();
@@ -47,6 +48,14 @@ class _TrickSingleScreenState extends State<TrickSingleScreen> {
     _commendId = '';
     page = 1;
     _scrollController = ScrollController();
+    deleteNotif = ValueNotifier<bool>(false);
+    deleteNotif.addListener(() {
+      if (deleteNotif.value) {
+        BlocProvider.of<TrickBloc>(context)
+            .add(TrickRequestCommedEvent(widget.trickModel.id, page));
+        deleteNotif.value = false;
+      }
+    });
     // ..addListener(
     //   () {
     //     // print('listen');
@@ -462,15 +471,17 @@ class _TrickSingleScreenState extends State<TrickSingleScreen> {
                                             _editValueNotivier
                                                 .notifyListeners();
                                           },
-                                          icon: const Icon(CupertinoIcons.pen,
-                                              color: Colors.green),
+                                          icon: const Icon(
+                                            CupertinoIcons.pen,
+                                            color: Colors.green,
+                                          ),
                                         ),
                                       ),
                                       Visibility(
                                         visible: ShareManager.readUserId() ==
                                             r[index].userModel.id,
-                                        child: deletIconStatus(state, context,
-                                            widget.trickModel, r[index], page),
+                                        child: deletIconStatus(context,
+                                            widget.trickModel, r[index], page,deleteNotif),
                                       ),
                                     ],
                                   ),
@@ -676,24 +687,24 @@ class _TrickSingleScreenState extends State<TrickSingleScreen> {
   }
 }
 
-Widget deletIconStatus(TrickState state, context, TrickModel trickModel,
-    TrickCommendModel trickCommendModel, int page) {
-  if (state is TrickLaodingDeleteState) {
-    LoadingAnimationWidget.fourRotatingDots(
-      color: GenerallColor.appBarBackGroundColor,
-      size: 12,
-    );
-  }
-  if (state is TrickResponseDeleteState) {
-    state.responseDelete.fold((l) {
-      return CustomSnakBar.getCustomSnakBar(l, context);
-    }, (r) {
-      if (r) {
-        BlocProvider.of<TrickBloc>(context)
-            .add(TrickRequestCommedEvent(trickModel.id, 1));
-      }
-    });
-  }
+Widget deletIconStatus(context, TrickModel trickModel,
+    TrickCommendModel trickCommendModel, int page,ValueNotifier deleteNotif) {
+  // if (state is TrickLaodingDeleteState) {
+  //   LoadingAnimationWidget.fourRotatingDots(
+  //     color: GenerallColor.appBarBackGroundColor,
+  //     size: 12,
+  //   );
+  // }
+  // if (state is TrickResponseDeleteState) {
+  //   state.responseDelete.fold((l) {
+  //     return CustomSnakBar.getCustomSnakBar(l, context);
+  //   }, (r) {
+  //     if (r) {
+  //       BlocProvider.of<TrickBloc>(context)
+  //           .add(TrickRequestCommedEvent(trickModel.id, 1));
+  //     }
+  //   });
+  // }
   return IconButton(
     onPressed: () {
       showDialog(
@@ -705,22 +716,11 @@ Widget deletIconStatus(TrickState state, context, TrickModel trickModel,
           return BlocProvider(
             create: (context) => TrickBloc(),
             child: BlocConsumer<TrickBloc, TrickState>(
-              listener: (context, state) {
-                if (state is TrickResponseDeleteState) {
-                  return state.responseDelete.fold((l) {
-                    CustomSnakBar.getCustomSnakBar(l, context);
-                  }, (r) {
-                    if (r) {
-                      BlocProvider.of<TrickBloc>(context)
-                          .add(TrickRequestCommedEvent(trickModel.id, page));
-                    }
-                  });
-                }
-              },
+              listener: (context, state) {},
               builder: (context, state) {
                 return _CustomDialog(
                   trickCommendModel: trickCommendModel,
-                  trickModel: trickModel,
+                  deleteNotif: deleteNotif,
                 );
               },
             ),
@@ -739,10 +739,10 @@ class _CustomDialog extends StatelessWidget {
   _CustomDialog({
     super.key,
     required this.trickCommendModel,
-    required this.trickModel,
+    required this.deleteNotif
   });
   TrickCommendModel trickCommendModel;
-  TrickModel trickModel;
+  ValueNotifier deleteNotif;
 
   @override
   Widget build(BuildContext context) {
@@ -799,6 +799,8 @@ class _CustomDialog extends StatelessWidget {
               TrickDeleteEvent(trickCommendModel.id),
             );
             CustomSnakBar.getCustomSnakBar('نظر شما با موفقیت حذف شد', context);
+            deleteNotif.value = true;
+            deleteNotif.notifyListeners();
             // BlocProvider.of<TrickBloc>(context).add(TrickRequestCommedEvent(trickModel.id));
             Navigator.pop(context);
           },
