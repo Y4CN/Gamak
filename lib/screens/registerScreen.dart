@@ -146,31 +146,36 @@ class _RegisterScreenState extends State<RegisterScreen> {
             SliverToBoxAdapter(
               child: CustomTextFeild(
                 controller: _emailController,
-                txt: 'ایمیل', isPassword: false,
+                txt: 'ایمیل',
+                isPassword: false,
               ),
             ),
             SliverToBoxAdapter(
               child: CustomTextFeild(
                 controller: _usernameController,
-                txt: ' اسم کاربری', isPassword: false,
+                txt: ' اسم کاربری',
+                isPassword: false,
               ),
             ),
             SliverToBoxAdapter(
               child: CustomTextFeild(
                 controller: _nameController,
-                txt: 'اسم', isPassword: false,
+                txt: 'اسم',
+                isPassword: false,
               ),
             ),
             SliverToBoxAdapter(
               child: CustomTextFeild(
                 controller: _passController,
-                txt: 'رمز عبور', isPassword: true,
+                txt: 'رمز عبور',
+                isPassword: true,
               ),
             ),
             SliverToBoxAdapter(
               child: CustomTextFeild(
                 controller: _confirmPassController,
-                txt: 'تایید رمز عبور', isPassword: true,
+                txt: 'تایید رمز عبور',
+                isPassword: true,
               ),
             ),
             SliverToBoxAdapter(
@@ -186,6 +191,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         'شما با موفقیت ثبت نام کردین',
                         context,
                       );
+                      BlocProvider.of<AuthBloc>(context).add(AuthVerifyEvent(_emailController.text.trim()));
+                      _confirmPassController.clear();
+                      _passController.clear();
+                      _emailController.clear();
+                      _nameController.clear();
+                      _usernameController.clear();
+                      CustomSnakBar.getCustomSnakBar(
+                          'برای فعال سازی لطفا ایمیل خود را چک کنین (هرز نامه رو هم چک کنین)',
+                          context);
+
                       state.register.fold((l) {
                         CustomSnakBar.getCustomSnakBar(l, context);
                       }, (r) {
