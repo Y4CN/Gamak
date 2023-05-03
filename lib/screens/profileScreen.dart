@@ -43,7 +43,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               return Center(
                 child: LoadingAnimationWidget.fourRotatingDots(
                   color: GenerallColor.appBarBackGroundColor,
-                  size: 60,
+                  size: 30,
                 ),
               );
             }
