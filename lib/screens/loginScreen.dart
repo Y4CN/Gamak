@@ -66,7 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
               child: CustomTextFeild(
                 controller: _passController,
                 txt: 'رمز عبور',
-                isPassword: false,
+                isPassword: true,
               ),
             ),
             SliverToBoxAdapter(
