@@ -36,3 +36,9 @@ class AuthVerifyEvent extends AuthEvent{
   String email;
   AuthVerifyEvent(this.email);
 }
+
+
+class AuthForgotPassEvent extends AuthEvent{
+  String email;
+  AuthForgotPassEvent(this.email);
+}

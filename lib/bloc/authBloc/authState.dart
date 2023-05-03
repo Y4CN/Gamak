@@ -17,14 +17,18 @@ class AuthRegisterResponseState extends AuthState {
   AuthRegisterResponseState(this.register);
 }
 
-class AuthReadUserResponseState extends AuthState{
-  Either<String,UserModel> readUser;
+class AuthReadUserResponseState extends AuthState {
+  Either<String, UserModel> readUser;
 
   AuthReadUserResponseState(this.readUser);
 }
 
-
-class AuthVerifyResponseState extends AuthState{
+class AuthVerifyResponseState extends AuthState {
   Either<String, bool> response;
   AuthVerifyResponseState(this.response);
+}
+
+class AuthForgotPassResponseState extends AuthState {
+  Either<String, bool> response;
+  AuthForgotPassResponseState(this.response);
 }

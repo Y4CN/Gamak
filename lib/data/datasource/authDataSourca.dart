@@ -23,6 +23,7 @@ abstract class IAuthDataSource {
 
   Future<UserModel> readUser();
   Future<bool> verify(String email);
+  Future<bool> forGotPass(String email);
 }
 
 class AuthDataSource extends IAuthDataSource {
@@ -110,6 +111,27 @@ class AuthDataSource extends IAuthDataSource {
     try {
       var response = await _dio.post(
         'collections/users/request-verification',
+        data: {
+          'email': email,
+        },
+      );
+      if (response.statusCode == 204) {
+        return true;
+      }
+      return false;
+    } on DioError catch (ex) {
+      throw ErrorHandler(ex.response?.statusCode, ex.response?.data['message']);
+    } catch (ex) {
+      throw ErrorHandler(0, 'unknown erorr');
+    }
+  }
+  
+  @override
+  Future<bool> forGotPass(String email)async {
+    
+    try {
+      var response = await _dio.post(
+        'collections/users/request-password-reset',
         data: {
           'email': email,
         },
