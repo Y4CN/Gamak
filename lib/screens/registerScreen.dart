@@ -191,7 +191,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         'شما با موفقیت ثبت نام کردین',
                         context,
                       );
-                      BlocProvider.of<AuthBloc>(context).add(AuthVerifyEvent(_emailController.text.trim()));
+                      BlocProvider.of<AuthBloc>(context).add(
+                        AuthVerifyEvent(
+                          _emailController.text.trim(),
+                        ),
+                      );
                       _confirmPassController.clear();
                       _passController.clear();
                       _emailController.clear();
