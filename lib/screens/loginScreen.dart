@@ -166,7 +166,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const ForgotPassScreen(),
+                        builder: (context) => BlocProvider(
+                          create: (context) => AuthBloc(),
+                          child: const ForgotPassScreen(),
+                        ),
                       ),
                     );
                   },
