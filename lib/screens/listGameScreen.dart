@@ -73,7 +73,7 @@ class _ListGameScreenState extends State<ListGameScreen> {
                 itemBuilder: (context, index) {
                   return Padding(
                     padding:
-                        const EdgeInsets.only(top: 10, left: 10, right: 10),
+                        const EdgeInsets.only(top: 15, left: 10, right: 10),
                     child: singleItemGame(gameProductModel: r[index]),
                   );
                 },
