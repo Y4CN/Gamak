@@ -490,7 +490,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         );
                       },
-                      childCount: r.length < 5 ? r.length : 5,
+                      childCount: r.length < 10 ? r.length : 10,
                     ),
                   );
                 }),
@@ -565,7 +565,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         );
                       },
-                      childCount: r.length < 5 ? r.length : 5,
+                      childCount: r.length < 10 ? r.length : 10,
                     ),
                   );
                 }),
