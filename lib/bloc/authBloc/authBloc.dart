@@ -35,7 +35,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
 
     on<AuthVerifyEvent>((event, emit) async {
-      emit(AuthLoadingState());
+      // emit(AuthLoadingState());
       var response = await _authRepository.verify(event.email);
       emit(AuthVerifyResponseState(response));
     });

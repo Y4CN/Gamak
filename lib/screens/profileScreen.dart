@@ -18,6 +18,7 @@ import 'package:game_hacks_chat/screens/supportScreen.dart';
 import 'package:game_hacks_chat/utilities/sharManager.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:pushpole/pushpole.dart';
 import 'package:share_plus/share_plus.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -217,20 +218,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         delegate: SliverChildListDelegate(
                           [
                             Visibility(
-                              visible: r.verified,
+                              visible: !r.verified,
                               child: ListTile(
                                 leading: const Icon(
                                   CupertinoIcons.check_mark,
                                   color: Colors.black54,
                                 ),
-                                onTap: () {
-                                  // BlocProvider.of<AuthBloc>(context).add(AuthVerifyEvent(email));
+                                onTap: () async {
+                                  BlocProvider.of<AuthBloc>(context)
+                                      .add(AuthVerifyEvent(r.email));
+                                  BlocProvider.of<AuthBloc>(context)
+                                      .add(AuthReadUserEvent());
+                                  var idnotif = await PushPole.getId();
+                                  PushPole.sendSimpleNotifToUser(
+                                    idnotif,
+                                    'فعال سازی ایمیل',
+                                    'لطفا ایمیل خود را چک کنین (هرزنامه) و پس از فعال سازی برنامه را بسته و باز کنین',
+                                  );
                                 },
                                 title: const Text('فعال سازی ایمیل شما'),
                               ),
                             ),
                             Visibility(
-                              visible: r.verified,
+                              visible: !r.verified,
                               child: const Divider(
                                 color: Colors.grey,
                                 height: .2,
@@ -248,7 +258,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               color: Colors.grey,
                               height: .2,
                             ),
-                            
                             ListTile(
                               leading: const Icon(
                                 Icons.lightbulb,
@@ -358,6 +367,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 );
               });
             }
+
             return NestedScrollView(
               headerSliverBuilder: (context, innerBoxIsScrolled) {
                 return [
