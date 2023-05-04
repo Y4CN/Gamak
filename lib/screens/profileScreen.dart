@@ -492,8 +492,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               .withOpacity(.8),
                         ),
                         onPressed: () {
-                          ShareManager.setGust(true);
-                          Navigator.pushAndRemoveUntil(
+                          Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) => BlocProvider(
@@ -501,7 +500,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 child: const RegisterScreen(),
                               ),
                             ),
-                            (route) => false,
                           );
                         },
                         child: const Text(
