@@ -22,7 +22,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       var getAllCategory = await _categoryRepository.getAllCategory();
       if (ShareManager.getGust()) {
         Either<String,UserModel> gust(){
-          return Right(UserModel(avatar: '', id: '', name: '', username: '', verified: false, isBlocked: false,),);
+          return Right(UserModel(avatar: '', id: '', name: '', username: '', verified: false, isBlocked: false, email: '',),);
         }
         userResponse = gust();
       }else{

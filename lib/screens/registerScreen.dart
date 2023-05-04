@@ -16,6 +16,7 @@ import 'package:game_hacks_chat/widget/customSnakBar.dart';
 import 'package:game_hacks_chat/widget/customTextField.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:pushpole/pushpole.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -53,6 +54,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         body: CustomScrollView(
           slivers: [
             SliverAppBar(
+              automaticallyImplyLeading: false,
               toolbarHeight: 200,
               backgroundColor: GenerallColor.appBarBackGroundColor,
               shape: const RoundedRectangleBorder(
@@ -191,7 +193,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     if (state is AuthRegisterResponseState) {
                       state.register.fold((l) {
                         CustomSnakBar.getCustomSnakBar(l, context);
-                      }, (r) {
+                      }, (r) async {
                         if (r) {
                           CustomSnakBar.getCustomSnakBar(
                             'شما با موفقیت ثبت نام کردین',
@@ -210,7 +212,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           CustomSnakBar.getCustomSnakBar(
                               'برای فعال سازی لطفا ایمیل خود را چک کنین (هرز نامه رو هم چک کنین)',
                               context);
-
                           Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(

@@ -216,6 +216,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       SliverList(
                         delegate: SliverChildListDelegate(
                           [
+                            Visibility(
+                              visible: r.verified,
+                              child: ListTile(
+                                leading: const Icon(
+                                  CupertinoIcons.check_mark,
+                                  color: Colors.black54,
+                                ),
+                                onTap: () {
+                                  // BlocProvider.of<AuthBloc>(context).add(AuthVerifyEvent(email));
+                                },
+                                title: const Text('فعال سازی ایمیل شما'),
+                              ),
+                            ),
+                            Visibility(
+                              visible: r.verified,
+                              child: const Divider(
+                                color: Colors.grey,
+                                height: .2,
+                              ),
+                            ),
                             ListTile(
                               leading: const Icon(
                                 Icons.key,
@@ -228,18 +248,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               color: Colors.grey,
                               height: .2,
                             ),
-                            // ListTile(
-                            //   leading: const Icon(
-                            //     CupertinoIcons.game_controller_solid,
-                            //     color: Colors.black54,
-                            //   ),
-                            //   onTap: () {},
-                            //   title: const Text('سفارش های شما'),
-                            // ),
-                            const Divider(
-                              color: Colors.grey,
-                              height: .2,
-                            ),
+                            
                             ListTile(
                               leading: const Icon(
                                 Icons.lightbulb,

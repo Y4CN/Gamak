@@ -77,8 +77,9 @@ class AuthDataSource extends IAuthDataSource {
       'password': password,
       'passwordConfirm': passwordConfirm,
       'name': name,
+      'emailVisibility':true,
       'avatar':
-          avatar == null ? null : await MultipartFile.fromFile(avatar.path)
+          avatar == null ? null : await MultipartFile.fromFile(avatar.path),
     });
     try {
       await _dio.post('collections/users/records', data: _formData);
@@ -96,6 +97,7 @@ class AuthDataSource extends IAuthDataSource {
       var response = await _dio.get(
         'collections/users/records/$id',
       );
+      
       ShareManager.saveVerifUser(response.data['verified']);
       ShareManager.saveBlockedUser(response.data['block']);
       return UserModel.fromJson(response.data);

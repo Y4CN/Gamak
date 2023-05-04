@@ -7,6 +7,7 @@ class UserModel {
   String username;
   bool verified;
   bool isBlocked;
+  String email;
 
   UserModel({
     required this.avatar,
@@ -15,6 +16,7 @@ class UserModel {
     required this.username,
     required this.verified,
     required this.isBlocked,
+    required this.email
   });
 
   factory UserModel.fromJson(Map<String, dynamic> jsonData) {
@@ -26,6 +28,7 @@ class UserModel {
       username: jsonData['username'],
       verified: jsonData['verified'],
       isBlocked: jsonData['block'],
+      email: jsonData['email'],
     );
   }
 }
