@@ -9,7 +9,9 @@ import 'package:game_hacks_chat/bloc/authBloc/authEvent.dart';
 import 'package:game_hacks_chat/bloc/authBloc/authState.dart';
 import 'package:game_hacks_chat/constant/generallColor.dart';
 import 'package:game_hacks_chat/screens/loginScreen.dart';
+import 'package:game_hacks_chat/screens/mainScreen.dart';
 import 'package:game_hacks_chat/utilities/fileManager.dart';
+import 'package:game_hacks_chat/utilities/sharManager.dart';
 import 'package:game_hacks_chat/widget/customSnakBar.dart';
 import 'package:game_hacks_chat/widget/customTextField.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -187,35 +189,40 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 child: BlocConsumer<AuthBloc, AuthState>(
                   listener: (context, state) {
                     if (state is AuthRegisterResponseState) {
-                      CustomSnakBar.getCustomSnakBar(
-                        'شما با موفقیت ثبت نام کردین',
-                        context,
-                      );
-                      BlocProvider.of<AuthBloc>(context).add(
-                        AuthVerifyEvent(
-                          _emailController.text.trim(),
-                        ),
-                      );
-                      _confirmPassController.clear();
-                      _passController.clear();
-                      _emailController.clear();
-                      _nameController.clear();
-                      _usernameController.clear();
-                      CustomSnakBar.getCustomSnakBar(
-                          'برای فعال سازی لطفا ایمیل خود را چک کنین (هرز نامه رو هم چک کنین)',
-                          context);
-
                       state.register.fold((l) {
                         CustomSnakBar.getCustomSnakBar(l, context);
                       }, (r) {
                         if (r) {
-                          Navigator.push(context, MaterialPageRoute(
-                            builder: (context) {
-                              return BlocProvider(
+                          CustomSnakBar.getCustomSnakBar(
+                            'شما با موفقیت ثبت نام کردین',
+                            context,
+                          );
+                          BlocProvider.of<AuthBloc>(context).add(
+                            AuthVerifyEvent(
+                              _emailController.text.trim(),
+                            ),
+                          );
+                          _confirmPassController.clear();
+                          _passController.clear();
+                          _emailController.clear();
+                          _nameController.clear();
+                          _usernameController.clear();
+                          CustomSnakBar.getCustomSnakBar(
+                              'برای فعال سازی لطفا ایمیل خود را چک کنین (هرز نامه رو هم چک کنین)',
+                              context);
+
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return BlocProvider(
                                   create: (context) => AuthBloc(),
-                                  child: const LoginScreen());
-                            },
-                          ));
+                                  child: const LoginScreen(),
+                                );
+                              },
+                            ),
+                            (route) => false,
+                          );
                         }
                       });
                     }
@@ -322,6 +329,51 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       color: Colors.white,
                       fontSize: 15,
                     ),
+                  ),
+                ),
+              ),
+            ),
+            SliverToBoxAdapter(
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size(double.infinity, 50),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    backgroundColor:
+                        GenerallColor.appBarBackGroundColor.withOpacity(.8),
+                  ),
+                  onPressed: () {
+                    ShareManager.setGust(true);
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const MainScreen(),
+                      ),
+                      (route) => false,
+                    );
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Text(
+                        'به عنوان مهمان وارد شوید',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 15,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Icon(
+                        CupertinoIcons.person_crop_circle,
+                        color: Colors.white,
+                      ),
+                    ],
                   ),
                 ),
               ),

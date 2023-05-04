@@ -20,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 3), () {
-      if (ShareManager.isLogedin()) {
+      if (ShareManager.isLogedin() || ShareManager.getGust()) {
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(

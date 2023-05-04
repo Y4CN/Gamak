@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:game_hacks_chat/locator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -44,5 +46,13 @@ class ShareManager {
 
   static bool getVerifUser() {
     return _sharedPref.getBool('verif') ?? false;
+  }
+
+  static void setGust(bool isGust) {
+    _sharedPref.setBool('gust', isGust);
+  }
+
+  static bool getGust() {
+    return _sharedPref.getBool('gust') ?? false;
   }
 }

@@ -7,6 +7,7 @@ import 'package:game_hacks_chat/bloc/authBloc/authState.dart';
 import 'package:game_hacks_chat/constant/generallColor.dart';
 import 'package:game_hacks_chat/screens/forgotPassScreen.dart';
 import 'package:game_hacks_chat/screens/mainScreen.dart';
+import 'package:game_hacks_chat/utilities/sharManager.dart';
 import 'package:game_hacks_chat/widget/customSnakBar.dart';
 import 'package:game_hacks_chat/widget/customTextField.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -87,6 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         CustomSnakBar.getCustomSnakBar(l, context);
                       }, (r) {
                         if (r) {
+                          ShareManager.setGust(false);
                           Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(
