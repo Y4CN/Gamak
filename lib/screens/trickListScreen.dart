@@ -13,6 +13,7 @@ import 'package:game_hacks_chat/utilities/sharManager.dart';
 import 'package:game_hacks_chat/widget/customSnakBar.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:share_plus/share_plus.dart';
 
 class TrickListScreen extends StatefulWidget {
   TrickListScreen({super.key, required this.gameProductModel});
@@ -249,6 +250,11 @@ class _TrickListScreenState extends State<TrickListScreen> {
         ),
         tooltip: 'اضافه کردن ترفند',
         onPressed: () {
+          if (ShareManager.getGust()) {
+            CustomSnakBar.getCustomSnakBar(
+                'شما به عنوان مهمان نمیتوانید ترفند اضافه کنید', context);
+            return;
+          }
           if (!ShareManager.getVerifUser()) {
             CustomSnakBar.getCustomSnakBar(
                 'برای ثبت ترفند باید ایمیل خود را وریفای کنین', context);

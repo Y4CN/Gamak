@@ -5,18 +5,22 @@ class CustomSnakBar {
   static getCustomSnakBar(String txt, context) {
     return ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
+        
         duration: const Duration(
           milliseconds: 1500,
         ),
         backgroundColor: Colors.white,
         elevation: 10,
         content: Center(
-          child: Text(
-            txt,
-            style: const TextStyle(
-              fontSize: 14,
-              color: Colors.black,
-              fontFamily: 'vazirm',
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 6),
+            child: Text(
+              txt,
+              style: const TextStyle(
+                fontSize: 14,
+                color: Colors.black,
+                fontFamily: 'vazirm',
+              ),
             ),
           ),
         ),

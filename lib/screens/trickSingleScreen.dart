@@ -480,8 +480,12 @@ class _TrickSingleScreenState extends State<TrickSingleScreen> {
                                       Visibility(
                                         visible: ShareManager.readUserId() ==
                                             r[index].userModel.id,
-                                        child: deletIconStatus(context,
-                                            widget.trickModel, r[index], page,deleteNotif),
+                                        child: deletIconStatus(
+                                            context,
+                                            widget.trickModel,
+                                            r[index],
+                                            page,
+                                            deleteNotif),
                                       ),
                                     ],
                                   ),
@@ -576,6 +580,19 @@ class _TrickSingleScreenState extends State<TrickSingleScreen> {
                           child: TextField(
                             controller: _commendController,
                             onSubmitted: (value) {
+                              if (ShareManager.getGust()) {
+                                CustomSnakBar.getCustomSnakBar(
+                                  'برای ثبت نظر باید ثبت نام کنید',
+                                  context,
+                                );
+                                return;
+                              }
+                              if (!ShareManager.getVerifUser()) {
+                                CustomSnakBar.getCustomSnakBar(
+                                    'برای ثبت نظر باید ایمیل خود را وریفای کنین',
+                                    context);
+                                return;
+                              }
                               if (_commendController.text.trim().isEmpty) {
                                 CustomSnakBar.getCustomSnakBar(
                                   'نظر شما خالی است !',
@@ -612,6 +629,13 @@ class _TrickSingleScreenState extends State<TrickSingleScreen> {
                                       size: 16)
                                   : IconButton(
                                       onPressed: () {
+                                        if (ShareManager.getGust()) {
+                                          CustomSnakBar.getCustomSnakBar(
+                                            'برای ثبت نظر باید ثبت نام کنید',
+                                            context,
+                                          );
+                                          return;
+                                        }
                                         if (!ShareManager.getVerifUser()) {
                                           CustomSnakBar.getCustomSnakBar(
                                               'برای ثبت نظر باید ایمیل خود را وریفای کنین',
@@ -688,7 +712,7 @@ class _TrickSingleScreenState extends State<TrickSingleScreen> {
 }
 
 Widget deletIconStatus(context, TrickModel trickModel,
-    TrickCommendModel trickCommendModel, int page,ValueNotifier deleteNotif) {
+    TrickCommendModel trickCommendModel, int page, ValueNotifier deleteNotif) {
   // if (state is TrickLaodingDeleteState) {
   //   LoadingAnimationWidget.fourRotatingDots(
   //     color: GenerallColor.appBarBackGroundColor,
@@ -736,11 +760,8 @@ Widget deletIconStatus(context, TrickModel trickModel,
 }
 
 class _CustomDialog extends StatelessWidget {
-  _CustomDialog({
-    super.key,
-    required this.trickCommendModel,
-    required this.deleteNotif
-  });
+  _CustomDialog(
+      {super.key, required this.trickCommendModel, required this.deleteNotif});
   TrickCommendModel trickCommendModel;
   ValueNotifier deleteNotif;
 

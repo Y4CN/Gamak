@@ -30,7 +30,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<AuthBloc>(context).add(AuthReadUserEvent());
+    if (!ShareManager.getGust()) {
+      BlocProvider.of<AuthBloc>(context).add(AuthReadUserEvent());
+    }
   }
 
   @override
