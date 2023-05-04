@@ -12,6 +12,7 @@ import 'package:game_hacks_chat/bloc/trickBloc/trickBloc.dart';
 import 'package:game_hacks_chat/bloc/trickBloc/trickEvent.dart';
 import 'package:game_hacks_chat/constant/generallColor.dart';
 import 'package:game_hacks_chat/screens/clientTrickScreen.dart';
+import 'package:game_hacks_chat/screens/registerScreen.dart';
 import 'package:game_hacks_chat/screens/splashScreen.dart';
 import 'package:game_hacks_chat/screens/supportScreen.dart';
 import 'package:game_hacks_chat/utilities/sharManager.dart';
@@ -348,7 +349,174 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 );
               });
             }
-            return Container();
+            return NestedScrollView(
+              headerSliverBuilder: (context, innerBoxIsScrolled) {
+                return [
+                  SliverAppBar(
+                    toolbarHeight: 150,
+                    backgroundColor: GenerallColor.appBarBackGroundColor,
+                    centerTitle: true,
+                    title: Stack(
+                      alignment: AlignmentDirectional.center,
+                      children: [
+                        Container(
+                          height: 120,
+                          width: 120,
+                          decoration: const BoxDecoration(
+                            color: Colors.white12,
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+                        Container(
+                          height: 100,
+                          width: 100,
+                          decoration: const BoxDecoration(
+                            color: Colors.white24,
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+                        Container(
+                          height: 80,
+                          width: 80,
+                          alignment: Alignment.center,
+                          decoration: const BoxDecoration(
+                            color: Colors.white24,
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            CupertinoIcons.person_crop_circle,
+                            color: Colors.black,
+                            size: 40,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SliverPersistentHeader(
+                    pinned: true,
+                    floating: true,
+                    delegate: MyDelegate(
+                      Container(
+                        color: GenerallColor.appBarBackGroundColor,
+                        alignment: Alignment.center,
+                        height: 100,
+                        width: double.infinity,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: const [
+                            Text(
+                              'کاربر مهمان',
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ];
+              },
+              body: CustomScrollView(
+                slivers: [
+                  SliverList(
+                    delegate: SliverChildListDelegate(
+                      [
+                        ListTile(
+                          leading: const Icon(
+                            CupertinoIcons.bubble_left_fill,
+                            color: Colors.black54,
+                          ),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              PageTransition(
+                                child: BlocProvider(
+                                  create: (context) => SupportBloc(),
+                                  child: const SupportScreen(),
+                                ),
+                                type: PageTransitionType.fade,
+                                duration: const Duration(milliseconds: 200),
+                              ),
+                            );
+                          },
+                          title: const Text(
+                            'پشتیبانی',
+                            style: TextStyle(
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                        const Divider(
+                          color: Colors.grey,
+                          height: .2,
+                        ),
+                        ListTile(
+                          leading: const Icon(
+                            Icons.share_rounded,
+                            color: Colors.black54,
+                          ),
+                          onTap: () {
+                            Share.share(
+                              'بیا از برنامه گیمک استفاده کن ! میتونی باهاش ترفند قرار بدی و ترفند های بقیه رو ببینی و دربارش نظر بدی ❤️',
+                            );
+                          },
+                          title: const Text(
+                            'برنامه رو معرفی کنید',
+                            style: TextStyle(
+                              color: Colors.black,
+                            ),
+                          ),
+                        ),
+                        const Divider(
+                          color: Colors.grey,
+                          height: .2,
+                        ),
+                      ],
+                    ),
+                  ),
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 20),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(double.infinity, 50),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          backgroundColor: GenerallColor.appBarBackGroundColor
+                              .withOpacity(.8),
+                        ),
+                        onPressed: () {
+                          ShareManager.setGust(true);
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => BlocProvider(
+                                create: (context) => AuthBloc(),
+                                child: const RegisterScreen(),
+                              ),
+                            ),
+                            (route) => false,
+                          );
+                        },
+                        child: const Text(
+                          'ثبت نام',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
           },
         ),
       ),

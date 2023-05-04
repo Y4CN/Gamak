@@ -102,11 +102,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                 style: const TextStyle(fontSize: 18),
                               );
                             }, (r) {
+                              if (r.id.isEmpty) {
+                                return const Text(
+                                  'کاربر مهمان',
+                                  style: TextStyle(
+                                      fontSize: 18, fontFamily: 'vazirm'),
+                                );
+                              }
                               return Text(
                                 r.name,
                                 style: const TextStyle(
-                                  fontSize: 18,
-                                ),
+                                    fontSize: 18, fontFamily: 'vazirm'),
                               );
                             })
                           : null,
