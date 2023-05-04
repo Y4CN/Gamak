@@ -125,26 +125,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     )
                                   : null,
                             ),
-                            Positioned(
-                              top: 7,
-                              left: 7,
-                              child: Container(
-                                height: 30,
-                                width: 30,
-                                decoration: BoxDecoration(
-                                  color: Colors.grey.shade200,
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                    color: Colors.black,
-                                    width: 2,
-                                  ),
-                                ),
-                                child: const Icon(
-                                  CupertinoIcons.add,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
+                            // Positioned(
+                            //   top: 7,
+                            //   left: 7,
+                            //   child: Container(
+                            //     height: 30,
+                            //     width: 30,
+                            //     decoration: BoxDecoration(
+                            //       color: Colors.grey.shade200,
+                            //       shape: BoxShape.circle,
+                            //       border: Border.all(
+                            //         color: Colors.black,
+                            //         width: 2,
+                            //       ),
+                            //     ),
+                            //     child: const Icon(
+                            //       CupertinoIcons.add,
+                            //       color: Colors.black,
+                            //     ),
+                            //   ),
+                            // ),
                           ],
                         ),
                       ),
