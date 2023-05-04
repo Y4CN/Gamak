@@ -13,6 +13,7 @@ import 'package:game_hacks_chat/bloc/trickBloc/trickEvent.dart';
 import 'package:game_hacks_chat/constant/generallColor.dart';
 import 'package:game_hacks_chat/screens/clientTrickScreen.dart';
 import 'package:game_hacks_chat/screens/registerScreen.dart';
+import 'package:game_hacks_chat/screens/resetPasswordScreen.dart';
 import 'package:game_hacks_chat/screens/splashScreen.dart';
 import 'package:game_hacks_chat/screens/supportScreen.dart';
 import 'package:game_hacks_chat/utilities/sharManager.dart';
@@ -251,7 +252,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 Icons.key,
                                 color: Colors.black54,
                               ),
-                              onTap: () {},
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  PageTransition(
+                                    child: BlocProvider(create: (context) => AuthBloc(),child:  ResetPassScreen(userModel: r,
+
+                                    ),),
+                                    type: PageTransitionType.fade,
+                                    duration: const Duration(milliseconds: 200),
+                                  ),
+                                );
+                              },
                               title: const Text('تغییر رمز عبور'),
                             ),
                             const Divider(
