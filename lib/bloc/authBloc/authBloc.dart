@@ -33,7 +33,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(AuthReadUserResponseState(responseUser));
     });
 
-
     on<AuthVerifyEvent>((event, emit) async {
       // emit(AuthLoadingState());
       var response = await _authRepository.verify(event.email);
@@ -41,9 +40,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     });
 
     on<AuthForgotPassEvent>((event, emit) async {
-     emit(AuthLoadingState());
-     var response = await _authRepository.forGotPass(event.email);
-     emit(AuthForgotPassResponseState(response));
+      emit(AuthLoadingState());
+      var response = await _authRepository.forGotPass(event.email);
+      emit(AuthForgotPassResponseState(response));
+    });
+
+    on<AuthChangeUserDetailsEvent>((event, emit) async {
+      emit(AuthLoadingState());
+      var response = await _authRepository.changeUser(event.name);
+      emit(AuthEditUserDetailsResponseState(response));
     });
   }
 }

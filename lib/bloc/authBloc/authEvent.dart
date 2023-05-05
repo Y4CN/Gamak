@@ -26,19 +26,19 @@ class AuthRegisterEvent extends AuthEvent {
   );
 }
 
+class AuthReadUserEvent extends AuthEvent {}
 
-
-class AuthReadUserEvent extends AuthEvent{
-  
-}
-
-class AuthVerifyEvent extends AuthEvent{
+class AuthVerifyEvent extends AuthEvent {
   String email;
   AuthVerifyEvent(this.email);
 }
 
-
-class AuthForgotPassEvent extends AuthEvent{
+class AuthForgotPassEvent extends AuthEvent {
   String email;
   AuthForgotPassEvent(this.email);
+}
+
+class AuthChangeUserDetailsEvent extends AuthEvent {
+  String name;
+  AuthChangeUserDetailsEvent(this.name);
 }

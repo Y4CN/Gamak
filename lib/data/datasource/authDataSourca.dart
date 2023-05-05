@@ -24,6 +24,7 @@ abstract class IAuthDataSource {
   Future<UserModel> readUser();
   Future<bool> verify(String email);
   Future<bool> forGotPass(String email);
+  Future<bool> changeUser(String name);
 }
 
 class AuthDataSource extends IAuthDataSource {
@@ -77,7 +78,7 @@ class AuthDataSource extends IAuthDataSource {
       'password': password,
       'passwordConfirm': passwordConfirm,
       'name': name,
-      'emailVisibility':true,
+      'emailVisibility': true,
       'avatar':
           avatar == null ? null : await MultipartFile.fromFile(avatar.path),
     });
@@ -97,7 +98,7 @@ class AuthDataSource extends IAuthDataSource {
       var response = await _dio.get(
         'collections/users/records/$id',
       );
-      
+
       ShareManager.saveVerifUser(response.data['verified']);
       ShareManager.saveBlockedUser(response.data['block']);
       return UserModel.fromJson(response.data);
@@ -127,10 +128,9 @@ class AuthDataSource extends IAuthDataSource {
       throw ErrorHandler(0, 'unknown erorr');
     }
   }
-  
+
   @override
-  Future<bool> forGotPass(String email)async {
-    
+  Future<bool> forGotPass(String email) async {
     try {
       var response = await _dio.post(
         'collections/users/request-password-reset',
@@ -139,6 +139,27 @@ class AuthDataSource extends IAuthDataSource {
         },
       );
       if (response.statusCode == 204) {
+        return true;
+      }
+      return false;
+    } on DioError catch (ex) {
+      throw ErrorHandler(ex.response?.statusCode, ex.response?.data['message']);
+    } catch (ex) {
+      throw ErrorHandler(0, 'unknown erorr');
+    }
+  }
+
+  @override
+  Future<bool> changeUser(String name) async {
+    try {
+      var userId = ShareManager.readUserId();
+      var response = await _dio.patch(
+        'collections/users/records/$userId',
+        data: {
+          'name': name,
+        },
+      );
+      if (response.statusCode == 200) {
         return true;
       }
       return false;

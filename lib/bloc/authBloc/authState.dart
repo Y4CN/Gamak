@@ -32,3 +32,9 @@ class AuthForgotPassResponseState extends AuthState {
   Either<String, bool> response;
   AuthForgotPassResponseState(this.response);
 }
+
+
+class AuthEditUserDetailsResponseState extends AuthState{
+  Either<String , bool> response;
+  AuthEditUserDetailsResponseState(this.response);
+}

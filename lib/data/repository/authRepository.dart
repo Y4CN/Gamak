@@ -21,7 +21,8 @@ abstract class IAuthRepository {
   );
   Future<Either<String, UserModel>> readUser();
   Future<Either<String, bool>> verify(String email);
-   Future<Either< String,bool>> forGotPass(String email);
+  Future<Either<String, bool>> forGotPass(String email);
+  Future<Either<String, bool>> changeUser(String name);
 }
 
 class AuthRepository extends IAuthRepository {
@@ -79,11 +80,21 @@ class AuthRepository extends IAuthRepository {
       throw Left(e.message ?? 'خطای ناشناخته');
     }
   }
-  
+
   @override
   Future<Either<String, bool>> forGotPass(String email) async {
     try {
       var response = await _authDataSource.forGotPass(email);
+      return Right(response);
+    } on ErrorHandler catch (e) {
+      throw Left(e.message ?? 'خطای ناشناخته');
+    }
+  }
+
+  @override
+  Future<Either<String, bool>> changeUser(String name) async {
+    try {
+      var response = await _authDataSource.changeUser(name);
       return Right(response);
     } on ErrorHandler catch (e) {
       throw Left(e.message ?? 'خطای ناشناخته');
