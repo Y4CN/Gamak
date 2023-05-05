@@ -11,6 +11,7 @@ import 'package:game_hacks_chat/bloc/supportBloc/supportBloc.dart';
 import 'package:game_hacks_chat/bloc/trickBloc/trickBloc.dart';
 import 'package:game_hacks_chat/bloc/trickBloc/trickEvent.dart';
 import 'package:game_hacks_chat/constant/generallColor.dart';
+import 'package:game_hacks_chat/screens/changeUserDetailsScreen.dart';
 import 'package:game_hacks_chat/screens/clientTrickScreen.dart';
 import 'package:game_hacks_chat/screens/registerScreen.dart';
 import 'package:game_hacks_chat/screens/resetPasswordScreen.dart';
@@ -74,7 +75,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 const EdgeInsets.only(bottom: 60, left: 25),
                             child: IconButton(
                               tooltip: 'ویرایش اطلاعات کاربر',
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  PageTransition(
+                                    child: BlocProvider(
+                                      create: (context) => AuthBloc(),
+                                      child:  ChangeUserDetailsScreen(userModel: r),
+                                    ),
+                                    type: PageTransitionType.fade,
+                                    duration: const Duration(milliseconds: 200),
+                                  ),
+                                );
+                              },
                               icon: const Icon(
                                 CupertinoIcons.pencil_circle,
                               ),
@@ -256,9 +269,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 Navigator.push(
                                   context,
                                   PageTransition(
-                                    child: BlocProvider(create: (context) => AuthBloc(),child:  ResetPassScreen(userModel: r,
-
-                                    ),),
+                                    child: BlocProvider(
+                                      create: (context) => AuthBloc(),
+                                      child: ResetPassScreen(
+                                        userModel: r,
+                                      ),
+                                    ),
                                     type: PageTransitionType.fade,
                                     duration: const Duration(milliseconds: 200),
                                   ),
