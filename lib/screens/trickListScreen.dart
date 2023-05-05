@@ -6,6 +6,7 @@ import 'package:game_hacks_chat/bloc/trickBloc/trickBloc.dart';
 import 'package:game_hacks_chat/bloc/trickBloc/trickEvent.dart';
 import 'package:game_hacks_chat/bloc/trickBloc/trickState.dart';
 import 'package:game_hacks_chat/constant/generallColor.dart';
+import 'package:game_hacks_chat/constant/tapselKey.dart';
 import 'package:game_hacks_chat/data/model/gameProductModel.dart';
 import 'package:game_hacks_chat/screens/addTrickScreen.dart';
 import 'package:game_hacks_chat/screens/trickSingleScreen.dart';
@@ -14,6 +15,7 @@ import 'package:game_hacks_chat/widget/customSnakBar.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:tapsell_plus/tapsell_plus.dart';
 
 class TrickListScreen extends StatefulWidget {
   TrickListScreen({super.key, required this.gameProductModel});
@@ -32,6 +34,28 @@ class _TrickListScreenState extends State<TrickListScreen> {
     page = 1;
     BlocProvider.of<TrickBloc>(context)
         .add(TrickRequestEvent(widget.gameProductModel.id, page));
+        getTap();
+  }
+
+
+    void getTap() async {
+    var responseID =
+        await TapsellPlus.instance.requestInterstitialAd(TapSellKey.fullScreenZone);
+    if (responseID.isNotEmpty) {
+      TapsellPlus.instance.showInterstitialAd(responseID, onOpened: (map) {
+        // Ad opened
+        print("OPEEEEEEEEEN **********");
+        print(map);
+      }, onError: (map) {
+        // Ad had error - map contains `error_message`
+        print("ERROR **********");
+        print(map);
+      }, onClosed: (map) {
+        // Ad closed
+        print("Close **********");
+        print(map);
+      });
+    }
   }
 
   @override

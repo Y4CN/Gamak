@@ -9,11 +9,13 @@ import 'package:game_hacks_chat/bloc/gameDetailBloc/gameDetailEvent.dart';
 import 'package:game_hacks_chat/bloc/gameDetailBloc/gameDetailState.dart';
 import 'package:game_hacks_chat/bloc/trickBloc/trickBloc.dart';
 import 'package:game_hacks_chat/constant/generallColor.dart';
+import 'package:game_hacks_chat/constant/tapselKey.dart';
 import 'package:game_hacks_chat/data/model/gameProductModel.dart';
 import 'package:game_hacks_chat/screens/trickListScreen.dart';
 import 'package:game_hacks_chat/widget/singlePic.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:tapsell_plus/tapsell_plus.dart';
 
 class GameScreen extends StatefulWidget {
   GameScreen({super.key, required this.gameProductModel});
@@ -24,11 +26,47 @@ class GameScreen extends StatefulWidget {
 }
 
 class _GameScreenState extends State<GameScreen> {
+  late String bannerId;
   @override
   void initState() {
     super.initState();
+    bannerId = '';
     BlocProvider.of<GameDetailsBloc>(context)
         .add(GameDetailsRequestEvent(widget.gameProductModel.id));
+    showBanner();
+  }
+
+  showBanner() async {
+    bannerId = await TapsellPlus.instance.requestStandardBannerAd(
+      TapSellKey.bannerZone,
+      TapsellPlusBannerType.BANNER_468x60,
+    );
+    if (bannerId.isNotEmpty) {
+      TapsellPlus.instance.showStandardBannerAd(
+        bannerId,
+        TapsellPlusHorizontalGravity.BOTTOM,
+        TapsellPlusVerticalGravity.CENTER,
+        margin: const EdgeInsets.only(top: 10),
+        onOpened: (map) {
+          // Ad opened
+          print("Banner OPEND *****");
+          print(map);
+        },
+        onError: (map) {
+          // Error when showing ad
+          print("Banner Error *****");
+          print(map);
+        },
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    if (bannerId.isNotEmpty) {
+      TapsellPlus.instance.destroyStandardBanner(bannerId);
+    }
   }
 
   @override
@@ -416,9 +454,11 @@ class _GameScreenState extends State<GameScreen> {
                                   Navigator.push(
                                     context,
                                     PageTransition(
-                                      child: SinglePicture(image: r[index].image),
+                                      child:
+                                          SinglePicture(image: r[index].image),
                                       type: PageTransitionType.fade,
-                                      duration: const Duration(milliseconds: 200),
+                                      duration:
+                                          const Duration(milliseconds: 200),
                                     ),
                                   );
                                 },

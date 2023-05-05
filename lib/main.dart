@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:game_hacks_chat/constant/generallColor.dart';
+import 'package:game_hacks_chat/constant/tapselKey.dart';
 import 'package:game_hacks_chat/locator.dart';
 import 'package:pushpole/pushpole.dart';
 import 'package:game_hacks_chat/screens/splashScreen.dart';
+import 'package:tapsell_plus/tapsell_plus.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   PushPole.initialize();
+  await TapsellPlus.instance.initialize(TapSellKey.key);
+  TapsellPlus.instance.setGDPRConsent(true);
   await initGet_it();
   runApp(const MyApp());
 }
