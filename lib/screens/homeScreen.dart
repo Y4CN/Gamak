@@ -13,6 +13,7 @@ import 'package:game_hacks_chat/screens/bannerDetailsScreen.dart';
 import 'package:game_hacks_chat/screens/categoryGameScreen.dart';
 import 'package:game_hacks_chat/screens/gameScreen.dart';
 import 'package:game_hacks_chat/screens/listGameScreen.dart';
+import 'package:game_hacks_chat/utilities/changeUserListen.dart';
 import 'package:game_hacks_chat/widget/singleItem.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:page_transition/page_transition.dart';
@@ -33,6 +34,11 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     BlocProvider.of<HomeBloc>(context).add(HomeRequestEvent());
     _bannerPageController = PageController(viewportFraction: .8);
+    ChangeUserListen.changeUser.addListener(() {
+      if (ChangeUserListen.changeUser.value) {
+        BlocProvider.of<HomeBloc>(context).add(HomeRequestEvent());
+      }
+    });
   }
 
   @override

@@ -17,6 +17,7 @@ import 'package:game_hacks_chat/screens/registerScreen.dart';
 import 'package:game_hacks_chat/screens/resetPasswordScreen.dart';
 import 'package:game_hacks_chat/screens/splashScreen.dart';
 import 'package:game_hacks_chat/screens/supportScreen.dart';
+import 'package:game_hacks_chat/utilities/changeUserListen.dart';
 import 'package:game_hacks_chat/utilities/sharManager.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:page_transition/page_transition.dart';
@@ -37,6 +38,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
     if (!ShareManager.getGust()) {
       BlocProvider.of<AuthBloc>(context).add(AuthReadUserEvent());
     }
+    ChangeUserListen.changeUser.addListener(() {
+      if (ChangeUserListen.changeUser.value) {
+        BlocProvider.of<AuthBloc>(context).add(AuthReadUserEvent());
+        ChangeUserListen.changeUser.value = false;
+      }
+    });
   }
 
   @override
@@ -81,7 +88,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   PageTransition(
                                     child: BlocProvider(
                                       create: (context) => AuthBloc(),
-                                      child:  ChangeUserDetailsScreen(userModel: r),
+                                      child:
+                                          ChangeUserDetailsScreen(userModel: r),
                                     ),
                                     type: PageTransitionType.fade,
                                     duration: const Duration(milliseconds: 200),
