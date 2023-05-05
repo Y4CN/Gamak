@@ -39,7 +39,7 @@ class _GameScreenState extends State<GameScreen> {
   showBanner() async {
     bannerId = await TapsellPlus.instance.requestStandardBannerAd(
       TapSellKey.bannerZone,
-      TapsellPlusBannerType.BANNER_468x60,
+      TapsellPlusBannerType.BANNER_320x100,
     );
     if (bannerId.isNotEmpty) {
       TapsellPlus.instance.showStandardBannerAd(
@@ -287,6 +287,10 @@ class _GameScreenState extends State<GameScreen> {
                             IconButton(
                               splashRadius: 15,
                               onPressed: () {
+                                if (bannerId.isNotEmpty) {
+                                  TapsellPlus.instance
+                                      .destroyStandardBanner(bannerId);
+                                }
                                 Navigator.push(
                                   context,
                                   PageTransition(
