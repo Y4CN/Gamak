@@ -40,5 +40,6 @@ class AuthForgotPassEvent extends AuthEvent {
 
 class AuthChangeUserDetailsEvent extends AuthEvent {
   String name;
-  AuthChangeUserDetailsEvent(this.name);
+  File? avatar;
+  AuthChangeUserDetailsEvent(this.name,this.avatar);
 }

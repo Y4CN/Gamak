@@ -24,7 +24,7 @@ abstract class IAuthDataSource {
   Future<UserModel> readUser();
   Future<bool> verify(String email);
   Future<bool> forGotPass(String email);
-  Future<bool> changeUser(String name);
+  Future<bool> changeUser(String name, File? avatar);
 }
 
 class AuthDataSource extends IAuthDataSource {
@@ -150,14 +150,17 @@ class AuthDataSource extends IAuthDataSource {
   }
 
   @override
-  Future<bool> changeUser(String name) async {
+  Future<bool> changeUser(String name, File? avatar) async {
     try {
       var userId = ShareManager.readUserId();
+      FormData _formData = FormData.fromMap({
+        'name': name,
+        'avatar':
+            avatar == null ? null : await MultipartFile.fromFile(avatar.path),
+      });
       var response = await _dio.patch(
         'collections/users/records/$userId',
-        data: {
-          'name': name,
-        },
+        data: _formData
       );
       if (response.statusCode == 200) {
         return true;

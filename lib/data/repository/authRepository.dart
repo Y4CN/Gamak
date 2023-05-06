@@ -22,7 +22,7 @@ abstract class IAuthRepository {
   Future<Either<String, UserModel>> readUser();
   Future<Either<String, bool>> verify(String email);
   Future<Either<String, bool>> forGotPass(String email);
-  Future<Either<String, bool>> changeUser(String name);
+  Future<Either<String, bool>> changeUser(String name,File? avatar);
 }
 
 class AuthRepository extends IAuthRepository {
@@ -92,9 +92,9 @@ class AuthRepository extends IAuthRepository {
   }
 
   @override
-  Future<Either<String, bool>> changeUser(String name) async {
+  Future<Either<String, bool>> changeUser(String name,File? avatar) async {
     try {
-      var response = await _authDataSource.changeUser(name);
+      var response = await _authDataSource.changeUser(name,avatar);
       return Right(response);
     } on ErrorHandler catch (e) {
       throw Left(e.message ?? 'خطای ناشناخته');

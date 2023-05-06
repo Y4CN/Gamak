@@ -47,7 +47,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     on<AuthChangeUserDetailsEvent>((event, emit) async {
       emit(AuthLoadingState());
-      var response = await _authRepository.changeUser(event.name);
+      var response = await _authRepository.changeUser(event.name,event.avatar);
       emit(AuthEditUserDetailsResponseState(response));
     });
   }

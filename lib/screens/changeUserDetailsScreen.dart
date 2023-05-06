@@ -285,6 +285,7 @@ class _ChangeUserDetailsScreenState extends State<ChangeUserDetailsScreen> {
                       BlocProvider.of<AuthBloc>(context).add(
                         AuthChangeUserDetailsEvent(
                           _nameController.text.trim(),
+                          _imagefile,
                         ),
                       );
                     },
