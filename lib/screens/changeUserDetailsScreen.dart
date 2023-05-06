@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,6 +10,7 @@ import 'package:game_hacks_chat/bloc/authBloc/authState.dart';
 import 'package:game_hacks_chat/constant/generallColor.dart';
 import 'package:game_hacks_chat/data/model/userModel.dart';
 import 'package:game_hacks_chat/utilities/changeUserListen.dart';
+import 'package:game_hacks_chat/utilities/fileManager.dart';
 import 'package:game_hacks_chat/widget/customSnakBar.dart';
 import 'package:game_hacks_chat/widget/customTextField.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
@@ -24,10 +28,13 @@ class _ChangeUserDetailsScreenState extends State<ChangeUserDetailsScreen> {
   late TextEditingController _nameController;
   late TextEditingController _userNameController;
   late TextEditingController _emailController;
+  File? _imagefile;
+  late ValueNotifier _imageNotof;
 
   @override
   void initState() {
     super.initState();
+    _imageNotof = ValueNotifier<bool>(false);
     _nameController = TextEditingController(text: widget.userModel.name);
     _userNameController =
         TextEditingController(text: widget.userModel.username);
@@ -47,7 +54,10 @@ class _ChangeUserDetailsScreenState extends State<ChangeUserDetailsScreen> {
           centerTitle: true,
           title: const Text(
             'ویرایش اطلاعات کاربری',
-            style: TextStyle(fontSize: 16, fontFamily: 'vazirm'),
+            style: TextStyle(
+              fontSize: 16,
+              fontFamily: 'vazirm',
+            ),
           ),
           actions: [
             IconButton(
@@ -63,6 +73,103 @@ class _ChangeUserDetailsScreenState extends State<ChangeUserDetailsScreen> {
         ),
         body: Column(
           children: [
+            Stack(
+              children: [
+                ValueListenableBuilder(
+                  valueListenable: _imageNotof,
+                  builder: (context, value, child) {
+                    if (value || _imagefile != null) {
+                      return Container(
+                        height: 80,
+                        width: 80,
+                        decoration: BoxDecoration(
+                            color: Colors.white24,
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                              image: FileImage(_imagefile!),
+                              fit: BoxFit.cover,
+                            )),
+                      );
+                    }
+                    return CachedNetworkImage(
+                      imageUrl: widget.userModel.avatar,
+                      errorWidget: (context, url, error) {
+                        return Container(
+                            height: 80,
+                            width: 80,
+                            alignment: Alignment.center,
+                            decoration: const BoxDecoration(
+                              color: Colors.white24,
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(
+                              CupertinoIcons.person,
+                              color: Colors.black,
+                              size: 30,
+                            ));
+                      },
+                      imageBuilder: (context, imageProvider) {
+                        return Container(
+                          height: 80,
+                          width: 80,
+                          decoration: BoxDecoration(
+                              color: Colors.white24,
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                image: imageProvider,
+                                fit: BoxFit.cover,
+                              )),
+                        );
+                      },
+                      placeholder: (context, url) {
+                        return Container(
+                          height: 80,
+                          width: 80,
+                          alignment: Alignment.center,
+                          decoration: const BoxDecoration(
+                            color: Colors.white24,
+                            shape: BoxShape.circle,
+                          ),
+                          child: LoadingAnimationWidget.fourRotatingDots(
+                            color: GenerallColor.appBarBackGroundColor,
+                            size: 20,
+                          ),
+                        );
+                      },
+                    );
+                  },
+                ),
+                Positioned(
+                  left: 0,
+                  top: 0,
+                  child: GestureDetector(
+                    onTap: () async {
+                      var fileback = await FileManager.pickFile();
+                      fileback.fold((l) {
+                        return CustomSnakBar.getCustomSnakBar(l, context);
+                      }, (r) {
+                        _imagefile = r;
+                        _imageNotof.value = true;
+                        _imageNotof.notifyListeners();
+                        return;
+                      });
+                    },
+                    child: Container(
+                      height: 25,
+                      width: 25,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.white,
+                          border: Border.all(color: Colors.black)),
+                      child: const Icon(
+                        CupertinoIcons.add,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
             Padding(
               padding: const EdgeInsets.only(
                 top: 14,
