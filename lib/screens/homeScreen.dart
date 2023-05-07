@@ -49,6 +49,46 @@ class _HomeScreenState extends State<HomeScreen> {
       },
       child: Scaffold(body: BlocBuilder<HomeBloc, HomeState>(
         builder: (context, state) {
+          if (state is HomeErrorState) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(double.infinity, 50),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      backgroundColor:
+                          GenerallColor.appBarBackGroundColor.withOpacity(.8),
+                    ),
+                    onPressed: () {
+                      BlocProvider.of<HomeBloc>(context)
+                          .add(HomeRequestEvent());
+                    },
+                    child: const Text(
+                      'تلاش مجدد',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Text(
+                    state.errorText,
+                    textAlign: TextAlign.center,
+                  ),
+                )
+              ],
+            );
+          }
           if (state is HomeLoadingState) {
             return Center(
               child: LoadingAnimationWidget.fourRotatingDots(

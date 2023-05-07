@@ -19,33 +19,38 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc() : super(HomeInitState()) {
     on<HomeRequestEvent>((event, emit) async {
       emit(HomeLoadingState());
-      var getAllCategory = await _categoryRepository.getAllCategory();
-      if (ShareManager.getGust()) {
-        Either<String, UserModel> gust() {
-          return Right(
-            UserModel(
-              avatar: '',
-              id: '',
-              name: '',
-              username: '',
-              verified: false,
-              isBlocked: false,
-              email: '',
-            ),
-          );
-        }
+      try {
+        var getAllCategory = await _categoryRepository.getAllCategory();
+        if (ShareManager.getGust()) {
+          Either<String, UserModel> gust() {
+            return Right(
+              UserModel(
+                avatar: '',
+                id: '',
+                name: '',
+                username: '',
+                verified: false,
+                isBlocked: false,
+                email: '',
+              ),
+            );
+          }
 
-        userResponse = gust();
-      } else {
-        userResponse = await _authRepository.readUser();
+          userResponse = gust();
+        } else {
+          userResponse = await _authRepository.readUser();
+        }
+        var readBanner = await _bannerRepository.getAllBanner();
+        var games = await _gameProductRepository.getAllgameProduct(event.page);
+        var popularGames = await _gameProductRepository.getPopulargameProduct();
+        var newsGames =
+            await _gameProductRepository.getNewGameProduct(event.page);
+        emit(HomeResponseState(getAllCategory, userResponse, readBanner, games,
+            popularGames, newsGames));
+      } catch (e) {
+        emit(HomeErrorState(
+            'گرفتن اطلاعات با خطا مواجه شده اینترنت خودتون رو چک کنین و دوباره روی دکمه زیر بزنین'));
       }
-      var readBanner = await _bannerRepository.getAllBanner();
-      var games = await _gameProductRepository.getAllgameProduct(event.page);
-      var popularGames = await _gameProductRepository.getPopulargameProduct();
-      var newsGames =
-          await _gameProductRepository.getNewGameProduct(event.page);
-      emit(HomeResponseState(getAllCategory, userResponse, readBanner, games,
-          popularGames, newsGames));
     });
   }
 }

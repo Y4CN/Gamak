@@ -21,3 +21,8 @@ class HomeResponseState extends HomeState{
   Either<String , List<GameProductModel>> newGames;
   HomeResponseState(this.getAllCategory,this.readUser,this.getAllBanner,this.games,this.popularGame,this.newGames);
 }
+
+class HomeErrorState extends HomeState{
+  String errorText;
+  HomeErrorState(this.errorText);
+}
