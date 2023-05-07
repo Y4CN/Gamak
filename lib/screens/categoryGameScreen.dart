@@ -57,6 +57,40 @@ class _CategoryGameScreenState extends State<CategoryGameScreen> {
           ),
           body: BlocBuilder<CategoryBloc, CategoryState>(
             builder: (context, state) {
+              if (state is CategoryErrorState) {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 20),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(double.infinity, 50),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          backgroundColor: GenerallColor.appBarBackGroundColor
+                              .withOpacity(.8),
+                        ),
+                        onPressed: () {
+                          BlocProvider.of<CategoryBloc>(context).add(
+                              CategoryRequestEvent(widget.categoryModel.id));
+                        },
+                        child: const Text(
+                          'تلاش مجدد',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Text(state.errorText)
+                  ],
+                );
+              }
               if (state is CategoryLoadingState) {
                 return Center(
                   child: LoadingAnimationWidget.fallingDot(
@@ -87,8 +121,7 @@ class _CategoryGameScreenState extends State<CategoryGameScreen> {
                           itemBuilder: (context, index) {
                             return Padding(
                               padding: const EdgeInsets.only(top: 14),
-                              child:
-                                  singleItemGame(gameProductModel: r[index]),
+                              child: singleItemGame(gameProductModel: r[index]),
                             );
                           },
                         )),

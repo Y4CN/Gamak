@@ -11,3 +11,9 @@ class CategoryResponseState extends CategoryState{
   Either<String,List<GameProductModel>> gameCat;
   CategoryResponseState(this.gameCat);
 }
+
+
+class CategoryErrorState extends CategoryState{
+  String errorText;
+  CategoryErrorState(this.errorText);
+}

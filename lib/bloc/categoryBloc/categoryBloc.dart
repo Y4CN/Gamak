@@ -9,8 +9,12 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   CategoryBloc() : super(CategoryInitState()) {
     on<CategoryRequestEvent>((event, emit) async {
       emit(CategoryLoadingState());
-      var gameCat = await _categoryRepository.getCategoryGame(event.catId);
-      emit(CategoryResponseState(gameCat));
+      try {
+        var gameCat = await _categoryRepository.getCategoryGame(event.catId);
+        emit(CategoryResponseState(gameCat));
+      } catch (e) {
+        emit(CategoryErrorState('مشکلی در گرفتن بازی ها به وجود اومده'));
+      }
     });
   }
 }
