@@ -15,21 +15,32 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final IAuthRepository _authRepository = locator.get();
   final IBannerRepository _bannerRepository = locator.get();
   final IGameProductRepository _gameProductRepository = locator.get();
-  var userResponse ;
+  var userResponse;
   HomeBloc() : super(HomeInitState()) {
     on<HomeRequestEvent>((event, emit) async {
       emit(HomeLoadingState());
       var getAllCategory = await _categoryRepository.getAllCategory();
       if (ShareManager.getGust()) {
-        Either<String,UserModel> gust(){
-          return Right(UserModel(avatar: '', id: '', name: '', username: '', verified: false, isBlocked: false, email: '',),);
+        Either<String, UserModel> gust() {
+          return Right(
+            UserModel(
+              avatar: '',
+              id: '',
+              name: '',
+              username: '',
+              verified: false,
+              isBlocked: false,
+              email: '',
+            ),
+          );
         }
+
         userResponse = gust();
-      }else{
-         userResponse = await _authRepository.readUser();
+      } else {
+        userResponse = await _authRepository.readUser();
       }
       var readBanner = await _bannerRepository.getAllBanner();
-      var games = await _gameProductRepository.getAllgameProduct();
+      var games = await _gameProductRepository.getAllgameProduct(event.page);
       var popularGames = await _gameProductRepository.getPopulargameProduct();
       var newsGames = await _gameProductRepository.getNewGameProduct();
       emit(HomeResponseState(getAllCategory, userResponse, readBanner, games,

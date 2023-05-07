@@ -5,7 +5,7 @@ import 'package:game_hacks_chat/locator.dart';
 import '../../utilities/errorHandler.dart';
 
 abstract class IGameProductDataSource {
-  Future<List<GameProductModel>> getUpdategames();
+  Future<List<GameProductModel>> getUpdategames(int page);
   Future<List<GameProductModel>> getNewGames();
   Future<List<GameProductModel>> getPopulargames();
   Future<List<GameProductModel>> getSearhGames(String txt);
@@ -14,11 +14,12 @@ abstract class IGameProductDataSource {
 class GameProductDataSource extends IGameProductDataSource {
   final Dio _dio = locator.get();
   @override
-  Future<List<GameProductModel>> getUpdategames() async {
+  Future<List<GameProductModel>> getUpdategames(int page) async {
     try {
       Map<String, dynamic> qExpanded = {
         'expand': 'category_id',
-        'sort': '-updated'
+        'sort': '-updated',
+        'page':page
       };
       var response = await _dio.get(
         'collections/games_product/records',

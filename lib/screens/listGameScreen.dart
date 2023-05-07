@@ -16,9 +16,11 @@ class ListGameScreen extends StatefulWidget {
 }
 
 class _ListGameScreenState extends State<ListGameScreen> {
+  late int _page;
   @override
   void initState() {
     super.initState();
+    _page = 1;
     BlocProvider.of<HomeBloc>(context).add(HomeRequestEvent());
   }
 
@@ -69,8 +71,37 @@ class _ListGameScreenState extends State<ListGameScreen> {
               );
             }, (r) {
               return ListView.builder(
-                itemCount: r.length,
+                itemCount: r.length >= 30 ? r.length + 1 : r.length,
                 itemBuilder: (context, index) {
+                  if (index == 30) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 20,
+                      ),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(double.infinity, 50),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          backgroundColor: GenerallColor.appBarBackGroundColor
+                              .withOpacity(.8),
+                        ),
+                        onPressed: () {
+                          BlocProvider.of<HomeBloc>(context)
+                              .add(HomeRequestEvent(page: ++_page));
+                        },
+                        child: const Text(
+                          'بیشتر',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ),
+                    );
+                  }
                   return Padding(
                     padding:
                         const EdgeInsets.only(top: 15, left: 10, right: 10),
@@ -91,8 +122,35 @@ class _ListGameScreenState extends State<ListGameScreen> {
               );
             }, (r) {
               return ListView.builder(
-                itemCount: r.length,
+                itemCount: r.length >= 30 ? r.length + 1 : r.length,
                 itemBuilder: (context, index) {
+                  if (index == 30) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 20),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(double.infinity, 50),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          backgroundColor: GenerallColor.appBarBackGroundColor
+                              .withOpacity(.8),
+                        ),
+                        onPressed: () {
+                          BlocProvider.of<HomeBloc>(context)
+                              .add(HomeRequestEvent(page: ++_page));
+                        },
+                        child: const Text(
+                          'بیشتر',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ),
+                    );
+                  }
                   return Padding(
                     padding:
                         const EdgeInsets.only(top: 10, left: 10, right: 10),
