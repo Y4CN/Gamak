@@ -6,7 +6,7 @@ import '../../utilities/errorHandler.dart';
 
 abstract class IGameProductDataSource {
   Future<List<GameProductModel>> getUpdategames(int page);
-  Future<List<GameProductModel>> getNewGames();
+  Future<List<GameProductModel>> getNewGames(int page);
   Future<List<GameProductModel>> getPopulargames();
   Future<List<GameProductModel>> getSearhGames(String txt);
 }
@@ -79,11 +79,12 @@ class GameProductDataSource extends IGameProductDataSource {
   }
   
   @override
-  Future<List<GameProductModel>> getNewGames() async {
+  Future<List<GameProductModel>> getNewGames(int page) async {
      try {
       Map<String, dynamic> qExpanded = {
         'expand': 'category_id',
-        'sort': '-created'
+        'sort': '-created',
+        'page':page
       };
       var response = await _dio.get(
         'collections/games_product/records',
