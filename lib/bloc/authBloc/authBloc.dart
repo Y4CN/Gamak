@@ -10,9 +10,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc() : super(AuthInitState()) {
     on<AuthLoginEvent>((event, emit) async {
       emit(AuthLoadingState());
-      var login =
-          await _authRepository.login(event.emailOruserName, event.passwrod);
-      emit(AuthLoginResponseState(login));
+      try {
+        var login =
+            await _authRepository.login(event.emailOruserName, event.passwrod);
+        emit(AuthLoginResponseState(login));
+      } catch (e) {
+        emit(AuthLoginErrorState('رمز عبور یا نام کاربری/ایمیل شما اشتباه هست'));
+      }
     });
 
     on<AuthRegisterEvent>((event, emit) async {
@@ -27,8 +31,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           event.avatar,
         );
         emit(AuthRegisterResponseState(register));
-      } on ErrorHandler catch (e) {
-        emit(AuthRegisterErrorState(e.message ?? "خطای ناشناخته"));
       } catch (e) {
         emit(AuthRegisterErrorState("خطای ناشناخته"));
       }

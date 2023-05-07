@@ -79,6 +79,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 child: BlocConsumer<AuthBloc, AuthState>(
                   listener: (context, state) {
+                    if (state is AuthLoginErrorState) {
+                      CustomSnakBar.getCustomSnakBar(state.errorText, context);
+                      return;
+                    }
                     if (state is AuthLoginResponseState) {
                       CustomSnakBar.getCustomSnakBar(
                         'شما با موفقیت وارد شدید',
@@ -102,7 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                   builder: (context, state) {
                     if (state is AuthLoadingState ||
-                        state is AuthLoginResponseState) {
+                        state is AuthLoginResponseState ) {
                       return Center(
                         child: LoadingAnimationWidget.fourRotatingDots(
                           color: GenerallColor.appBarBackGroundColor,
