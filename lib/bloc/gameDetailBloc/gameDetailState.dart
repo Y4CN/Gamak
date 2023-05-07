@@ -19,3 +19,9 @@ class GameDetailsResponseState extends GameDetailsState {
     this.platform,
   );
 }
+
+
+class GameDetailsErrorState extends GameDetailsState{
+  String errorText;
+  GameDetailsErrorState(this.errorText);
+}

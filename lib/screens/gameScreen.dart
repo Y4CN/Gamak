@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -33,31 +34,34 @@ class _GameScreenState extends State<GameScreen> {
     bannerId = '';
     BlocProvider.of<GameDetailsBloc>(context)
         .add(GameDetailsRequestEvent(widget.gameProductModel.id));
-    showBanner();
   }
 
   showBanner() async {
-    bannerId = await TapsellPlus.instance.requestStandardBannerAd(
-      TapSellKey.bannerZone,
-      TapsellPlusBannerType.BANNER_320x100,
-    );
-    if (bannerId.isNotEmpty) {
-      TapsellPlus.instance.showStandardBannerAd(
-        bannerId,
-        TapsellPlusHorizontalGravity.BOTTOM,
-        TapsellPlusVerticalGravity.CENTER,
-        margin: const EdgeInsets.only(top: 10),
-        onOpened: (map) {
-          // Ad opened
-          print("Banner OPEND *****");
-          print(map);
-        },
-        onError: (map) {
-          // Error when showing ad
-          print("Banner Error *****");
-          print(map);
-        },
+    final connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      bannerId = await TapsellPlus.instance.requestStandardBannerAd(
+        TapSellKey.bannerZone,
+        TapsellPlusBannerType.BANNER_320x100,
       );
+      if (bannerId.isNotEmpty) {
+        TapsellPlus.instance.showStandardBannerAd(
+          bannerId,
+          TapsellPlusHorizontalGravity.BOTTOM,
+          TapsellPlusVerticalGravity.CENTER,
+          margin: const EdgeInsets.only(top: 10),
+          onOpened: (map) {
+            // Ad opened
+            print("Banner OPEND *****");
+            print(map);
+          },
+          onError: (map) {
+            // Error when showing ad
+            print("Banner Error *****");
+            print(map);
+          },
+        );
+      }
     }
   }
 
@@ -74,6 +78,40 @@ class _GameScreenState extends State<GameScreen> {
     return Scaffold(
       body: BlocBuilder<GameDetailsBloc, GameDetailsState>(
         builder: (context, state) {
+          if (state is GameDetailsErrorState) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(double.infinity, 50),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      backgroundColor:
+                          GenerallColor.appBarBackGroundColor.withOpacity(.8),
+                    ),
+                    onPressed: () {
+                      BlocProvider.of<GameDetailsBloc>(context).add(
+                          GameDetailsRequestEvent(widget.gameProductModel.id));
+                    },
+                    child: const Text(
+                      'تلاش مجدد',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
+                ),
+                Text(state.errorText)
+              ],
+            );
+          }
           if (state is GameDetailsLoadingState) {
             return Center(
               child: LoadingAnimationWidget.fourRotatingDots(

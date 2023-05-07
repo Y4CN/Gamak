@@ -57,6 +57,7 @@ dependencies:
   url_launcher: ^6.1.10
   device_preview: ^1.1.0
   tapsell_plus: ^2.1.7
+  connectivity_plus: ^3.0.6
 
 dev_dependencies:
   flutter_test:
