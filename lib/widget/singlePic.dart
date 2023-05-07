@@ -48,7 +48,7 @@ class SinglePicture extends StatelessWidget {
               height: 250,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: Colors.amber,
+                color: Colors.transparent,
                 borderRadius: BorderRadius.circular(12),
               ),
               margin: const EdgeInsets.symmetric(
@@ -68,7 +68,7 @@ class SinglePicture extends StatelessWidget {
               height: 250,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: Colors.amber,
+                color: Colors.transparent,
                 borderRadius: BorderRadius.circular(12),
               ),
               margin: const EdgeInsets.symmetric(

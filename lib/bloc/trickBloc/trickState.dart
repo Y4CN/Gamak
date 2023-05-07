@@ -71,3 +71,9 @@ class TrickGetTriclResponseState extends TrickState{
   Either<String,List<ClientTrickModel>> trickUser;
   TrickGetTriclResponseState(this.trickUser);
 }
+
+
+class TrickListErrorState extends TrickState{
+  String errorText;
+  TrickListErrorState(this.errorText);
+} 

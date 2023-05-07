@@ -9,13 +9,19 @@ class TrickBloc extends Bloc<TrickEvent, TrickState> {
   TrickBloc() : super(TrickInitState()) {
     on<TrickRequestEvent>((event, emit) async {
       emit(TrickLoadingState());
-      var trickLst = await _trickRepository.getTrickGame(event.gameId,event.page);
-      emit(TrickResponseState(trickLst));
+      try {
+        var trickLst =
+            await _trickRepository.getTrickGame(event.gameId, event.page);
+        emit(TrickResponseState(trickLst));
+      } catch (e) {
+        emit(TrickListErrorState('متاسفانه گرفتن اطلاعات ترفند به مشکل خورده'));
+      }
     });
 
     on<TrickRequestCommedEvent>((event, emit) async {
       emit(TrickLoadingSingleState());
-      var trickCommends = await _trickRepository.getTrickCommed(event.page,event.trickId);
+      var trickCommends =
+          await _trickRepository.getTrickCommed(event.page, event.trickId);
       emit(TrickResponseSingleState(trickCommends));
     });
 
@@ -42,15 +48,14 @@ class TrickBloc extends Bloc<TrickEvent, TrickState> {
 
     on<TrickAddTrickEvent>((event, emit) async {
       emit(TrickLoadingAddTrickState());
-      var addTrick = await _trickRepository.addTrick(event.title, event.description, event.images, event.gameId);
+      var addTrick = await _trickRepository.addTrick(
+          event.title, event.description, event.images, event.gameId);
       emit(TrcikResponseAddTrickState(addTrick));
     });
-    
-
 
     on<TrickGetTrickUser>((event, emit) async {
       emit(TrickGetTrickUserLoadingState());
-      var trickUser = await _trickRepository.getAllTrickUser(); 
+      var trickUser = await _trickRepository.getAllTrickUser();
       emit(TrickGetTriclResponseState(trickUser));
     });
   }

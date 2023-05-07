@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -34,27 +35,30 @@ class _TrickListScreenState extends State<TrickListScreen> {
     page = 1;
     BlocProvider.of<TrickBloc>(context)
         .add(TrickRequestEvent(widget.gameProductModel.id, page));
-        getTap();
+    getTap();
   }
 
-
-    void getTap() async {
-    var responseID =
-        await TapsellPlus.instance.requestInterstitialAd(TapSellKey.fullScreenZone);
-    if (responseID.isNotEmpty) {
-      TapsellPlus.instance.showInterstitialAd(responseID, onOpened: (map) {
-        // Ad opened
-        print("OPEEEEEEEEEN **********");
-        print(map);
-      }, onError: (map) {
-        // Ad had error - map contains `error_message`
-        print("ERROR **********");
-        print(map);
-      }, onClosed: (map) {
-        // Ad closed
-        print("Close **********");
-        print(map);
-      });
+  void getTap() async {
+    final connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      var responseID = await TapsellPlus.instance
+          .requestInterstitialAd(TapSellKey.fullScreenZone);
+      if (responseID.isNotEmpty) {
+        TapsellPlus.instance.showInterstitialAd(responseID, onOpened: (map) {
+          // Ad opened
+          print("OPEEEEEEEEEN **********");
+          print(map);
+        }, onError: (map) {
+          // Ad had error - map contains `error_message`
+          print("ERROR **********");
+          print(map);
+        }, onClosed: (map) {
+          // Ad closed
+          print("Close **********");
+          print(map);
+        });
+      }
     }
   }
 
@@ -63,6 +67,40 @@ class _TrickListScreenState extends State<TrickListScreen> {
     return Scaffold(
       body: BlocBuilder<TrickBloc, TrickState>(
         builder: (context, state) {
+          if (state is TrickListErrorState) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(double.infinity, 50),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      backgroundColor:
+                          GenerallColor.appBarBackGroundColor.withOpacity(.8),
+                    ),
+                    onPressed: () {
+                      BlocProvider.of<TrickBloc>(context).add(
+                          TrickRequestEvent(widget.gameProductModel.id, page));
+                    },
+                    child: const Text(
+                      'تلاش مجدد',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
+                ),
+                Text(state.errorText)
+              ],
+            );
+          }
           return CustomScrollView(
             slivers: [
               SliverAppBar(
@@ -263,51 +301,63 @@ class _TrickListScreenState extends State<TrickListScreen> {
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
-      floatingActionButton: FloatingActionButton.extended(
-        autofocus: false,
-        backgroundColor: GenerallColor.appBarBackGroundColor,
-        elevation: 6,
-        isExtended: true,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(5),
-          side: BorderSide.none,
-        ),
-        tooltip: 'اضافه کردن ترفند',
-        onPressed: () {
-          if (ShareManager.getGust()) {
-            CustomSnakBar.getCustomSnakBar(
-                'شما به عنوان مهمان نمیتوانید ترفند اضافه کنید', context);
-            return;
-          }
-          if (!ShareManager.getVerifUser()) {
-            CustomSnakBar.getCustomSnakBar(
-                'برای ثبت ترفند باید ایمیل خود را وریفای کنین', context);
-            return;
-          }
-          if (ShareManager.getBlockedUser()) {
-            CustomSnakBar.getCustomSnakBar(
-                'شما مسدود شدید نمیتوانین ترفند اضافه کنین', context);
-            return;
-          }
-          Navigator.push(
-            context,
-            PageTransition(
-              child: BlocProvider(
-                create: (context) => TrickBloc(),
-                child: AddTrickScreen(
-                  gameProductModel: widget.gameProductModel,
+      floatingActionButton:
+          BlocBuilder<TrickBloc, TrickState>(builder: (context, state) {
+        if (state is TrickResponseState) {
+          return FloatingActionButton.extended(
+            autofocus: false,
+            backgroundColor: GenerallColor.appBarBackGroundColor,
+            elevation: 6,
+            isExtended: true,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5),
+              side: BorderSide.none,
+            ),
+            tooltip: 'اضافه کردن ترفند',
+            onPressed: () {
+              if (ShareManager.getGust()) {
+                CustomSnakBar.getCustomSnakBar(
+                  'شما به عنوان مهمان نمیتوانید ترفند اضافه کنید',
+                  context,
+                );
+                return;
+              }
+              if (!ShareManager.getVerifUser()) {
+                CustomSnakBar.getCustomSnakBar(
+                  'برای ثبت ترفند باید ایمیل خود را وریفای کنین',
+                  context,
+                );
+                return;
+              }
+              if (ShareManager.getBlockedUser()) {
+                CustomSnakBar.getCustomSnakBar(
+                  'شما مسدود شدید نمیتوانین ترفند اضافه کنین',
+                  context,
+                );
+                return;
+              }
+              Navigator.push(
+                context,
+                PageTransition(
+                  child: BlocProvider(
+                    create: (context) => TrickBloc(),
+                    child: AddTrickScreen(
+                      gameProductModel: widget.gameProductModel,
+                    ),
+                  ),
+                  type: PageTransitionType.fade,
+                  duration: const Duration(milliseconds: 200),
                 ),
-              ),
-              type: PageTransitionType.fade,
-              duration: const Duration(milliseconds: 200),
+              );
+            },
+            label: const Text(
+              'ترفند اضافه کن !',
+              style: TextStyle(color: Colors.white, fontSize: 16),
             ),
           );
-        },
-        label: const Text(
-          'ترفند اضافه کن !',
-          style: TextStyle(color: Colors.white, fontSize: 16),
-        ),
-      ),
+        }
+        return const SizedBox();
+      }),
     );
   }
 }

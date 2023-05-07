@@ -223,7 +223,7 @@ class _TrickSingleScreenState extends State<TrickSingleScreen> {
                                     return Container(
                                       alignment: Alignment.center,
                                       decoration: BoxDecoration(
-                                        color: Colors.amber,
+                                        color: Colors.transparent,
                                         borderRadius: BorderRadius.circular(12),
                                       ),
                                       margin: const EdgeInsets.symmetric(
@@ -242,7 +242,7 @@ class _TrickSingleScreenState extends State<TrickSingleScreen> {
                                     return Container(
                                       alignment: Alignment.center,
                                       decoration: BoxDecoration(
-                                        color: Colors.amber,
+                                        color: Colors.transparent,
                                         borderRadius: BorderRadius.circular(12),
                                       ),
                                       margin: const EdgeInsets.symmetric(
