@@ -51,6 +51,42 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       body: BlocBuilder<AuthBloc, AuthState>(
         builder: (context, state) {
+          if (state is AuthReadUserErrorState) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(double.infinity, 50),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      backgroundColor:
+                          GenerallColor.appBarBackGroundColor.withOpacity(.8),
+                    ),
+                    onPressed: () {
+                      if (!ShareManager.getGust()) {
+                        BlocProvider.of<AuthBloc>(context)
+                            .add(AuthReadUserEvent());
+                      }
+                    },
+                    child: const Text(
+                      'تلاش مجدد',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
+                ),
+                Text(state.errorText)
+              ],
+            );
+          }
           if (state is AuthLoadingState) {
             return Center(
               child: LoadingAnimationWidget.fourRotatingDots(

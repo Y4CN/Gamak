@@ -15,7 +15,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             await _authRepository.login(event.emailOruserName, event.passwrod);
         emit(AuthLoginResponseState(login));
       } catch (e) {
-        emit(AuthLoginErrorState('رمز عبور یا نام کاربری/ایمیل شما اشتباه هست'));
+        emit(
+            AuthLoginErrorState('رمز عبور یا نام کاربری/ایمیل شما اشتباه هست'));
       }
     });
 
@@ -38,8 +39,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     on<AuthReadUserEvent>((event, emit) async {
       emit(AuthLoadingState());
-      var responseUser = await _authRepository.readUser();
-      emit(AuthReadUserResponseState(responseUser));
+      try {
+        var responseUser = await _authRepository.readUser();
+        emit(AuthReadUserResponseState(responseUser));
+      } catch (e) {
+        emit(AuthReadUserErrorState('مشکلی در گرفتن اطلاعات به وجود اومده'));
+      }
     });
 
     on<AuthVerifyEvent>((event, emit) async {

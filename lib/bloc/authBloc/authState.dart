@@ -48,3 +48,8 @@ class AuthLoginErrorState extends AuthState{
   String errorText;
   AuthLoginErrorState(this.errorText);
 }
+
+class AuthReadUserErrorState extends AuthState{
+   String errorText;
+   AuthReadUserErrorState(this.errorText);
+}
