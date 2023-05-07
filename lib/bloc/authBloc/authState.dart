@@ -38,3 +38,8 @@ class AuthEditUserDetailsResponseState extends AuthState{
   Either<String , bool> response;
   AuthEditUserDetailsResponseState(this.response);
 }
+
+class AuthRegisterErrorState extends AuthState{
+  String errorText;
+  AuthRegisterErrorState(this.errorText);
+}

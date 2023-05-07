@@ -190,6 +190,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 child: BlocConsumer<AuthBloc, AuthState>(
                   listener: (context, state) {
+                    if (state is AuthRegisterErrorState) {
+                      CustomSnakBar.getCustomSnakBar(state.errorText, context);
+                      return;
+                    }
                     if (state is AuthRegisterResponseState) {
                       state.register.fold((l) {
                         CustomSnakBar.getCustomSnakBar(l, context);
