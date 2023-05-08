@@ -75,12 +75,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro' 
         }
     }
-}
+} 
 
 flutter {
     source '../..'
 }
 
 dependencies {
+    implementation 'com.push-pole.android:pushpolesdk:1.7.8'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }
